@@ -1474,7 +1474,6 @@ function buildAsiaPeerChart() {
     },
     options:{
       responsive:true, maintainAspectRatio:false,
-      layout:{padding:{top:20}},
       plugins:{
         legend:{display:false},
         tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{
@@ -1485,30 +1484,7 @@ function buildAsiaPeerChart() {
         x:{grid:{display:false},ticks:{color:'#667085',font:{size:9,family:'Segoe UI'}}},
         y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>v+'%'}}
       }
-    },
-    plugins:[{
-      id:'asiaPeerLabels',
-      afterDatasetsDraw(chart) {
-        const ctx2 = chart.ctx;
-        const offsets = [14, -10, 14]; // LVMH below, Hermès above, Kering below
-        chart.data.datasets.forEach((ds, dsIdx) => {
-          const meta = chart.getDatasetMeta(dsIdx);
-          const showIdxs = [0, 2, 4, 5, 6, 10, 11, 12]; // 2019,2021,2023,2024,1Q25,FY25,1Q26,2Q26
-          ds.data.forEach((val, i) => {
-            if (val == null || !showIdxs.includes(i)) return;
-            const pt = meta.data[i];
-            if (!pt) return;
-            ctx2.save();
-            ctx2.fillStyle = ds.borderColor;
-            ctx2.font = 'bold 8px Segoe UI';
-            ctx2.textAlign = 'center';
-            const label = `${val>=0?'+':''}${val.toFixed(0)}%`;
-            ctx2.fillText(label, pt.x, pt.y + offsets[dsIdx]);
-            ctx2.restore();
-          });
-        });
-      }
-    }]
+    }
   });
 }
 
