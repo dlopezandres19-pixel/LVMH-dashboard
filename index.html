@@ -582,7 +582,7 @@ new Chart(document.getElementById('gdpChart'),{
     plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{
       label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%${ctx.dataIndex===2?' (2026E forecast)':''}`
     }}},
-    scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>v+'%'}}}
+    scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}
   }
 });
 
@@ -605,7 +605,7 @@ new Chart(document.getElementById('retailChart'),{
     plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{
       label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% YoY${ctx.datasetIndex===0&&ctx.dataIndex===retailChinaInterpIdx?' (interpolated — NBS combines Jan-Feb)':''}`
     }}},
-    scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>v+'%'}}}
+    scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}
   }
 });
 
@@ -1176,7 +1176,7 @@ function buildIndexChart() {
       },
       scales:{
         x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},
-        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>v+'%'}}
+        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
       }
     }
   });
@@ -1253,7 +1253,7 @@ function renderModelDetail(model) {
       },
       scales:{
         x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},
-        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>v+'%'}}
+        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
       }
     }
   });
@@ -1382,7 +1382,7 @@ function renderBuCharts(bu) {
       },
       scales:{
         x:{grid:{display:false},ticks:{color:'#667085',font:{size:9,family:'Segoe UI'}}},
-        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>v+'%'}}
+        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
       }
     },
     plugins:[{
@@ -1432,7 +1432,7 @@ function renderBuCharts(bu) {
       },
       scales:{
         x:{grid:{display:false},ticks:{color:'#667085',font:{size:9,family:'Segoe UI'}}},
-        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>v+'%'}}
+        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
       }
     },
     plugins:[{
@@ -1482,7 +1482,7 @@ function buildAsiaPeerChart() {
       },
       scales:{
         x:{grid:{display:false},ticks:{color:'#667085',font:{size:9,family:'Segoe UI'}}},
-        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>v+'%'}}
+        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
       }
     }
   });
