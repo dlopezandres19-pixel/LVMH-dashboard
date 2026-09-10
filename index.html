@@ -159,19 +159,77 @@
 <div class="header">
   <div>
     <h1>China Luxury — Unified Intelligence Dashboard</h1>
-    <p>WeChat Index · Google Trends · Macro Indicators (USA · Europe · China) · LVMH & Peers · For Investment Research Purposes</p>
+    <p>LVMH F&amp;LG / Asia Performance · WeChat Index · Google Trends · Macro Indicators (USA · Europe · China) · LVMH & Peers · For Investment Research Purposes</p>
   </div>
   <div>
     <div class="date-badge" id="headerDateBadge">WeChat: Apr 12, 2026 · NBS: Jul 2026 (Retail/Jewelry) · May 2026 (Confidence) · Google Trends: Apr 12, 2026 · Resale: Apr 12, 2026</div>
-    <div class="source-tag">Sources: Tencent WeChat Index · Google Trends · National Bureau of Statistics China (stats.gov.cn) · Foxytotes · Watchcharts</div>
+    <div class="source-tag">Sources: LVMH/Hermès/Kering filings · Tencent WeChat Index · Google Trends · National Bureau of Statistics China (stats.gov.cn) · Vestiaire Collective · Xianyu/Goofish</div>
   </div>
 </div>
 
 <div class="dashboard">
 
+  <!-- ══ SECTION 0/1: LVMH F&LG + ASIA (EX. JAPAN) PERFORMANCE ══ -->
+  <div class="section-header">
+    <div class="section-label">① LVMH Performance — F&amp;LG &amp; Asia (ex. Japan)</div>
+    <div class="section-line"></div>
+    <div class="section-sub" id="lvmhSectionSub">LVMH quarterly filings · Peer 10-Qs (Hermès, Kering) · Updated quarterly on earnings release</div>
+  </div>
+
+  <div class="resale-grid">
+
+    <!-- Panel A: F&LG Organic Performance -->
+    <div class="resale-panel">
+      <div class="resale-panel-header">
+        <div>
+          <div class="resale-panel-title">Fashion &amp; Leather Goods — Organic Performance</div>
+          <div class="resale-source-tag">Revenue organic growth (quarterly) &amp; EBIT margin (semi-annual)</div>
+        </div>
+      </div>
+      <div class="resale-chart-wrap"><canvas id="flgGrowthChart"></canvas></div>
+      <div style="font-size:11px;color:var(--blue-5);margin:10px 0 4px;letter-spacing:.04em;">EBIT MARGIN TREND: <span style="color:var(--white);font-weight:600;">34.7%</span> (1H25) → <span style="color:var(--white);font-weight:600;">35.2%</span> (2H25) → <span style="color:var(--white);font-weight:600;">35.0%</span> (FY25) → <span style="color:#e05c4a;font-weight:600;">34.1%</span> (1H26)</div>
+      <table class="resale-table">
+        <thead><tr><th>Period</th><th>Organic Growth</th></tr></thead>
+        <tbody id="flgTableBody"></tbody>
+      </table>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--blue-2);font-size:11px;color:var(--muted);line-height:1.6;">
+        <div style="margin-bottom:6px;">• F&amp;LG organic growth was negative for 5 consecutive quarters (1Q25 to 1Q26, -2% to -9%) before turning positive in 2Q26 (+1%) — the first positive print since 2023.</div>
+        <div>• EBIT margin compressed from 37.1% (FY2024) to a 1H26 low of 34.1% — margin pressure has outpaced the recent growth recovery, suggesting cost or mix headwinds beyond just top-line softness.</div>
+      </div>
+    </div>
+
+    <!-- Panel B: Asia ex-Japan — LVMH vs Peers -->
+    <div class="resale-panel">
+      <div class="resale-panel-header">
+        <div>
+          <div class="resale-panel-title">Asia (ex. Japan) — LVMH vs. Peers</div>
+          <div class="resale-source-tag">Organic growth (quarterly) &amp; revenue exposure to the region</div>
+        </div>
+        <div>
+          <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
+            <div class="legend-item"><div class="legend-dot" style="background:#d4a84b"></div>LVMH</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#e8a020"></div>Hermès</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#5b9bd5"></div>Kering</div>
+          </div>
+        </div>
+      </div>
+      <div class="resale-chart-wrap"><canvas id="asiaPeerChart"></canvas></div>
+      <div class="resale-table-title" style="margin-top:10px;">Asia (ex. Japan) Revenue Exposure · 1H26</div>
+      <table class="resale-table">
+        <thead><tr><th>Company</th><th>Organic Growth (2Q26)</th><th>Revenue Exposure (1H26)</th></tr></thead>
+        <tbody id="asiaPeerTableBody"></tbody>
+      </table>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--blue-2);font-size:11px;color:var(--muted);line-height:1.6;">
+        <div style="margin-bottom:6px;">• LVMH's Asia (ex. Japan) growth turned positive in 3Q25 and has stayed positive since (+7% 1Q26, +4% 2Q26) — recovering faster than Kering, which remains negative every quarter shown (-25% to -1%).</div>
+        <div>• Hermès has posted positive Asia (ex. Japan) growth every quarter since 1Q25, and carries ~1.5x LVMH's revenue exposure to the region (40% vs. 29%) — its resilience looks structural, not just a smaller-base effect.</div>
+      </div>
+    </div>
+
+  </div>
+
   <!-- ══ SECTION 1: NBS ══ -->
   <div class="section-header">
-    <div class="section-label">① Macro Indicators — USA · Europe · China</div>
+    <div class="section-label">② Macro Indicators — USA · Europe · China</div>
     <div class="section-line"></div>
     <div class="section-sub">National Bureau of Statistics China · Eurostat · BEA/Census · Latest available: Jul 2026 (GDP/Retail) · May 2026 (Confidence)</div>
   </div>
@@ -199,7 +257,7 @@
 
   <!-- ══ SECTION 2: WECHAT INDEX ══ -->
   <div class="section-header">
-    <div class="section-label">② WeChat Index — Brand Monitor</div>
+    <div class="section-label">③ WeChat Index — Brand Monitor</div>
     <div class="section-line"></div>
     <div class="section-sub">Tencent WeChat Index Mini Program · Daily weighted engagement score · Sep 8, 2026</div>
   </div>
@@ -278,7 +336,7 @@
 
   <!-- ══ SECTION 3: GOOGLE TRENDS ══ -->
   <div class="section-header">
-    <div class="section-label">③ Google Trends — Search Interest Monitoring</div>
+    <div class="section-label">④ Google Trends — Search Interest Monitoring</div>
     <div class="section-line"></div>
     <div class="section-sub">Mainland China + Global · Relative search popularity 0-100 · Auto-updated from GitHub repo</div>
   </div>
@@ -330,7 +388,7 @@
 
   <!-- ══ SECTION 4: CROSS-PLATFORM ANALYSIS ══ -->
   <div class="section-header">
-    <div class="section-label">④ Cross-Platform Intelligence Analysis</div>
+    <div class="section-label">⑤ Cross-Platform Intelligence Analysis</div>
     <div class="section-line"></div>
     <div class="section-sub" id="crossPlatformSubtitle">Comparing WeChat Index + Google Trends (China & Global) + NBS Macro · 7-day signals</div>
   </div>
@@ -343,7 +401,7 @@
 
   <!-- ══ SECTION 5: RESALE TRACKER (v2 — US/EU/China) ══ -->
   <div class="section-header">
-    <div class="section-label">⑤ Luxury Resale Value Retention — USA · Europe · China</div>
+    <div class="section-label">⑥ Luxury Resale Value Retention — USA · Europe · China</div>
     <div class="section-line"></div>
     <div class="section-sub" id="resaleSectionSub">Value retention & liquidity across 8 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · Auto-updated weekly</div>
   </div>
@@ -1221,6 +1279,121 @@ function renderModelDetail(model) {
   const title = document.getElementById('modelSnapshotTitle');
   if (title) title.textContent = `Latest Snapshot · ${model} · ${latestDateOverall ? new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'}`;
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// SECTION ① — LVMH PERFORMANCE: F&LG + ASIA (EX. JAPAN) (static, manual quarterly update)
+// Source: LVMH_Dashboard.xlsx, tab "Dashboard", provided by user each quarter.
+// To update: user re-uploads the refreshed Excel; re-extract the same cell
+// ranges (rows 22-34 organic growth, rows 38-40 EBIT margin, rows 51-61 peer
+// benchmark) and replace the arrays below.
+// ══════════════════════════════════════════════════════════════════════════════
+
+const LVMH_QUARTERS = ['1Q25','2Q25','3Q25','4Q25','FY25','1Q26','2Q26'];
+const FLG_GROWTH = [-0.05, -0.09, -0.02, -0.03, -0.05, -0.02, 0.01]; // row 24
+const ASIA_GROWTH = {
+  LVMH:   [-0.11, -0.06, 0.02, 0.01, -0.04, 0.07, 0.04],   // row 34 / row 59
+  Hermes: [0.012, 0.052, 0.062, 0.08, 0.049, 0.022, 0.025], // row 60
+  Kering: [-0.25, -0.19, -0.11, -0.06, -0.15, -0.04, -0.01] // row 61
+};
+const ASIA_EXPOSURE_1H26 = { LVMH: 0.2851, Hermes: 0.4033, Kering: 0.2823 }; // row 52-54, col O (1H-26)
+
+function buildFlgChart() {
+  const colors = FLG_GROWTH.map(v => v >= 0 ? '#2e9e6b' : '#c0392b');
+  const isAnnual = LVMH_QUARTERS.map(q => q === 'FY25');
+  new Chart(document.getElementById('flgGrowthChart'), {
+    type: 'bar',
+    data: {
+      labels: LVMH_QUARTERS,
+      datasets: [{
+        label: 'F&LG Organic Growth',
+        data: FLG_GROWTH.map(v => +(v*100).toFixed(1)),
+        backgroundColor: colors.map((c,i) => isAnnual[i] ? c+'55' : c),
+        borderColor: colors,
+        borderWidth: isAnnual.map(a => a ? 2 : 0),
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {display:false},
+        tooltip: {backgroundColor:'#1a3354',borderColor:'#2e6da4',borderWidth:1,padding:10,titleColor:'#f5f8fc',bodyColor:'#f5f8fc',callbacks:{
+          label: ctx => ` ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y}% organic growth${isAnnual[ctx.dataIndex] ? ' (full year)' : ''}`
+        }}
+      },
+      scales: {
+        x: {grid:{display:false},ticks:{color:'#8aa8c4',font:{size:9}}},
+        y: {grid:{color:'rgba(46,109,164,0.15)'},ticks:{color:'#8aa8c4',font:{size:9},callback:v=>v+'%'}}
+      }
+    }
+  });
+}
+
+function buildFlgTable() {
+  let rows = '';
+  LVMH_QUARTERS.forEach((q, i) => {
+    const v = FLG_GROWTH[i];
+    const cls = v >= 0 ? 'delta-up' : 'delta-down';
+    const sign = v >= 0 ? '▲ +' : '▼ ';
+    const bold = q === 'FY25' ? 'font-weight:600;' : '';
+    rows += `<tr style="${bold}"><td>${q}</td><td class="${cls}">${sign}${(v*100).toFixed(1)}%</td></tr>`;
+  });
+  document.getElementById('flgTableBody').innerHTML = rows;
+}
+
+function buildAsiaPeerChart() {
+  const seriesColors = {LVMH:'#d4a84b', Hermes:'#e8a020', Kering:'#5b9bd5'};
+  new Chart(document.getElementById('asiaPeerChart'), {
+    type: 'line',
+    data: {
+      labels: LVMH_QUARTERS,
+      datasets: Object.keys(ASIA_GROWTH).map(k => ({
+        label: k === 'Hermes' ? 'Hermès' : k,
+        data: ASIA_GROWTH[k].map(v => +(v*100).toFixed(1)),
+        borderColor: seriesColors[k], backgroundColor: seriesColors[k]+'22',
+        borderWidth:2, pointRadius: LVMH_QUARTERS.map(q=>q==='FY25'?6:4), pointHoverRadius:7,
+        tension:0.25, fill:false,
+        borderDash: LVMH_QUARTERS.map((q,i,arr)=> undefined) // solid; FY25 point just rendered larger
+      }))
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'#1a3354',borderColor:'#2e6da4',borderWidth:1,padding:10,titleColor:'#f5f8fc',bodyColor:'#f5f8fc',callbacks:{
+          label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y}%${ctx.label==='FY25'?' (full year)':''}`
+        }}
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#8aa8c4',font:{size:9}}},
+        y:{grid:{color:'rgba(46,109,164,0.15)'},ticks:{color:'#8aa8c4',font:{size:9},callback:v=>v+'%'}}
+      }
+    }
+  });
+}
+
+function buildAsiaPeerTable() {
+  const names = {LVMH:'LVMH', Hermes:'Hermès', Kering:'Kering'};
+  const dots = {LVMH:'#d4a84b', Hermes:'#e8a020', Kering:'#5b9bd5'};
+  let rows = '';
+  Object.keys(ASIA_GROWTH).forEach(k => {
+    const latestGrowth = ASIA_GROWTH[k][ASIA_GROWTH[k].length - 1]; // 2Q26
+    const cls = latestGrowth >= 0 ? 'delta-up' : 'delta-down';
+    const sign = latestGrowth >= 0 ? '▲ +' : '▼ ';
+    const dotStyle = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${dots[k]};margin-right:5px;flex-shrink:0;`;
+    rows += `<tr>
+      <td><span style="${dotStyle}"></span>${names[k]}</td>
+      <td class="${cls}">${sign}${(latestGrowth*100).toFixed(1)}%</td>
+      <td style="color:var(--muted)">${(ASIA_EXPOSURE_1H26[k]*100).toFixed(1)}%</td>
+    </tr>`;
+  });
+  document.getElementById('asiaPeerTableBody').innerHTML = rows;
+}
+
+buildFlgChart();
+buildFlgTable();
+buildAsiaPeerChart();
+buildAsiaPeerTable();
 
 </script>
 
