@@ -413,11 +413,15 @@
   <div class="resale-panel">
     <div class="resale-panel-header">
       <div>
-        <div class="resale-panel-title">Resale Value Retention Index — By Region</div>
-        <div class="resale-source-tag">Average VR across 8 tracked models (Birkin 25/30, Kelly 25/28, Neverfull, Speedy 25, Capucines BB, Lady Dior Small)</div>
+        <div class="resale-panel-title" id="indexPanelTitle">Resale Value Retention Index — By Region</div>
+        <div class="resale-source-tag" id="indexPanelSubtitle">Average VR — Hermès (Birkin 25/30, Kelly 25/28)</div>
         <div id="indexStalenessBadge"></div>
       </div>
-      <div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+        <select id="brandGroupSelector" class="bu-select">
+          <option value="hermes" selected>Hermès</option>
+          <option value="lvdior">LV &amp; Dior</option>
+        </select>
         <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
           <div class="legend-item"><div class="legend-dot" style="background:#d4a84b"></div>USA</div>
           <div class="legend-item"><div class="legend-dot" style="background:#2ecc71"></div>Europe</div>
@@ -1107,8 +1111,12 @@ async function loadResaleData() {
       }
     }
 
-    buildIndexChart();
-    buildIndexTable();
+    const brandSel = document.getElementById('brandGroupSelector');
+    if (brandSel && !brandSel._wired) {
+      brandSel.addEventListener('change', () => renderIndexPanel(brandSel.value));
+      brandSel._wired = true;
+    }
+    renderIndexPanel(brandSel.value);
 
     const sel = document.getElementById('modelSelector');
     if (sel && !sel._wired) {
@@ -1125,11 +1133,25 @@ async function loadResaleData() {
   }
 }
 
-// Average vr_median across all 8 models, per date (skipping nulls / China
-// zero-signal weeks). Returns [{date, avg, nModels}] sorted by date.
-function computeRegionIndex(regionData) {
+// Brand groups for the Regional Index panel — kept separate because
+// blending Hermès (typically >100% VR, pricing power) with LV/Dior
+// (typically <100%, normal depreciation) into one number told neither
+// story clearly.
+const BRAND_GROUPS = {
+  hermes: ['Hermès Birkin 25', 'Hermès Birkin 30', 'Hermès Kelly 25', 'Hermès Kelly 28'],
+  lvdior: ['LV Neverfull MM', 'LV Speedy 25', 'LV Capucines BB', 'Dior Lady Dior Small']
+};
+const BRAND_GROUP_LABELS = {
+  hermes: 'Hermès (Birkin 25/30, Kelly 25/28)',
+  lvdior: 'LV & Dior (Neverfull, Speedy 25, Capucines BB, Lady Dior Small)'
+};
+
+// Average vr_median across the models in `modelFilter`, per date (skipping
+// nulls / China zero-signal weeks). Returns [{date, avg, nModels}] sorted.
+function computeRegionIndex(regionData, modelFilter) {
   const byDate = {};
-  Object.values(regionData || {}).forEach(history => {
+  Object.entries(regionData || {}).forEach(([model, history]) => {
+    if (modelFilter && !modelFilter.includes(model)) return;
     (history || []).forEach(entry => {
       if (entry.vr_median == null) return;
       byDate[entry.date] = byDate[entry.date] || {sum:0, n:0};
@@ -1143,10 +1165,12 @@ function computeRegionIndex(regionData) {
 }
 
 let indexChartInstance = null;
-function buildIndexChart() {
-  const usIdx = computeRegionIndex(RESALE_V2_DATA.US);
-  const euIdx = computeRegionIndex(RESALE_V2_DATA.EU);
-  const cnIdx = computeRegionIndex(RESALE_V2_DATA.CN);
+function buildIndexChart(brandGroup) {
+  const models = BRAND_GROUPS[brandGroup];
+  const nTotal = models.length;
+  const usIdx = computeRegionIndex(RESALE_V2_DATA.US, models);
+  const euIdx = computeRegionIndex(RESALE_V2_DATA.EU, models);
+  const cnIdx = computeRegionIndex(RESALE_V2_DATA.CN, models);
 
   const allDates = Array.from(new Set([...usIdx, ...euIdx, ...cnIdx].map(d => d.date))).sort();
   function seriesFor(idx) {
@@ -1182,7 +1206,9 @@ function buildIndexChart() {
   });
 }
 
-function buildIndexTable() {
+function buildIndexTable(brandGroup) {
+  const models = BRAND_GROUPS[brandGroup];
+  const nTotal = models.length;
   const regions = [
     {key:'US', name:'USA', source:'Vestiaire Collective'},
     {key:'EU', name:'Europe', source:'Vestiaire Collective'},
@@ -1191,17 +1217,17 @@ function buildIndexTable() {
   let rows = '';
   let latestDateOverall = '';
   regions.forEach(r => {
-    const idx = computeRegionIndex(RESALE_V2_DATA[r.key]);
+    const idx = computeRegionIndex(RESALE_V2_DATA[r.key], models);
     const latest = idx[idx.length - 1];
     const dotStyle = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;
     if (!latest) {
-      rows += `<tr><td><span style="${dotStyle}"></span>${r.name}</td><td colspan="2" style="color:var(--muted)">No genuine listings this week</td><td style="color:var(--muted)">${r.source}</td></tr>`;
+      rows += `<tr><td><span style="${dotStyle}"></span>${r.name}</td><td colspan="2" style="color:var(--text-muted)">No genuine listings this week</td><td style="color:var(--text-muted)">${r.source}</td></tr>`;
     } else {
       rows += `<tr>
         <td><span style="${dotStyle}"></span>${r.name}</td>
         <td class="vr-val">${(latest.avg*100).toFixed(1)}%</td>
-        <td style="color:var(--muted)">${latest.nModels} / 8</td>
-        <td style="color:var(--muted)">${r.source}</td>
+        <td style="color:var(--text-muted)">${latest.nModels} / ${nTotal}</td>
+        <td style="color:var(--text-muted)">${r.source}</td>
       </tr>`;
       if (latest.date > latestDateOverall) latestDateOverall = latest.date;
     }
@@ -1209,6 +1235,15 @@ function buildIndexTable() {
   document.getElementById('resaleIndexTableBody').innerHTML = rows;
   const title = document.getElementById('indexSnapshotTitle');
   if (title) title.textContent = `Latest Snapshot · ${latestDateOverall ? new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'}`;
+}
+
+function renderIndexPanel(brandGroup) {
+  document.getElementById('indexPanelTitle').textContent = brandGroup === 'hermes'
+    ? 'Resale Value Retention Index — Hermès — By Region'
+    : 'Resale Value Retention Index — LV & Dior — By Region';
+  document.getElementById('indexPanelSubtitle').textContent = `Average VR — ${BRAND_GROUP_LABELS[brandGroup]}`;
+  buildIndexChart(brandGroup);
+  buildIndexTable(brandGroup);
 }
 
 let modelChartInstance = null;
