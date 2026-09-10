@@ -341,67 +341,64 @@
     <div class="correlation-grid" id="correlationGrid"></div>
   </div>
 
-  <!-- ══ SECTION 5: RESALE TRACKER ══ -->
+  <!-- ══ SECTION 5: RESALE TRACKER (v2 — US/EU/China) ══ -->
   <div class="section-header">
-    <div class="section-label">⑤ Luxury Resale Value Retention</div>
+    <div class="section-label">⑤ Luxury Resale Value Retention — USA · Europe · China</div>
     <div class="section-line"></div>
-    <div class="section-sub" id="resaleSectionSub">Daily monitoring of resale value retention across luxury handbags &amp; watches · Auto-updated from GitHub</div>
+    <div class="section-sub" id="resaleSectionSub">Value retention & liquidity across 8 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · Auto-updated weekly</div>
   </div>
-  <div style="font-size:11px;color:var(--white);opacity:0.7;margin-top:-10px;margin-bottom:4px;font-style:italic;">Western resale markets only (US/EU) — not a China-specific signal.</div>
+  <div style="font-size:11px;color:var(--white);opacity:0.7;margin-top:-10px;margin-bottom:4px;font-style:italic;">China is an unauthenticated P2P marketplace — shown separately, filtered for likely replicas, and flagged when no genuine listings pass the filter. Not directly comparable to US/EU.</div>
 
-  <div class="resale-grid">
-
-    <!-- Handbags Panel -->
-    <div class="resale-panel">
-      <div class="resale-panel-header">
-        <div>
-          <div class="resale-panel-title">Handbags — Value Retention</div>
-          <div class="resale-source-tag">Source: Foxytotes</div>
-          <div id="handbagsStalenessBadge"></div>
-        </div>
-        <div>
-          <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
-            <div class="legend-item"><div class="legend-dot" style="background:#d4af37"></div>Hermès</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#8b6f47"></div>Louis Vuitton</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#c0c0c0"></div>Dior</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#4ade80"></div>Gucci</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#f87171"></div>Saint Laurent</div>
-          </div>
+  <!-- Panel 1: Regional Index Comparison -->
+  <div class="resale-panel" style="margin-bottom:18px;">
+    <div class="resale-panel-header">
+      <div>
+        <div class="resale-panel-title">Resale Value Retention Index — By Region</div>
+        <div class="resale-source-tag">Average VR across 8 tracked models (Birkin 25/30, Kelly 25/28, Neverfull, Speedy 25, Capucines BB, Lady Dior Small)</div>
+        <div id="indexStalenessBadge"></div>
+      </div>
+      <div>
+        <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
+          <div class="legend-item"><div class="legend-dot" style="background:#d4a84b"></div>USA</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#2ecc71"></div>Europe</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#4a90c4"></div>China ⚠</div>
         </div>
       </div>
-      <div class="resale-chart-wrap"><canvas id="resaleChartHandbags"></canvas></div>
-      <div class="resale-table-title" id="handbagsSnapshotTitle">Latest Snapshot · Loading…</div>
-      <table class="resale-table">
-        <thead><tr><th>Brand</th><th>VR</th><th>Δ d-1</th><th>Min</th><th>Max</th><th>n</th></tr></thead>
-        <tbody id="resaleTableHandbagsBody"></tbody>
-      </table>
     </div>
+    <div class="resale-chart-wrap"><canvas id="resaleIndexChart"></canvas></div>
+    <div class="resale-table-title" id="indexSnapshotTitle">Latest Snapshot · Loading…</div>
+    <table class="resale-table">
+      <thead><tr><th>Region</th><th>Avg VR</th><th>Models w/ data</th><th>Source</th></tr></thead>
+      <tbody id="resaleIndexTableBody"></tbody>
+    </table>
+  </div>
 
-    <!-- Watches Panel -->
-    <div class="resale-panel">
-      <div class="resale-panel-header">
-        <div>
-          <div class="resale-panel-title">Watches — Value Retention</div>
-          <div class="resale-source-tag">Source: Watchcharts · 🟢 Icon models · 🟡 Top-5 fallback</div>
-          <div id="watchesStalenessBadge"></div>
-        </div>
-        <div>
-          <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
-            <div class="legend-item"><div class="legend-dot" style="background:#22d3ee"></div>Rolex 🟢</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Cartier 🟢</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#a78bfa"></div>Hublot 🟡</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#ec4899"></div>Piaget 🟡</div>
-          </div>
-        </div>
+  <!-- Panel 2: Model Detail -->
+  <div class="resale-panel">
+    <div class="resale-panel-header">
+      <div>
+        <div class="resale-panel-title">Model Detail — By Region</div>
+        <div class="resale-source-tag">VR, liquidity & sample size for one model across all 3 regions</div>
       </div>
-      <div class="resale-chart-wrap"><canvas id="resaleChartWatches"></canvas></div>
-      <div class="resale-table-title" id="watchesSnapshotTitle">Latest Snapshot · Loading…</div>
-      <table class="resale-table">
-        <thead><tr><th>Brand</th><th>VR</th><th>Δ d-1</th><th>Min</th><th>Max</th><th>n</th></tr></thead>
-        <tbody id="resaleTableWatchesBody"></tbody>
-      </table>
+      <div>
+        <select id="modelSelector" style="background:var(--blue-1);color:var(--white);border:1px solid var(--blue-3);border-radius:6px;padding:6px 10px;font-size:12px;font-family:'DM Sans',sans-serif;">
+          <option value="Hermès Birkin 25">Hermès Birkin 25</option>
+          <option value="Hermès Birkin 30">Hermès Birkin 30</option>
+          <option value="Hermès Kelly 25">Hermès Kelly 25</option>
+          <option value="Hermès Kelly 28">Hermès Kelly 28</option>
+          <option value="LV Neverfull MM">LV Neverfull MM</option>
+          <option value="LV Speedy 25">LV Speedy 25</option>
+          <option value="LV Capucines BB">LV Capucines BB</option>
+          <option value="Dior Lady Dior Small">Dior Lady Dior Small</option>
+        </select>
+      </div>
     </div>
-
+    <div class="resale-chart-wrap"><canvas id="modelDetailChart"></canvas></div>
+    <div class="resale-table-title" id="modelSnapshotTitle">Latest Snapshot · Loading…</div>
+    <table class="resale-table">
+      <thead><tr><th>Region</th><th>VR</th><th>Median Price</th><th>Avg days to sell</th><th>n listings</th></tr></thead>
+      <tbody id="modelDetailTableBody"></tbody>
+    </table>
   </div>
 
   <!-- Methodology Note -->
@@ -424,7 +421,7 @@
       </div>
       <div style="display:flex;gap:8px;align-items:flex-start;">
         <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--blue-3);line-height:1;flex-shrink:0;">④</div>
-        <div style="font-size:10px;color:var(--muted);line-height:1.55;"><strong style="color:var(--blue-5);font-weight:500;">Resale (Foxytotes / Watchcharts):</strong> VR = resale price ÷ retail. Weighted avg by MSRP/retail per brand. US/Western-centric — does not capture CN (Plum, Xianyu), JP or ME resale. 🟡 = top-5 fallback method. Values are directional indicators, not absolute benchmarks.</div>
+        <div style="font-size:10px;color:var(--muted);line-height:1.55;"><strong style="color:var(--blue-5);font-weight:500;">Resale (Vestiaire / Xianyu):</strong> VR = median resale price ÷ current retail MSRP, per model per region. US/EU from Vestiaire Collective (authenticated marketplace). China from Xianyu/Goofish (unauthenticated P2P) — filtered for likely replicas by price floor + keyword exclusion; treat as directional, not absolute.</div>
       </div>
       <div style="display:flex;gap:8px;align-items:flex-start;">
         <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--blue-3);line-height:1;flex-shrink:0;">⑤</div>
@@ -432,7 +429,7 @@
       </div>
     </div>
     <div style="font-size:9.5px;color:rgba(138,168,196,.55);border-top:1px solid rgba(31,72,120,.45);padding-top:10px;line-height:1.6;">
-      Resale data auto-refreshed from github.com/dlopezandres19-pixel/luxury-resale-tracker · History begins on tracker activation date and grows daily. Sample: ~35 handbags (5 designers), ~150 watch refs (4 brands via icon models where available).
+      Resale data auto-refreshed weekly (Mondays, 3am Lima time) via Apify + GitHub Actions from github.com/dlopezandres19-pixel/luxury-resale-tracker (data_v2/) · History begins Sep 10, 2026 and grows weekly · MSRP reference table: msrp_reference.json in the same repo, manually maintained.
     </div>
   </div>
 
@@ -990,307 +987,239 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // ══════════════════════════════════════════════════════════════════════════════
-// SECTION ⑤ — LUXURY RESALE VALUE RETENTION TRACKER (dynamic fetch)
-// Source: github.com/dlopezandres19-pixel/luxury-resale-tracker
-// Files: data/handbags_history.json · data/watches_history.json
+// SECTION ⑤ — LUXURY RESALE VALUE RETENTION TRACKER v2 (US / EU / China)
+// Source: github.com/dlopezandres19-pixel/luxury-resale-tracker/data_v2/
+// Files: us_resale.json · eu_resale.json · cn_resale.json
+// Each file: { "<model name>": [ {date, vr_median, vr_mean, n_listings,
+//   avg_days_to_sell, price_median, currency, ...}, ... ], ... }
 // ══════════════════════════════════════════════════════════════════════════════
 
-const RESALE_COLORS = {
-  handbags: {
-    "Hermès":"#d4af37", "Louis Vuitton":"#8b6f47", "Dior":"#c0c0c0",
-    "Gucci":"#4ade80", "Saint Laurent":"#f87171"
-  },
-  watches: {
-    "Rolex":"#22d3ee", "Cartier":"#f59e0b", "Hublot":"#a78bfa", "Piaget":"#ec4899"
-  }
-};
+const RESALE_V2_BASE = 'https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-resale-tracker/main/data_v2/';
+const RESALE_V2_MODELS = ['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28','LV Neverfull MM','LV Speedy 25','LV Capucines BB','Dior Lady Dior Small'];
+const REGION_COLORS_V2 = { US:'#d4a84b', EU:'#2ecc71', CN:'#4a90c4' };
+const REGION_FILES = { US:'us_resale.json', EU:'eu_resale.json', CN:'cn_resale.json' };
 
-const RESALE_BASE = 'https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-resale-tracker/main/data/';
+let RESALE_V2_DATA = { US:{}, EU:{}, CN:{} };
 
-// Show loading placeholders while fetching
-function resaleLoadingState() {
-  const loadingRow = `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:14px;font-size:11px;">Loading data from GitHub…</td></tr>`;
-  document.getElementById('resaleTableHandbagsBody').innerHTML = loadingRow;
-  document.getElementById('resaleTableWatchesBody').innerHTML = loadingRow;
+function resaleV2LoadingState() {
+  const loadingRow = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:14px;font-size:11px;">Loading data from GitHub…</td></tr>`;
+  document.getElementById('resaleIndexTableBody').innerHTML = loadingRow;
+  document.getElementById('modelDetailTableBody').innerHTML = loadingRow;
 }
 
 async function loadResaleData() {
-  resaleLoadingState();
+  resaleV2LoadingState();
   try {
-    const [hRes, wRes] = await Promise.all([
-      fetch(RESALE_BASE + 'handbags_history.json'),
-      fetch(RESALE_BASE + 'watches_history.json')
+    const [usRes, euRes, cnRes] = await Promise.all([
+      fetch(RESALE_V2_BASE + REGION_FILES.US),
+      fetch(RESALE_V2_BASE + REGION_FILES.EU),
+      fetch(RESALE_V2_BASE + REGION_FILES.CN)
     ]);
-    if (!hRes.ok || !wRes.ok) throw new Error('Fetch failed');
-    const [hData, wData] = await Promise.all([hRes.json(), wRes.json()]);
+    if (!usRes.ok || !euRes.ok || !cnRes.ok) throw new Error('Fetch failed — one or more data_v2 files not found');
+    const [usData, euData, cnData] = await Promise.all([usRes.json(), euRes.json(), cnRes.json()]);
+    RESALE_V2_DATA = { US: usData, EU: euData, CN: cnData };
 
-    // Compute each panel's own latest date independently — do NOT mix
-    // Handbags and Watches, since their scrapers run/fail independently
-    // and can be weeks apart in freshness.
     function latestDate(dataObj) {
       const dates = [];
-      Object.values(dataObj).forEach(arr => { if (arr.length) dates.push(arr[arr.length-1].date); });
+      Object.values(dataObj).forEach(arr => { if (arr && arr.length) dates.push(arr[arr.length-1].date); });
       return dates.sort().pop() || '';
     }
     function fmtDate(iso) {
-      return iso ? new Date(iso + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+      return iso ? new Date(iso + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : 'n/a';
     }
-
-    const handbagsDate = latestDate(hData);
-    const watchesDate = latestDate(wData);
-    const handbagsFmt = fmtDate(handbagsDate);
-    const watchesFmt = fmtDate(watchesDate);
-
-    // Staleness badges — computed dynamically against today's date so this
-    // never needs manual updating. >10 days = flag; >30 days = red flag.
-    function daysStale(iso) {
-      if (!iso) return null;
-      const then = new Date(iso + 'T12:00:00');
-      const now = new Date();
-      return Math.round((now - then) / 86400000);
-    }
-    function renderStalenessBadge(elId, iso, isFrozenValues) {
-      const el = document.getElementById(elId);
-      if (!el) return;
-      const days = daysStale(iso);
-      if (days === null) { el.innerHTML = ''; return; }
-      if (isFrozenValues) {
-        el.innerHTML = `<div class="signal-badge red" style="margin-top:6px;">🔴 Values unchanged since data collection began — see data quality note below</div>`;
-      } else if (days > 30) {
-        el.innerHTML = `<div class="signal-badge red" style="margin-top:6px;">🔴 Stale — last update ${days}d ago</div>`;
-      } else if (days > 10) {
-        el.innerHTML = `<div class="signal-badge yellow" style="margin-top:6px;">⚠ ${days}d since last update</div>`;
-      } else {
-        el.innerHTML = '';
-      }
-    }
-    // Handbags: check if the values are frozen (all identical) — a data quality
-    // issue distinct from simple staleness, so it gets its own explicit flag.
-    const handbagsFrozen = Object.values(hData).every(arr => {
-      if (arr.length < 3) return false;
-      const vals = arr.map(s => s.weighted_vr);
-      return vals.every(v => v === vals[0]);
-    });
-    renderStalenessBadge('handbagsStalenessBadge', handbagsDate, handbagsFrozen);
-    renderStalenessBadge('watchesStalenessBadge', watchesDate, false);
-
-    const hTitle = document.getElementById('handbagsSnapshotTitle');
-    if (hTitle && handbagsFmt) hTitle.textContent = `Latest Snapshot · ${handbagsFmt}`;
-    const wTitle = document.getElementById('watchesSnapshotTitle');
-    if (wTitle && watchesFmt) wTitle.textContent = `Latest Snapshot · ${watchesFmt}`;
-
-    // Staleness badges — computed live against today's date, so this never
-    // needs manual updating. Flags any panel whose data is >10 days old.
-    function stalenessBadgeHtml(dateIso) {
-      if (!dateIso) return '';
-      const days = Math.floor((Date.now() - new Date(dateIso + 'T12:00:00').getTime()) / 86400000);
-      if (days > 30) return `<div class="signal-badge red" style="margin-top:6px;">🔴 Stale — ${days} days since last real update</div>`;
-      if (days > 10) return `<div class="signal-badge yellow" style="margin-top:6px;">⚠ ${days} days since last update — verify scraper</div>`;
-      return '';
-    }
-    const hBadge = document.getElementById('handbagsStalenessBadge');
-    if (hBadge) hBadge.innerHTML = stalenessBadgeHtml(handbagsDate);
-    const wBadge = document.getElementById('watchesStalenessBadge');
-    if (wBadge) wBadge.innerHTML = stalenessBadgeHtml(watchesDate);
-
-    // Separate check: are the VALUES frozen (identical) across recent entries,
-    // even if new dates keep being appended? This is a different failure mode
-    // than staleness — the scraper runs and commits, but returns the same
-    // number every time (see Foxytotes investigation, Sep 2026).
-    function frozenBrandsCount(dataObj) {
-      let frozen = 0, total = 0;
-      Object.values(dataObj).forEach(arr => {
-        if (arr.length < 5) return;
-        total++;
-        const last5 = arr.slice(-5).map(s => s.weighted_vr);
-        if (last5.every(v => v === last5[0])) frozen++;
-      });
-      return {frozen, total};
-    }
-    const hFrozen = frozenBrandsCount(hData);
-    if (hBadge && hFrozen.total > 0 && hFrozen.frozen === hFrozen.total) {
-      hBadge.innerHTML += `<div class="signal-badge red" style="margin-top:6px;">🔴 Values frozen — identical for last 5 updates across all ${hFrozen.total} brands (source likely serving static/example data, not live results)</div>`;
-    }
+    const dates = { US: latestDate(usData), EU: latestDate(euData), CN: latestDate(cnData) };
+    const oldestFmt = Object.values(dates).filter(Boolean).sort()[0];
 
     const sub = document.getElementById('resaleSectionSub');
-    if (sub && (handbagsFmt || watchesFmt)) {
-      sub.textContent = `Daily monitoring of resale value retention across luxury handbags & watches · Handbags: ${handbagsFmt || 'n/a'} · Watches: ${watchesFmt || 'n/a'}`;
-    }
-    // Header badge: show the OLDER (more stale) of the two, since that's the
-    // honest worst-case freshness signal for the "Resale" source overall.
-    const oldestFmt = [handbagsDate, watchesDate].filter(Boolean).sort()[0];
-    if (oldestFmt) {
-      HEADER_DATES.resale = fmtDate(oldestFmt) + (handbagsDate !== watchesDate ? ' (oldest of the two)' : '');
-      updateHeaderBadge();
+    if (sub) sub.textContent = `Value retention & liquidity across 8 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · US: ${fmtDate(dates.US)} · EU: ${fmtDate(dates.EU)} · China: ${fmtDate(dates.CN)}`;
+
+    const badge = document.getElementById('indexStalenessBadge');
+    if (badge) {
+      if (!oldestFmt) {
+        badge.innerHTML = '';
+      } else {
+        const days = Math.floor((Date.now() - new Date(oldestFmt + 'T12:00:00').getTime()) / 86400000);
+        if (days > 14) badge.innerHTML = `<div class="signal-badge red" style="margin-top:6px;">🔴 Stale — ${days} days since oldest region update</div>`;
+        else if (days > 8) badge.innerHTML = `<div class="signal-badge yellow" style="margin-top:6px;">⚠ ${days} days since oldest region update</div>`;
+        else badge.innerHTML = '';
+      }
     }
 
-    // Build charts and tables
-    buildResaleChart('resaleChartHandbags', hData, RESALE_COLORS.handbags, false);
-    buildResaleChart('resaleChartWatches',  wData, RESALE_COLORS.watches,  true);
-    buildResaleTable('resaleTableHandbagsBody', hData, RESALE_COLORS.handbags, false);
-    buildResaleTable('resaleTableWatchesBody',  wData, RESALE_COLORS.watches,  true);
+    buildIndexChart();
+    buildIndexTable();
 
-    // Once resale data is loaded, refresh cross-platform analysis with fresh VR context
-    if (window.trendsLoaded) renderCorrelation(currentPeriod);
+    const sel = document.getElementById('modelSelector');
+    if (sel && !sel._wired) {
+      sel.addEventListener('change', () => renderModelDetail(sel.value));
+      sel._wired = true;
+    }
+    renderModelDetail(sel ? sel.value : RESALE_V2_MODELS[0]);
 
   } catch (err) {
-    console.error('Resale fetch error:', err);
-    const errRow = `<tr><td colspan="6" style="text-align:center;color:#e05c4a;padding:14px;font-size:11px;">⚠ Could not load resale data from GitHub. Check network settings.</td></tr>`;
-    document.getElementById('resaleTableHandbagsBody').innerHTML = errRow;
-    document.getElementById('resaleTableWatchesBody').innerHTML = errRow;
+    console.error('Resale v2 load error:', err);
+    const errRow = `<tr><td colspan="5" style="text-align:center;color:#e05c4a;padding:14px;font-size:11px;">Could not load resale data — check github.com/dlopezandres19-pixel/luxury-resale-tracker/data_v2/</td></tr>`;
+    document.getElementById('resaleIndexTableBody').innerHTML = errRow;
+    document.getElementById('modelDetailTableBody').innerHTML = errRow;
   }
 }
 
-// Convert history JSON (dict of brand → array of snapshots) into chart + table data
-// History format: { "Hermès": [{date, weighted_vr, simple_avg_vr, min_vr, max_vr, n_bags, fallback}, …], … }
-
-function buildResaleChart(canvasId, historyData, colorMap, isWatch) {
-  const brands = Object.keys(historyData);
-
-  // Build one dataset per brand using full history
-  const allLabels = new Set();
-  brands.forEach(brand => {
-    historyData[brand].forEach(snap => allLabels.add(snap.date));
-  });
-  const labels = Array.from(allLabels).sort();
-
-  const datasets = brands.map(brand => {
-    const history = historyData[brand];
-    const countKey = isWatch ? 'n_watches' : 'n_bags';
-    // Map date → snapshot for quick lookup
-    const byDate = {};
-    history.forEach(s => byDate[s.date] = s);
-
-    const pointCount = history.length;
-    const pointR = pointCount <= 5 ? 6 : 3;
-
-    const dataPoints = labels.map(date => {
-      const s = byDate[date];
-      return s ? +(s.weighted_vr * 100).toFixed(2) : null;
+// Average vr_median across all 8 models, per date (skipping nulls / China
+// zero-signal weeks). Returns [{date, avg, nModels}] sorted by date.
+function computeRegionIndex(regionData) {
+  const byDate = {};
+  Object.values(regionData || {}).forEach(history => {
+    (history || []).forEach(entry => {
+      if (entry.vr_median == null) return;
+      byDate[entry.date] = byDate[entry.date] || {sum:0, n:0};
+      byDate[entry.date].sum += entry.vr_median;
+      byDate[entry.date].n += 1;
     });
-
-    const lastSnap = history[history.length - 1] || {};
-    const n = lastSnap[countKey] || 0;
-    const fbNote = lastSnap.fallback ? ' · fallback' : '';
-
-    return {
-      label: brand,
-      data: dataPoints,
-      borderColor: colorMap[brand],
-      backgroundColor: colorMap[brand] + '22',
-      borderWidth: 2,
-      pointRadius: pointR,
-      pointHoverRadius: pointR + 3,
-      tension: 0.4,
-      fill: false,
-      spanGaps: true,
-      _n: n,
-      _fb: fbNote
-    };
   });
+  return Object.keys(byDate).sort().map(date => ({
+    date, avg: byDate[date].sum / byDate[date].n, nModels: byDate[date].n
+  }));
+}
 
-  const ctx = document.getElementById(canvasId).getContext('2d');
+let indexChartInstance = null;
+function buildIndexChart() {
+  const usIdx = computeRegionIndex(RESALE_V2_DATA.US);
+  const euIdx = computeRegionIndex(RESALE_V2_DATA.EU);
+  const cnIdx = computeRegionIndex(RESALE_V2_DATA.CN);
 
-  // Destroy existing chart instance if any (prevent canvas reuse error)
-  const existing = Chart.getChart(canvasId);
-  if (existing) existing.destroy();
+  const allDates = Array.from(new Set([...usIdx, ...euIdx, ...cnIdx].map(d => d.date))).sort();
+  function seriesFor(idx) {
+    const map = {}; idx.forEach(d => map[d.date] = d.avg);
+    return allDates.map(d => map[d] != null ? +(map[d]*100).toFixed(2) : null);
+  }
 
-  return new Chart(ctx, {
+  const ctx = document.getElementById('resaleIndexChart');
+  if (indexChartInstance) indexChartInstance.destroy();
+  indexChartInstance = new Chart(ctx, {
     type: 'line',
-    data: { labels, datasets },
+    data: {
+      labels: allDates,
+      datasets: [
+        {label:'USA', data:seriesFor(usIdx), borderColor:REGION_COLORS_V2.US, backgroundColor:REGION_COLORS_V2.US+'22', borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true},
+        {label:'Europe', data:seriesFor(euIdx), borderColor:REGION_COLORS_V2.EU, backgroundColor:REGION_COLORS_V2.EU+'22', borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true},
+        {label:'China ⚠', data:seriesFor(cnIdx), borderColor:REGION_COLORS_V2.CN, backgroundColor:REGION_COLORS_V2.CN+'22', borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true, borderDash:[5,4]}
+      ]
+    },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#0d1b2e',
-          borderColor: '#2e6da4',
-          borderWidth: 1,
-          titleColor: '#a8cceb',
-          bodyColor: '#c9e0f4',
-          callbacks: {
-            title: items => `${items[0].dataset.label} · ${items[0].label}`,
-            label: ctx => ` ${ctx.parsed.y != null ? ctx.parsed.y.toFixed(2) + '%' : 'n/a'} · n=${ctx.dataset._n}${ctx.dataset._fb}`
-          }
-        }
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'#1a3354',borderColor:'#2e6da4',borderWidth:1,padding:10,titleColor:'#f5f8fc',bodyColor:'#f5f8fc',callbacks:{
+          label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% avg VR`
+        }}
       },
-      scales: {
-        x: {
-          grid: { color: 'rgba(46,109,164,0.12)' },
-          ticks: {
-            color: '#8aa8c4',
-            font: { size: 10 },
-            maxTicksLimit: 10,
-            maxRotation: 30
-          }
-        },
-        y: {
-          grid: { color: 'rgba(46,109,164,0.18)' },
-          ticks: {
-            color: '#8aa8c4',
-            font: { size: 10 },
-            callback: v => v + '%'
-          }
-          // No suggestedMin:0 — auto-scaled to data range
-        }
+      scales:{
+        x:{grid:{color:'rgba(46,109,164,0.15)'},ticks:{color:'#8aa8c4',font:{size:9}}},
+        y:{grid:{color:'rgba(46,109,164,0.15)'},ticks:{color:'#8aa8c4',font:{size:9},callback:v=>v+'%'}}
       }
     }
   });
 }
 
-function buildResaleTable(containerId, historyData, colorMap, isWatch) {
-  const brands = Object.keys(historyData);
-  const countKey = isWatch ? 'n_watches' : 'n_bags';
+function buildIndexTable() {
+  const regions = [
+    {key:'US', name:'USA', source:'Vestiaire Collective'},
+    {key:'EU', name:'Europe', source:'Vestiaire Collective'},
+    {key:'CN', name:'China ⚠', source:'Xianyu / Goofish'}
+  ];
   let rows = '';
-
-  brands.forEach(brand => {
-    const history = historyData[brand];
-    if (!history || history.length === 0) return;
-
-    const last  = history[history.length - 1];
-    const prev  = history.length >= 2 ? history[history.length - 2] : null;
-
-    const vr    = (last.weighted_vr * 100).toFixed(2);
-    const minVr = (last.min_vr * 100).toFixed(1);
-    const maxVr = (last.max_vr * 100).toFixed(1);
-    const n     = last[countKey];
-
-    // Δ d-1: compare last two weighted_vr entries (in percentage points)
-    let deltaHtml;
-    if (prev) {
-      const delta = ((last.weighted_vr - prev.weighted_vr) * 100);
-      if (Math.abs(delta) < 0.005) {
-        deltaHtml = '<span class="delta-neu">→ 0.0pp</span>';
-      } else if (delta > 0) {
-        deltaHtml = `<span class="delta-up">▲ +${delta.toFixed(2)}pp</span>`;
-      } else {
-        deltaHtml = `<span class="delta-down">▼ ${delta.toFixed(2)}pp</span>`;
-      }
+  let latestDateOverall = '';
+  regions.forEach(r => {
+    const idx = computeRegionIndex(RESALE_V2_DATA[r.key]);
+    const latest = idx[idx.length - 1];
+    const dotStyle = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;
+    if (!latest) {
+      rows += `<tr><td><span style="${dotStyle}"></span>${r.name}</td><td colspan="2" style="color:var(--muted)">No genuine listings this week</td><td style="color:var(--muted)">${r.source}</td></tr>`;
     } else {
-      deltaHtml = '<span class="delta-neu">→ —</span>';
+      rows += `<tr>
+        <td><span style="${dotStyle}"></span>${r.name}</td>
+        <td class="vr-val">${(latest.avg*100).toFixed(1)}%</td>
+        <td style="color:var(--muted)">${latest.nModels} / 8</td>
+        <td style="color:var(--muted)">${r.source}</td>
+      </tr>`;
+      if (latest.date > latestDateOverall) latestDateOverall = latest.date;
     }
+  });
+  document.getElementById('resaleIndexTableBody').innerHTML = rows;
+  const title = document.getElementById('indexSnapshotTitle');
+  if (title) title.textContent = `Latest Snapshot · ${latestDateOverall ? new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'}`;
+}
 
-    // Fallback badge (watches only get 🟢/🟡; handbags only get 🟡 if fallback)
-    let fbBadge = '';
-    if (isWatch) {
-      fbBadge = last.fallback ? ' 🟡' : ' 🟢';
-    } else {
-      fbBadge = last.fallback ? ' 🟡' : '';
-    }
+let modelChartInstance = null;
+function renderModelDetail(model) {
+  const regions = [
+    {key:'US', name:'USA'},
+    {key:'EU', name:'Europe'},
+    {key:'CN', name:'China ⚠'}
+  ];
 
-    const dotStyle = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${colorMap[brand]};margin-right:5px;flex-shrink:0;`;
-    rows += `<tr>
-      <td><span style="${dotStyle}"></span>${brand}${fbBadge}</td>
-      <td class="vr-val">${vr}%</td>
-      <td>${deltaHtml}</td>
-      <td>${minVr}%</td>
-      <td>${maxVr}%</td>
-      <td style="color:var(--muted)">${n}</td>
-    </tr>`;
+  const allDates = new Set();
+  regions.forEach(r => {
+    const h = (RESALE_V2_DATA[r.key] && RESALE_V2_DATA[r.key][model]) || [];
+    h.forEach(e => allDates.add(e.date));
+  });
+  const sortedDates = Array.from(allDates).sort();
+
+  const datasets = regions.map(r => {
+    const h = (RESALE_V2_DATA[r.key] && RESALE_V2_DATA[r.key][model]) || [];
+    const byDate = {}; h.forEach(e => byDate[e.date] = e.vr_median);
+    const data = sortedDates.map(d => byDate[d] != null ? +(byDate[d]*100).toFixed(2) : null);
+    return {
+      label:r.name, data,
+      borderColor:REGION_COLORS_V2[r.key], backgroundColor:REGION_COLORS_V2[r.key]+'22',
+      borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true,
+      borderDash:r.key==='CN'?[5,4]:undefined
+    };
   });
 
-  document.getElementById(containerId).innerHTML = rows || '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:12px;font-size:11px;">No data available</td></tr>';
+  const ctx = document.getElementById('modelDetailChart');
+  if (modelChartInstance) modelChartInstance.destroy();
+  modelChartInstance = new Chart(ctx, {
+    type:'line',
+    data:{labels:sortedDates, datasets},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:true, position:'bottom', labels:{color:'#8aa8c4', font:{size:9}, boxWidth:10, padding:8}},
+        tooltip:{backgroundColor:'#1a3354',borderColor:'#2e6da4',borderWidth:1,padding:10,titleColor:'#f5f8fc',bodyColor:'#f5f8fc',callbacks:{
+          label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% VR`
+        }}
+      },
+      scales:{
+        x:{grid:{color:'rgba(46,109,164,0.15)'},ticks:{color:'#8aa8c4',font:{size:9}}},
+        y:{grid:{color:'rgba(46,109,164,0.15)'},ticks:{color:'#8aa8c4',font:{size:9},callback:v=>v+'%'}}
+      }
+    }
+  });
+
+  let rows = '';
+  let latestDateOverall = '';
+  regions.forEach(r => {
+    const h = (RESALE_V2_DATA[r.key] && RESALE_V2_DATA[r.key][model]) || [];
+    const last = h.length ? h[h.length-1] : null;
+    const dotStyle = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;
+    if (!last || last.vr_median == null) {
+      const note = (last && last._caveat) ? last._caveat : 'No data yet';
+      rows += `<tr><td><span style="${dotStyle}"></span>${r.name}</td><td colspan="4" style="color:var(--muted);font-size:10px;">${note}</td></tr>`;
+    } else {
+      const currSymbol = last.currency === 'USD' ? '$' : last.currency === 'EUR' ? '€' : '¥';
+      rows += `<tr>
+        <td><span style="${dotStyle}"></span>${r.name}</td>
+        <td class="vr-val">${(last.vr_median*100).toFixed(1)}%</td>
+        <td style="color:var(--muted)">${currSymbol}${last.price_median!=null?last.price_median.toLocaleString():'—'}</td>
+        <td style="color:var(--muted)">${last.avg_days_to_sell!=null?last.avg_days_to_sell+'d':'—'}</td>
+        <td style="color:var(--muted)">${last.n_listings!=null?last.n_listings:'—'}</td>
+      </tr>`;
+      if (last.date > latestDateOverall) latestDateOverall = last.date;
+    }
+  });
+  document.getElementById('modelDetailTableBody').innerHTML = rows;
+  const title = document.getElementById('modelSnapshotTitle');
+  if (title) title.textContent = `Latest Snapshot · ${model} · ${latestDateOverall ? new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'}`;
 }
 
 </script>
