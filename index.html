@@ -20,21 +20,21 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text-primary);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;font-size:13px;}
 
-  .header{background:var(--card);border-bottom:1px solid var(--border);padding:20px 44px 16px;display:flex;align-items:center;justify-content:space-between;}
+  .header{background:#1b3a5c;border-bottom:1px solid #15304d;padding:20px 44px 16px;display:flex;align-items:center;justify-content:space-between;}
   .header-left{display:flex;flex-direction:column;}
-  .header h1{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:22px;font-weight:700;color:var(--accent);}
-  .header p{font-size:10px;color:var(--text-muted);margin-top:3px;letter-spacing:.06em;text-transform:uppercase;}
+  .header h1{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:22px;font-weight:700;color:#ffffff;}
+  .header p{font-size:10px;color:rgba(255,255,255,0.6);margin-top:3px;letter-spacing:.06em;text-transform:uppercase;}
   .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
-  .header-logo img{height:48px;}
-  .date-badge{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:10px;color:var(--text-muted);letter-spacing:.04em;}
-  .source-tag{font-size:9px;color:var(--text-light);margin-top:4px;text-align:right;}
+  .header-logo img{height:48px;filter:brightness(10);}
+  .date-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:5px 12px;font-size:10px;color:rgba(255,255,255,0.75);letter-spacing:.04em;}
+  .source-tag{font-size:9px;color:rgba(255,255,255,0.45);margin-top:4px;text-align:right;}
 
   .dashboard{padding:24px 44px;display:flex;flex-direction:column;gap:22px;}
 
-  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:2px;}
-  .section-label{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:13px;font-weight:600;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
-  .section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
-  .section-sub{font-size:10px;color:var(--text-muted);letter-spacing:.04em;}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:2px;background:#E2E9F0;margin-left:-44px;margin-right:-44px;padding:10px 44px;}
+  .section-label{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:13px;font-weight:600;color:#193C6C;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+  .section-line{flex:1;height:1px;background:linear-gradient(90deg,#B8C8D8,transparent);}
+  .section-sub{font-size:10px;color:#193C6C;letter-spacing:.04em;opacity:0.7;}
 
   .nbs-charts-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
 
@@ -408,8 +408,10 @@
   </div>
   <div style="font-size:11px;color:var(--white);opacity:0.7;margin-top:-10px;margin-bottom:4px;font-style:italic;">China is an unauthenticated P2P marketplace — shown separately, filtered for likely replicas, and flagged when no genuine listings pass the filter. Not directly comparable to US/EU.</div>
 
+  <div class="resale-grid">
+
   <!-- Panel 1: Regional Index Comparison -->
-  <div class="resale-panel" style="margin-bottom:18px;">
+  <div class="resale-panel">
     <div class="resale-panel-header">
       <div>
         <div class="resale-panel-title">Resale Value Retention Index — By Region</div>
@@ -437,10 +439,10 @@
     <div class="resale-panel-header">
       <div>
         <div class="resale-panel-title">Model Detail — By Region</div>
-        <div class="resale-source-tag">VR, liquidity & sample size for one model across all 3 regions</div>
+        <div class="resale-source-tag">VR, liquidity &amp; sample size for one model across all 3 regions</div>
       </div>
       <div>
-        <select id="modelSelector" style="background:var(--blue-1);color:var(--white);border:1px solid var(--blue-3);border-radius:6px;padding:6px 10px;font-size:12px;font-family:'DM Sans',sans-serif;">
+        <select id="modelSelector" class="bu-select">
           <option value="Hermès Birkin 25">Hermès Birkin 25</option>
           <option value="Hermès Birkin 30">Hermès Birkin 30</option>
           <option value="Hermès Kelly 25">Hermès Kelly 25</option>
@@ -460,9 +462,11 @@
     </table>
   </div>
 
+  </div>
+
   <!-- Methodology Note -->
-  <div style="background:var(--blue-1);border:1px solid var(--blue-2);border-radius:11px;padding:18px 24px;">
-    <div style="font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:14px;border-bottom:1px solid var(--blue-2);padding-bottom:8px;">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px 24px;">
+    <div style="font-family:'Lucida Bright',Georgia,serif;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:8px;">
       📊 Data Sources &amp; Methodology
     </div>
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:14px;">
@@ -487,7 +491,7 @@
         <div style="font-size:10px;color:var(--muted);line-height:1.55;"><strong style="color:var(--blue-5);font-weight:500;">Disclaimer:</strong> Research tool only — not investment advice. Each source measures a different dimension of consumer behavior. Always combine with LVMH/peer earnings and professional financial analysis before drawing conclusions.</div>
       </div>
     </div>
-    <div style="font-size:9.5px;color:rgba(138,168,196,.55);border-top:1px solid rgba(31,72,120,.45);padding-top:10px;line-height:1.6;">
+    <div style="font-size:9.5px;color:var(--text-light);border-top:1px solid var(--border);padding-top:10px;line-height:1.6;">
       Resale data auto-refreshed weekly (Mondays, 3am Lima time) via Apify + GitHub Actions from github.com/dlopezandres19-pixel/luxury-resale-tracker (data_v2/) · History begins Sep 10, 2026 and grows weekly · MSRP reference table: msrp_reference.json in the same repo, manually maintained.
     </div>
   </div>
@@ -495,7 +499,7 @@
 </div>
 
 <script>
-const C={luxury:'#2e9e6b',hermes:'#e8a020',lv:'#5b9bd5',cartier:'#c0392b',gucci:'#6dba6d',dior:'#e74c3c'};
+const C={luxury:'#2e9e6b',hermes:'#e8a020',lv:'#5b9bd5',cartier:'#c0392b',gucci:'#6dba6d',dior:'#7b68ae'};
 
 // ── HEADER DATE BADGE (dynamic) ───────────────────────────────────────────────
 // WeChat & NBS dates are hardcoded (manual update). Google Trends & Resale are
@@ -757,7 +761,7 @@ function setView(view,btn){
 // ══════════════════════════════════════════════════════════════════════════════
 const BRANDS = {
   lv: { name: 'Louis Vuitton', color: '#5b9bd5', keywords: { cn: 'LV', en: 'Louis Vuitton' } },
-  dior: { name: 'Dior', color: '#e74c3c', keywords: { cn: '迪奥', en: 'Dior' } },
+  dior: { name: 'Dior', color: '#7b68ae', keywords: { cn: '迪奥', en: 'Dior' } },
   hermes: { name: 'Hermès', color: '#e8a020', keywords: { cn: '爱马仕', en: 'Hermès' } },
   cartier: { name: 'Cartier', color: '#c0392b', keywords: { cn: '卡地亚', en: 'Cartier' } },
   gucci: { name: 'Gucci', color: '#6dba6d', keywords: { cn: 'Gucci', en: 'Gucci' } }
@@ -1391,12 +1395,17 @@ function renderBuCharts(bu) {
           const meta = chart.getDatasetMeta(0);
           const bar = meta.data[i];
           ctx.save();
-          ctx.fillStyle = '#fff';
           ctx.font = 'bold 9px Segoe UI';
           ctx.textAlign = 'center';
           const label = `${val>=0?'+':''}${val.toFixed(1)}%`;
-          const y = val >= 0 ? bar.y + 14 : bar.y - 6;
-          if (Math.abs(bar.height) > 18) {
+          // Always show label: inside bar if tall enough, outside if not
+          if (Math.abs(bar.height) > 20) {
+            ctx.fillStyle = '#fff';
+            const y = val >= 0 ? bar.y + 14 : bar.y - 6;
+            ctx.fillText(label, bar.x, y);
+          } else {
+            ctx.fillStyle = val >= 0 ? '#2e9e6b' : '#c0392b';
+            const y = val >= 0 ? bar.y - 5 : bar.y + 12;
             ctx.fillText(label, bar.x, y);
           }
           ctx.restore();
@@ -1426,7 +1435,25 @@ function renderBuCharts(bu) {
         x:{grid:{display:false},ticks:{color:'#667085',font:{size:9,family:'Segoe UI'}}},
         y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>v+'%'}}
       }
-    }
+    },
+    plugins:[{
+      id:'ebitPointLabels',
+      afterDatasetsDraw(chart) {
+        const ctx = chart.ctx;
+        const ds = chart.data.datasets[0];
+        const meta = chart.getDatasetMeta(0);
+        ds.data.forEach((val, i) => {
+          if (val == null) return;
+          const pt = meta.data[i];
+          ctx.save();
+          ctx.fillStyle = '#1b3a5c';
+          ctx.font = 'bold 9px Segoe UI';
+          ctx.textAlign = 'center';
+          ctx.fillText(`${val.toFixed(1)}%`, pt.x, pt.y - 10);
+          ctx.restore();
+        });
+      }
+    }]
   });
 }
 
