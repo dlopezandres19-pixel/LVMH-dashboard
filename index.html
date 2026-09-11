@@ -462,7 +462,7 @@
   <div class="section-header">
     <div class="section-label">⑥ Cross-Platform Intelligence Analysis</div>
     <div class="section-line"></div>
-    <div class="section-sub" id="crossPlatformSubtitle">Comparing WeChat Index + Google Trends (China & Global) + Macro + Luxury Resale Value Retention · 7-day signals</div>
+    <div class="section-sub" id="crossPlatformSubtitle">Comparing WeChat Index + Google Trends (China & Global) + Macro + Luxury Resale Value Retention · 30-day basis (smoothed to reduce single-day noise)</div>
   </div>
 
   <div class="signal-panel">
@@ -859,7 +859,7 @@ async function loadTrendsData() {
     initTrendsCharts();
     renderTrendsView('china', '7d');
     renderTrendsView('global', '7d');
-    renderCorrelation('7d');
+    renderCorrelation();
     
   } catch (error) {
     console.error('Error loading Google Trends data:', error);
@@ -955,7 +955,7 @@ function setTrendsViewBoth(period, button) {
   
   // Update cross-platform analysis
   currentPeriod = period;
-  renderCorrelation(period);
+  renderCorrelation();
   
   // Update subtitle
   const periodNames = {
@@ -968,8 +968,15 @@ function setTrendsViewBoth(period, button) {
     `Comparing WeChat Index + Google Trends (China & Global) + NBS Macro · ${periodInfo.long} comparison`;
 }
 
-function renderCorrelation(period) {
-  if (!trendsData || !trendsData.china[period] || !trendsData.global[period]) {
+function renderCorrelation() {
+  // Fixed to the 30-day window regardless of whatever period is selected
+  // in the Google Trends buttons above — daily data (7d) is too noisy for
+  // a directional read (e.g. a single viral WeChat post can swing a brand
+  // +80% day/day). 30d smooths that out and is the right basis for a thesis.
+  const XPLAT_PERIOD = '30d';
+  const WECHAT_PERIOD_MAP = { '7d':'7d', '30d':'30d', '12m':'1y' };
+
+  if (!trendsData || !trendsData.china[XPLAT_PERIOD] || !trendsData.global[XPLAT_PERIOD]) {
     document.getElementById('correlationGrid').innerHTML = `
       <div class="corr-item" style="grid-column:1/-1;text-align:center;padding:20px;">
         <div class="corr-signal mixed">Google Trends data loading...</div>
@@ -979,59 +986,47 @@ function renderCorrelation(period) {
     return;
   }
 
-  const chinaData = trendsData.china[period].latest;
-  const globalData = trendsData.global[period].latest;
+  const chinaData = trendsData.china[XPLAT_PERIOD].latest;
+  const globalData = trendsData.global[XPLAT_PERIOD].latest;
 
-  // ── Live WeChat context: latest value + day/day change, per brand ──
-  // WDATA doesn't track Dior, so that card notes it's not covered rather
-  // than silently omitting it.
   function liveWeChatContext(brandKey) {
     const wchatKeyMap = { lv:'lv', hermes:'hermes', cartier:'cartier', gucci:'gucci' };
     const key = wchatKeyMap[brandKey];
     if (!key || typeof WDATA === 'undefined') return null;
-    const d = WDATA['7d']; // 7-day view = most comparable cadence to Trends' 7d default
+    const d = WDATA[WECHAT_PERIOD_MAP[XPLAT_PERIOD]];
     if (!d || !d[key] || d[key].length < 2) return null;
     const arr = d[key];
-    const latest = arr[arr.length-1], prev = arr[arr.length-2];
-    const pctChange = prev ? ((latest-prev)/prev*100) : null;
+    const first = arr[0], latest = arr[arr.length-1];
+    const pctChange = first ? ((latest-first)/first*100) : null; // trend over the window, not day/day
     return { latest, pctChange };
   }
 
-  // ── Live Macro context (China-side, shared across all brands) ──
   function liveMacroContext() {
     if (typeof confChina === 'undefined') return null;
     const lastNonNull = arr => { for (let i=arr.length-1;i>=0;i--) if (arr[i]!=null) return arr[i]; return null; };
-    return {
-      conf: lastNonNull(confChina),
-      retail: lastNonNull(retailChina),
-      gdp: lastNonNull(gdpChina),
-    };
+    return { conf: lastNonNull(confChina), retail: lastNonNull(retailChina), gdp: lastNonNull(gdpChina) };
   }
 
-  // ── Live LVMH Performance / peer growth context — only where the brand
-  // actually maps to a tracked business unit or peer. Cartier (Richemont)
-  // isn't tracked in the Asia peer benchmark, so it gets none.
   function livePerformanceContext(brandKey) {
     if (typeof BU_GROWTH === 'undefined' || typeof ASIA_GROWTH === 'undefined') return null;
     if (brandKey === 'lv' || brandKey === 'dior') {
       const flg = BU_GROWTH['Fashion and Leather Goods'];
       const latestFlg = flg[flg.length-1];
       const asiaLvmh = ASIA_GROWTH.LVMH[ASIA_GROWTH.LVMH.length-1];
-      const note = brandKey === 'dior' ? ' (F&LG is a shared business unit with LV — not Dior-specific)' : '';
-      return { label: 'LVMH F&LG', growth: latestFlg, asiaGrowth: asiaLvmh, note };
+      const note = brandKey === 'dior' ? ' (shared BU with LV, not Dior-specific)' : '';
+      return { label:'LVMH F&LG', growth:latestFlg, asiaGrowth:asiaLvmh, note };
     }
     if (brandKey === 'hermes') {
       const asiaHermes = ASIA_GROWTH.Hermes[ASIA_GROWTH.Hermes.length-1];
-      return { label: 'Hermès (independent, peer benchmark only)', growth: null, asiaGrowth: asiaHermes, note: '' };
+      return { label:'Hermès', growth:null, asiaGrowth:asiaHermes, note:'' };
     }
     if (brandKey === 'gucci') {
       const asiaKering = ASIA_GROWTH.Kering[ASIA_GROWTH.Kering.length-1];
-      return { label: 'Kering (parent, peer benchmark only)', growth: null, asiaGrowth: asiaKering, note: '' };
+      return { label:'Kering', growth:null, asiaGrowth:asiaKering, note:'' };
     }
-    return null; // Cartier/Richemont — not tracked in Section 1
+    return null;
   }
 
-  // ── Live Resale context (unchanged from before) ──
   function liveResaleContext(brandKey) {
     const modelMap = {
       hermes: ['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28'],
@@ -1058,55 +1053,61 @@ function renderCorrelation(period) {
 
   Object.keys(BRANDS).forEach(brandKey => {
     const brand = BRANDS[brandKey];
-    const chinaKeyword = brand.keywords.cn;
-    const globalKeyword = brand.keywords.en;
-
-    const chinaLatest = chinaData[chinaKeyword];
-    const globalLatest = globalData[globalKeyword];
+    const chinaLatest = chinaData[brand.keywords.cn];
+    const globalLatest = globalData[brand.keywords.en];
     if (!chinaLatest || !globalLatest) return;
 
-    const chinaUp = chinaLatest.change > 2;
-    const chinaDown = chinaLatest.change < -2;
-    const globalUp = globalLatest.change > 2;
+    const chinaUp = chinaLatest.change > 2, chinaDown = chinaLatest.change < -2;
+    const globalUp = globalLatest.change > 2, globalDown = globalLatest.change < -2;
     const chinaDataLimited = Math.abs(chinaLatest.value) < 5;
 
     const wechat = liveWeChatContext(brandKey);
     const perf = livePerformanceContext(brandKey);
     const resale = liveResaleContext(brandKey);
 
-    // Build each context line only from real, live numbers — omitted
-    // entirely (not guessed at) when not available for that brand.
-    const wechatLine = wechat
-      ? ` WeChat Index (7d): ${wechat.latest.toFixed(1)}M${wechat.pctChange!=null?`, ${wechat.pctChange>=0?'+':''}${wechat.pctChange.toFixed(1)}% vs. prior day`:''}.`
-      : ' WeChat Index: not tracked for this brand.';
+    // Count how many of the available signals point the same direction as
+    // Trends, to decide how confidently to state the thesis. Signals that
+    // don't apply to this brand (e.g. Cartier + LVMH Performance) are
+    // simply not counted, not treated as neutral or negative.
+    let agree = 0, total = 0;
+    const trendsDir = chinaUp && globalUp ? 1 : (chinaDown && globalDown ? -1 : 0);
+    if (wechat && wechat.pctChange != null) { total++; if (Math.sign(wechat.pctChange) === trendsDir && trendsDir !== 0) agree++; }
+    if (resale) { total++; if ((resale.aboveRetail ? 1 : -1) === trendsDir && trendsDir !== 0) agree++; }
 
+    let signal, signalClass, thesis;
+    if (trendsDir === 1 && wechat && wechat.pctChange > 0) {
+      signal = '✓ Converging Signals — China Interest Rising'; signalClass = 'strong';
+      thesis = `Directional read: search and engagement both point up for ${brand.name} this period — the more corroborated of the five brands tracked here.`;
+    } else if (trendsDir === -1 && wechat && wechat.pctChange < 0) {
+      signal = '🔴 Converging Signals — China Interest Softening'; signalClass = 'weak';
+      thesis = `Directional read: search and engagement both point down for ${brand.name} this period — worth flagging as a brand to watch.`;
+    } else if (chinaUp && !globalUp) {
+      signal = '⚡ China-Specific Divergence'; signalClass = 'mixed';
+      thesis = `Directional read: China-specific strength not mirrored globally for ${brand.name} — could be local, could be noise; not enough here to call it structural.`;
+    } else if (globalUp && !chinaUp) {
+      signal = chinaDataLimited ? '⚠ Global Rising · China Read Unreliable' : '⚠ China Underperforming Global Search';
+      signalClass = 'mixed';
+      thesis = chinaDataLimited
+        ? `Directional read: global search is up for ${brand.name}, but the China Trends figure is too thin (low mainland Google penetration) to read either way.`
+        : `Directional read: global interest is outpacing China for ${brand.name} — worth checking against WeChat before concluding this is a China-specific slowdown.`;
+    } else {
+      signal = '→ Mixed / Inconclusive'; signalClass = 'mixed';
+      thesis = `Directional read: no clear single story for ${brand.name} this period — signals are mixed or too thin to call.`;
+    }
+
+    const wechatLine = wechat
+      ? ` WeChat (30d trend): ${wechat.latest.toFixed(1)}M, ${wechat.pctChange>=0?'+':''}${wechat.pctChange.toFixed(0)}% over the window.`
+      : ' WeChat: not tracked for this brand.';
     const perfLine = perf
       ? (perf.growth != null
-          ? ` ${perf.label} organic growth: ${perf.growth>=0?'+':''}${perf.growth.toFixed(1)}% (latest quarter)${perf.note}; Asia ex-Japan: ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`
-          : ` ${perf.label} — Asia ex-Japan organic growth: ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}% (latest quarter).`)
-      : ' Not covered in the LVMH Performance section (different parent group).';
+          ? ` ${perf.label} organic growth ${perf.growth>=0?'+':''}${perf.growth.toFixed(1)}%${perf.note}, Asia ex-Japan ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`
+          : ` ${perf.label} Asia ex-Japan organic growth ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`)
+      : ' Not covered in LVMH Performance (different parent group).';
+    const macroLine = macro ? ` China backdrop: confidence ${macro.conf!=null?macro.conf.toFixed(1)+'pts':'n/a'}, retail ${macro.retail!=null?(macro.retail>=0?'+':'')+macro.retail.toFixed(1)+'%':'n/a'}.` : '';
+    const resaleLine = resale ? ` Resale ~${resale.vr.toFixed(0)}% VR (US/EU).` : '';
+    const trendsLine = ` Trends: China ${chinaLatest.change>=0?'+':''}${chinaLatest.change.toFixed(1)}%, Global ${globalLatest.change>=0?'+':''}${globalLatest.change.toFixed(1)}%.`;
 
-    const macroLine = macro
-      ? ` China macro backdrop: consumer confidence ${macro.conf!=null?macro.conf.toFixed(1)+' pts':'n/a'}, retail sales ${macro.retail!=null?(macro.retail>=0?'+':'')+macro.retail.toFixed(1)+'%':'n/a'}, GDP ${macro.gdp!=null?(macro.gdp>=0?'+':'')+macro.gdp.toFixed(1)+'%':'n/a'}.`
-      : '';
-
-    const resaleLine = resale
-      ? ` Resale (US/EU avg): ~${resale.vr.toFixed(0)}% VR${resale.aboveRetail ? ', above retail' : ', below retail'}.`
-      : '';
-
-    // Directional signal is driven by Trends (China vs Global), same logic
-    // as before; the other sections are cited as supporting context, not
-    // used to override the headline signal.
-    let signal, signalClass;
-    if (chinaUp && globalUp) { signal = '✓ Search Interest Rising — Both Markets'; signalClass = 'strong'; }
-    else if (chinaDown && globalLatest.change < -2) { signal = '🔴 Search Interest Declining — Both Markets'; signalClass = 'weak'; }
-    else if (chinaUp && !globalUp) { signal = '⚡ China-Specific Divergence'; signalClass = 'mixed'; }
-    else if (globalUp && !chinaUp) { signal = chinaDataLimited ? '⚠ Global Rising · China Signal Not Reliable' : '⚠ China Underperforming Global Search'; signalClass = 'mixed'; }
-    else { signal = '→ Mixed / Inconclusive'; signalClass = 'mixed'; }
-
-    const trendsLine = `Google Trends — China ${chinaLatest.change>=0?'+':''}${chinaLatest.change.toFixed(1)}%, Global ${globalLatest.change>=0?'+':''}${globalLatest.change.toFixed(1)}%.${chinaDataLimited?' (China value near-zero — low Google penetration in mainland, treat as data limitation not demand signal.)':''}`;
-
-    const text = `${trendsLine}${wechatLine}${perfLine}${macroLine}${resaleLine} None of this confirms a single story on its own — worth watching whether these line up over the next few updates before drawing a conclusion.`;
+    const text = `${thesis}<br><span style="opacity:.75;">${trendsLine}${wechatLine}${perfLine}${macroLine}${resaleLine}</span>`;
 
     html += `
       <div class="corr-item">
@@ -1206,7 +1207,7 @@ async function loadResaleData() {
     // re-render Cross-Platform once it's in, so that section's resale
     // references reflect real numbers rather than being silently empty.
     if (typeof renderCorrelation === 'function' && typeof currentPeriod !== 'undefined') {
-      renderCorrelation(currentPeriod);
+      renderCorrelation();
     }
 
   } catch (err) {
