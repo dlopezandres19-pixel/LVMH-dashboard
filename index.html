@@ -704,26 +704,41 @@ function renderPriceEvolutionChart(){
     document.getElementById('priceEvolutionKpis').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:20px;font-size:11px;">No data available for this selection yet.</div>';
     return;
   }
-  // Compute fill color per point: green (resale > retail) or red (resale < retail)
-  // We use a hidden "fill reference" dataset approach — simpler: just use a fixed
-  // light fill on the resale line toward the retail line, with low opacity.
-  // Chart.js fill:'1' means "fill toward dataset at index 1" (retail line).
+  // Plugin: draws conditional fill between resale and retail lines
+  // 🟢 green when resale > retail (pricing power), 🔴 red when resale < retail (depreciation)
+  const conditionalFillPlugin={
+    id:'conditionalFill',
+    beforeDatasetsDraw(chart){
+      const{ctx:c,chartArea,scales}=chart;
+      if(!chartArea)return;
+      const meta0=chart.getDatasetMeta(0); // resale
+      const meta1=chart.getDatasetMeta(1); // retail
+      if(!meta0.data.length||!meta1.data.length)return;
+      c.save();
+      c.beginPath();
+      c.rect(chartArea.left,chartArea.top,chartArea.width,chartArea.height);
+      c.clip();
+      for(let i=0;i<meta0.data.length-1;i++){
+        const x0=meta0.data[i].x,   yr0=meta0.data[i].y,   yt0=meta1.data[i]?.y;
+        const x1=meta0.data[i+1].x, yr1=meta0.data[i+1].y, yt1=meta1.data[i+1]?.y;
+        if(yr0==null||yt0==null||yr1==null||yt1==null)continue;
+        // In canvas: lower y = higher value. resale > retail means yr < yt
+        const aboveRetail=(yr0<yt0||yr1<yt1);
+        c.beginPath();
+        c.moveTo(x0,yr0); c.lineTo(x1,yr1);
+        c.lineTo(x1,yt1); c.lineTo(x0,yt0);
+        c.closePath();
+        c.fillStyle=aboveRetail?'rgba(46,158,107,0.10)':'rgba(192,57,43,0.07)';
+        c.fill();
+      }
+      c.restore();
+    }
+  };
+
   priceEvolutionChartInstance=new Chart(ctx,{
     type:'line',
     data:{labels:dates,datasets:[
-      {label:'Resale Price (median)',data:resalePrices,borderColor:'#e8a020',
-       backgroundColor:(ctx)=>{
-         // Dynamic color: green if resale > retail, red otherwise, always very light
-         const chart=ctx.chart;const{ctx:c,chartArea}=chart;
-         if(!chartArea)return'rgba(232,160,32,0.08)';
-         const gradient=c.createLinearGradient(0,chartArea.top,0,chartArea.bottom);
-         gradient.addColorStop(0,'rgba(46,158,107,0.10)');
-         gradient.addColorStop(1,'rgba(46,158,107,0.02)');
-         return gradient;
-       },
-       borderWidth:2.5,pointRadius:5,pointHoverRadius:7,tension:0.25,
-       fill:'+1',  // fill toward the retail line (dataset index +1)
-       spanGaps:true},
+      {label:'Resale Price (median)',data:resalePrices,borderColor:'#e8a020',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointHoverRadius:7,tension:0.25,fill:false,spanGaps:true},
       {label:'Retail Price (MSRP)',data:retailPrices,borderColor:'rgba(27,58,92,0.55)',backgroundColor:'transparent',borderWidth:2,borderDash:[7,4],pointRadius:4,pointHoverRadius:6,pointBackgroundColor:'rgba(27,58,92,0.55)',pointBorderColor:'rgba(27,58,92,0.55)',tension:0,fill:false,spanGaps:true}
     ]},
     options:{
@@ -740,7 +755,8 @@ function renderPriceEvolutionChart(){
         x:{grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9}}},
         y:{grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9},callback:v=>currSymbol+v.toLocaleString()}}
       }
-    }
+    },
+    plugins:[conditionalFillPlugin]
   });
 }
 
