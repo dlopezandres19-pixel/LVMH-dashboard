@@ -19,30 +19,23 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text-primary);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;font-size:13px;}
-
   .header{background:#1b3a5c;border-bottom:1px solid #15304d;padding:20px 44px 16px;display:flex;align-items:center;justify-content:space-between;}
   .header-left{display:flex;flex-direction:column;}
   .header h1{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:22px;font-weight:700;color:#ffffff;}
   .header p{font-size:10px;color:rgba(255,255,255,0.6);margin-top:3px;letter-spacing:.06em;text-transform:uppercase;}
   .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
-  .header-logo img{height:48px;filter:brightness(10);}
   .date-badge{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:5px 12px;font-size:10px;color:rgba(255,255,255,0.75);letter-spacing:.04em;}
   .source-tag{font-size:9px;color:rgba(255,255,255,0.45);margin-top:4px;text-align:right;}
-
   .dashboard{padding:24px 44px;display:flex;flex-direction:column;gap:22px;}
-
   .section-header{display:flex;align-items:center;gap:14px;margin-bottom:2px;background:#E2E9F0;margin-left:-44px;margin-right:-44px;padding:10px 44px;}
   .section-label{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:13px;font-weight:600;color:#193C6C;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
   .section-line{flex:1;height:1px;background:linear-gradient(90deg,#B8C8D8,transparent);}
   .section-sub{font-size:10px;color:#193C6C;letter-spacing:.04em;opacity:0.7;}
-
   .nbs-charts-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
-
   .signal-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:6px;}
   .signal-badge.green{background:rgba(46,158,107,.1);color:#2e9e6b;border:1px solid rgba(46,158,107,.25);}
   .signal-badge.yellow{background:rgba(232,160,32,.1);color:#c4820a;border:1px solid rgba(232,160,32,.25);}
   .signal-badge.red{background:rgba(192,57,43,.1);color:#c0392b;border:1px solid rgba(192,57,43,.25);}
-
   .signal-panel{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:22px 24px;}
   .signal-title{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:4px;}
   .signal-subtitle{font-size:10px;color:var(--text-muted);margin-bottom:16px;letter-spacing:.04em;}
@@ -53,7 +46,6 @@
   .signal-name{font-size:11px;font-weight:600;color:var(--text-primary);}
   .signal-text{font-size:10.5px;color:var(--text-secondary);line-height:1.6;}
   .signal-text em{color:var(--text-muted);font-style:italic;}
-
   .panel{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:22px 24px;}
   .panel-title{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:3px;}
   .panel-subtitle{font-size:10px;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px;min-height:14px;}
@@ -63,7 +55,6 @@
   .legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;}
   .legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-secondary);}
   .legend-dot{width:9px;height:9px;border-radius:50%;}
-
   .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
   .kpi-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:16px 14px;position:relative;overflow:hidden;}
   .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:11px 11px 0 0;}
@@ -80,14 +71,12 @@
   .kpi-change.down{background:rgba(74,144,196,.1);color:var(--accent-light);}
   .kpi-change.up{background:rgba(192,57,43,.1);color:#c0392b;}
   .kpi-sub{font-size:10px;color:var(--text-muted);margin-top:4px;}
-
   .selector-row{display:flex;align-items:center;justify-content:space-between;}
   .selector-label{font-size:11px;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;}
   .time-selector{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:3px;}
   .time-btn{font-family:'Segoe UI',system-ui,sans-serif;font-size:12px;font-weight:500;padding:7px 22px;border-radius:7px;border:none;cursor:pointer;background:transparent;color:var(--text-muted);letter-spacing:.04em;transition:all .2s;}
   .time-btn.active{background:var(--accent);color:#fff;}
   .time-btn:hover:not(.active){background:var(--border-light);color:var(--text-primary);}
-
   .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
   .insights-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
   .insight-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px 16px;}
@@ -97,23 +86,19 @@
   .insight-title{font-size:12px;font-weight:600;color:var(--accent-gold);margin-bottom:5px;line-height:1.35;}
   .insight-text{font-size:11px;color:var(--text-secondary);line-height:1.6;}
   .insight-source{font-size:9.5px;color:var(--text-muted);margin-top:8px;font-style:italic;}
-
   .notes-bar{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:16px 26px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
   .note-item{display:flex;gap:9px;align-items:flex-start;}
   .note-num{font-family:'Lucida Bright','Playfair Display',Georgia,serif;font-size:20px;font-weight:700;color:var(--accent-light);line-height:1;flex-shrink:0;}
   .note-text{font-size:11px;color:var(--text-muted);line-height:1.55;}
   .note-text strong{color:var(--text-secondary);font-weight:500;}
-
   @keyframes fadeIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
   .fade-in{animation:fadeIn .3s ease forwards;}
-
   .tab-container{display:flex;gap:8px;margin-bottom:16px;}
   .tab-btn{font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;font-weight:500;padding:10px 24px;border-radius:9px;border:1px solid var(--border);cursor:pointer;background:var(--card);color:var(--text-muted);transition:all .2s;}
   .tab-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
   .tab-btn:hover:not(.active){background:var(--bg);color:var(--text-primary);}
   .tab-content{display:none;}
   .tab-content.active{display:block;}
-
   .correlation-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
   .corr-item{background:var(--bg);border:1px solid var(--border-light);border-radius:9px;padding:14px 16px;}
   .corr-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
@@ -124,7 +109,6 @@
   .corr-signal.mixed{background:rgba(232,160,32,.1);color:#c4820a;border:1px solid rgba(232,160,32,.25);}
   .corr-signal.weak{background:rgba(192,57,43,.1);color:#c0392b;border:1px solid rgba(192,57,43,.25);}
   .corr-text{font-size:10px;color:var(--text-secondary);line-height:1.5;}
-
   .resale-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
   @media(max-width:900px){.resale-grid{grid-template-columns:1fr;}}
   .resale-panel{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:22px 24px;}
@@ -141,9 +125,7 @@
   .resale-table .delta-down{color:#c0392b;font-weight:600;}
   .resale-table .delta-neu{color:var(--text-muted);}
   .resale-table-title{font-size:10px;color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;}
-
   .bu-select{background:var(--bg);color:var(--text-primary);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:12px;font-family:'Segoe UI',system-ui,sans-serif;}
-
 </style>
 </head>
 <body>
@@ -161,7 +143,7 @@
 
 <div class="dashboard">
 
-  <!-- ══ SECTION 0/1: LVMH F&LG + ASIA (EX. JAPAN) PERFORMANCE ══ -->
+  <!-- ══ SECTION 0/1: LVMH F&LG + ASIA ══ -->
   <div class="section-header">
     <div class="section-label">① LVMH Performance — F&amp;LG &amp; Asia (ex. Japan)</div>
     <div class="section-line"></div>
@@ -169,8 +151,6 @@
   </div>
 
   <div class="resale-grid">
-
-    <!-- Panel A: BU Organic Performance (dropdown-driven) -->
     <div class="resale-panel">
       <div class="resale-panel-header">
         <div>
@@ -192,13 +172,8 @@
       <div style="height:1px;background:var(--border);margin:16px 0;"></div>
       <div class="resale-panel-title" id="buEbitTitle" style="font-size:13px;margin-bottom:10px;">EBIT Margin (%)</div>
       <div class="resale-chart-wrap"><canvas id="buEbitChart"></canvas></div>
-      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.6;" id="buInsights">
-        <div style="margin-bottom:6px;">• F&amp;LG organic growth was negative for 5 consecutive quarters (1Q25 to 1Q26, -2% to -9%) before turning positive in 2Q26 (+1%) — the first positive print since 2023.</div>
-        <div>• EBIT margin compressed from 37.1% (FY2024) to a 1H26 low of 34.1% — margin pressure has outpaced the recent growth recovery.</div>
-      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.6;" id="buInsights"></div>
     </div>
-
-    <!-- Panel B: Asia ex-Japan — LVMH vs Peers -->
     <div class="resale-panel">
       <div class="resale-panel-header">
         <div>
@@ -224,10 +199,9 @@
         <div>• Hermès has posted positive Asia (ex. Japan) growth every quarter since 1Q25, and carries ~1.5x LVMH's revenue exposure to the region (40% vs. 29%) — its resilience looks structural.</div>
       </div>
     </div>
-
   </div>
 
-  <!-- ══ SECTION 1: NBS ══ -->
+  <!-- ══ SECTION 2: NBS ══ -->
   <div class="section-header">
     <div class="section-label">② Macro Indicators — USA · Europe · China</div>
     <div class="section-line"></div>
@@ -255,7 +229,7 @@
     </div>
   </div>
 
-  <!-- ══ SECTION 2: WECHAT INDEX ══ -->
+  <!-- ══ SECTION 3: WECHAT ══ -->
   <div class="section-header">
     <div class="section-label">③ WeChat Index — Brand Monitor</div>
     <div class="section-line"></div>
@@ -263,41 +237,11 @@
   </div>
 
   <div class="kpi-row">
-    <div class="kpi-card luxury">
-      <div class="kpi-label">Benchmark</div>
-      <div class="kpi-brand">Luxury (General)</div>
-      <div class="kpi-value">15.3M</div>
-      <div class="kpi-change down">▼ 4.26% vs prev. day</div>
-      <div class="kpi-sub">Sep 8, 2026</div>
-    </div>
-    <div class="kpi-card hermes">
-      <div class="kpi-label">Hermès</div>
-      <div class="kpi-brand">Hermès</div>
-      <div class="kpi-value">13.6M</div>
-      <div class="kpi-change down">▼ 8.65% vs prev. day</div>
-      <div class="kpi-sub">Sep 8, 2026</div>
-    </div>
-    <div class="kpi-card lv">
-      <div class="kpi-label">LVMH flagship</div>
-      <div class="kpi-brand">Louis Vuitton</div>
-      <div class="kpi-value">2.2M</div>
-      <div class="kpi-change down">▼ 1.55% vs prev. day</div>
-      <div class="kpi-sub">Quiet week — Aug 22 spike fully resolved</div>
-    </div>
-    <div class="kpi-card cartier">
-      <div class="kpi-label">Richemont</div>
-      <div class="kpi-brand">Cartier</div>
-      <div class="kpi-value">3.2M</div>
-      <div class="kpi-change up">▲ 0.51% vs prev. day</div>
-      <div class="kpi-sub">Sep 8, 2026</div>
-    </div>
-    <div class="kpi-card gucci">
-      <div class="kpi-label">Kering</div>
-      <div class="kpi-brand">Gucci</div>
-      <div class="kpi-value">16.1M</div>
-      <div class="kpi-change up">▲ 86.46% vs prev. day</div>
-      <div class="kpi-sub">⚠ Anomaly — verify cause before trusting signal</div>
-    </div>
+    <div class="kpi-card luxury"><div class="kpi-label">Benchmark</div><div class="kpi-brand">Luxury (General)</div><div class="kpi-value">15.3M</div><div class="kpi-change down">▼ 4.26% vs prev. day</div><div class="kpi-sub">Sep 8, 2026</div></div>
+    <div class="kpi-card hermes"><div class="kpi-label">Hermès</div><div class="kpi-brand">Hermès</div><div class="kpi-value">13.6M</div><div class="kpi-change down">▼ 8.65% vs prev. day</div><div class="kpi-sub">Sep 8, 2026</div></div>
+    <div class="kpi-card lv"><div class="kpi-label">LVMH flagship</div><div class="kpi-brand">Louis Vuitton</div><div class="kpi-value">2.2M</div><div class="kpi-change down">▼ 1.55% vs prev. day</div><div class="kpi-sub">Quiet week — Aug 22 spike fully resolved</div></div>
+    <div class="kpi-card cartier"><div class="kpi-label">Richemont</div><div class="kpi-brand">Cartier</div><div class="kpi-value">3.2M</div><div class="kpi-change up">▲ 0.51% vs prev. day</div><div class="kpi-sub">Sep 8, 2026</div></div>
+    <div class="kpi-card gucci"><div class="kpi-label">Kering</div><div class="kpi-brand">Gucci</div><div class="kpi-value">16.1M</div><div class="kpi-change up">▲ 86.46% vs prev. day</div><div class="kpi-sub">⚠ Anomaly — verify cause before trusting signal</div></div>
   </div>
 
   <div class="selector-row">
@@ -337,7 +281,7 @@
 
   <div class="insights-row" id="insightsRow"></div>
 
-  <!-- ══ SECTION 3: GOOGLE TRENDS ══ -->
+  <!-- ══ SECTION 4: GOOGLE TRENDS ══ -->
   <div class="section-header">
     <div class="section-label">④ Google Trends — Search Interest Monitoring</div>
     <div class="section-line"></div>
@@ -354,13 +298,10 @@
   </div>
 
   <div class="charts-row">
-    <!-- CHINA -->
     <div class="panel">
       <div class="panel-title">Google Trends — China</div>
       <div class="panel-subtitle" id="trendsChinaSub">Last 7 days · Mainland China search interest</div>
-      
       <div class="kpi-row" style="grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px;" id="trendsKpiChinaMini"></div>
-      
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-lv)"></div>Louis Vuitton</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-dior)"></div>Dior</div>
@@ -370,14 +311,10 @@
       </div>
       <div class="chart-wrap-tall"><canvas id="chartTrendsChina"></canvas></div>
     </div>
-
-    <!-- GLOBAL -->
     <div class="panel">
       <div class="panel-title">Google Trends — Global</div>
       <div class="panel-subtitle" id="trendsGlobalSub">Last 7 days · Worldwide search interest</div>
-      
       <div class="kpi-row" style="grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px;" id="trendsKpiGlobalMini"></div>
-      
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-lv)"></div>Louis Vuitton</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-dior)"></div>Dior</div>
@@ -389,78 +326,128 @@
     </div>
   </div>
 
-  <!-- ══ SECTION 5: RESALE TRACKER (v2 — US/EU/China) ══ -->
+  <!-- ══ SECTION 5: RESALE TRACKER ══ -->
   <div class="section-header">
     <div class="section-label">⑤ Luxury Resale Value Retention — USA · Europe · China</div>
     <div class="section-line"></div>
-    <div class="section-sub" id="resaleSectionSub">Value retention across 6 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · Auto-updated weekly</div>
+    <div class="section-sub" id="resaleSectionSub">Value retention across 6 tracked models · Rebag (US) · Vestiaire Collective (EU) · Xianyu/Goofish (China) · Auto-updated weekly</div>
   </div>
-  <div style="font-size:11px;color:var(--white);opacity:0.7;margin-top:-10px;margin-bottom:4px;font-style:italic;">China is an unauthenticated P2P marketplace — shown separately, filtered for likely replicas, and flagged when no genuine listings pass the filter. Not directly comparable to US/EU.</div>
+  <div style="font-size:11px;color:var(--text-muted);margin-top:-10px;margin-bottom:4px;font-style:italic;">China is an unauthenticated P2P marketplace — shown separately, filtered for likely replicas, and flagged when no genuine listings pass the filter. Not directly comparable to US/EU.</div>
 
   <div class="resale-grid">
 
-  <!-- Panel 1: Regional Index Comparison -->
-  <div class="resale-panel">
-    <div class="resale-panel-header">
-      <div>
-        <div class="resale-panel-title" id="indexPanelTitle">Resale Value Retention Index — By Region</div>
-        <div class="resale-source-tag" id="indexPanelSubtitle">Average VR — Hermès (Birkin 25/30, Kelly 25/28)</div>
-        <div id="indexStalenessBadge"></div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
-        <select id="brandGroupSelector" class="bu-select">
-          <option value="hermes" selected>Hermès</option>
-          <option value="lvdior">Louis Vuitton</option>
-        </select>
-        <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
-          <div class="legend-item"><div class="legend-dot" style="background:#d4a84b"></div>USA</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#2ecc71"></div>Europe</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#4a90c4"></div>China ⚠</div>
+    <!-- Panel 1: Regional Index -->
+    <div class="resale-panel">
+      <div class="resale-panel-header">
+        <div>
+          <div class="resale-panel-title" id="indexPanelTitle">Resale Value Retention Index — By Region</div>
+          <div class="resale-source-tag" id="indexPanelSubtitle">Average VR — Hermès (Birkin 25/30, Kelly 25/28)</div>
+          <div id="indexStalenessBadge"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+          <select id="brandGroupSelector" class="bu-select">
+            <option value="hermes" selected>Hermès</option>
+            <option value="lvdior">Louis Vuitton</option>
+          </select>
+          <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
+            <div class="legend-item"><div class="legend-dot" style="background:#d4a84b"></div>USA</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#2ecc71"></div>Europe</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#4a90c4"></div>China ⚠</div>
+          </div>
         </div>
       </div>
+      <div class="resale-chart-wrap"><canvas id="resaleIndexChart"></canvas></div>
+      <div class="resale-table-title" id="indexSnapshotTitle">Latest Snapshot · Loading…</div>
+      <table class="resale-table">
+        <thead><tr><th>Region</th><th>Avg VR</th><th>Models w/ data</th><th>Source</th></tr></thead>
+        <tbody id="resaleIndexTableBody"></tbody>
+      </table>
     </div>
-    <div class="resale-chart-wrap"><canvas id="resaleIndexChart"></canvas></div>
-    <div class="resale-table-title" id="indexSnapshotTitle">Latest Snapshot · Loading…</div>
-    <table class="resale-table">
-      <thead><tr><th>Region</th><th>Avg VR</th><th>Models w/ data</th><th>Source</th></tr></thead>
-      <tbody id="resaleIndexTableBody"></tbody>
-    </table>
-  </div>
 
-  <!-- Panel 2: Model Detail -->
-  <div class="resale-panel">
-    <div class="resale-panel-header">
-      <div>
-        <div class="resale-panel-title">Model Detail — By Region</div>
-        <div class="resale-source-tag">VR, liquidity &amp; sample size for one model across all 3 regions</div>
+    <!-- Panel 2: Model Detail -->
+    <div class="resale-panel">
+      <div class="resale-panel-header">
+        <div>
+          <div class="resale-panel-title">Model Detail — By Region</div>
+          <div class="resale-source-tag">VR, liquidity &amp; sample size for one model across all 3 regions</div>
+        </div>
+        <div>
+          <select id="modelSelector" class="bu-select">
+            <option value="Hermès Birkin 25">Hermès Birkin 25</option>
+            <option value="Hermès Birkin 30">Hermès Birkin 30</option>
+            <option value="Hermès Kelly 25">Hermès Kelly 25</option>
+            <option value="Hermès Kelly 28">Hermès Kelly 28</option>
+            <option value="LV Neverfull MM">LV Neverfull MM</option>
+            <option value="LV Speedy 25">LV Speedy 25</option>
+          </select>
+        </div>
       </div>
-      <div>
-        <select id="modelSelector" class="bu-select">
-          <option value="Hermès Birkin 25">Hermès Birkin 25</option>
-          <option value="Hermès Birkin 30">Hermès Birkin 30</option>
-          <option value="Hermès Kelly 25">Hermès Kelly 25</option>
-          <option value="Hermès Kelly 28">Hermès Kelly 28</option>
-          <option value="LV Neverfull MM">LV Neverfull MM</option>
-          <option value="LV Speedy 25">LV Speedy 25</option>
-        </select>
+      <div class="resale-chart-wrap"><canvas id="modelDetailChart"></canvas></div>
+      <div class="resale-table-title" id="modelSnapshotTitle">Latest Snapshot · Loading…</div>
+      <table class="resale-table">
+        <thead><tr><th>Region</th><th>Retail Price (MSRP)</th><th>Median Resale Price</th><th>VR</th><th>n listings</th></tr></thead>
+        <tbody id="modelDetailTableBody"></tbody>
+      </table>
+      <div id="modelAnomalyFlag"></div>
+    </div>
+
+    <!-- Panel 3: Resale Price vs Retail Price — NEW -->
+    <div class="resale-panel" style="grid-column: 1 / -1;">
+      <div class="resale-panel-header">
+        <div>
+          <div class="resale-panel-title">Resale Price vs. Retail Price — Historical Evolution</div>
+          <div class="resale-source-tag">Median resale price vs. MSRP retail price · Weekly snapshots · Select model and region</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;justify-content:flex-end;">
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <label style="font-size:9px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;">Model</label>
+            <select id="priceEvolutionModelSelector" class="bu-select">
+              <option value="Hermès Birkin 25">Hermès Birkin 25</option>
+              <option value="Hermès Birkin 30">Hermès Birkin 30</option>
+              <option value="Hermès Kelly 25">Hermès Kelly 25</option>
+              <option value="Hermès Kelly 28">Hermès Kelly 28</option>
+              <option value="LV Neverfull MM">LV Neverfull MM</option>
+              <option value="LV Speedy 25">LV Speedy 25</option>
+              <option value="avg_hermes">Avg. Hermès</option>
+              <option value="avg_lv">Avg. Louis Vuitton</option>
+            </select>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <label style="font-size:9px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;">Region</label>
+            <select id="priceEvolutionRegionSelector" class="bu-select">
+              <option value="US">USA (USD)</option>
+              <option value="EU">Europe (EUR)</option>
+              <option value="CN">China (CNY) ⚠</option>
+            </select>
+          </div>
+          <div class="legend" style="flex-direction:column;gap:4px;align-items:flex-end;margin-bottom:0;">
+            <div class="legend-item"><div class="legend-dot" style="background:#e8a020"></div>Resale (median)</div>
+            <div class="legend-item"><div style="width:9px;height:2px;background:rgba(27,58,92,0.5);border-top:2px dashed rgba(27,58,92,0.5);"></div><span style="margin-left:5px;">Retail (MSRP)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI row -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;" id="priceEvolutionKpis"></div>
+
+      <div style="position:relative;height:260px;margin-bottom:16px;">
+        <canvas id="priceEvolutionChart"></canvas>
+      </div>
+
+      <div style="font-size:10px;color:var(--text-muted);line-height:1.6;padding-top:10px;border-top:1px solid var(--border);">
+        Retail price shown as dashed line — updates only when MSRP changes (stored as <code>msrp_used</code> per weekly snapshot, so historical changes are preserved).
+        Resale = median of authenticated listings scraped that week. China (Xianyu) is unauthenticated P2P — treat as directional only.
+        "Avg. Hermès" and "Avg. LV" show the simple average across all tracked models for that brand in the selected region.
       </div>
     </div>
-    <div class="resale-chart-wrap"><canvas id="modelDetailChart"></canvas></div>
-    <div class="resale-table-title" id="modelSnapshotTitle">Latest Snapshot · Loading…</div>
-    <table class="resale-table">
-      <thead><tr><th>Region</th><th>Retail Price (MSRP)</th><th>Median Resale Price</th><th>VR</th><th>n listings</th></tr></thead>
-      <tbody id="modelDetailTableBody"></tbody>
-    </table>
-    <div id="modelAnomalyFlag"></div>
-  </div>
 
   </div>
 
-  <!-- ══ SECTION 4: CROSS-PLATFORM ANALYSIS ══ -->
+  <!-- ══ SECTION 6: CROSS-PLATFORM ══ -->
   <div class="section-header">
     <div class="section-label">⑥ Cross-Platform Intelligence Analysis</div>
     <div class="section-line"></div>
-    <div class="section-sub" id="crossPlatformSubtitle">Comparing WeChat Index + Google Trends (China & Global) + Macro + Luxury Resale Value Retention · 30-day basis (smoothed to reduce single-day noise)</div>
+    <div class="section-sub" id="crossPlatformSubtitle">Comparing WeChat Index + Google Trends (China & Global) + Macro + Luxury Resale Value Retention · 30-day basis</div>
   </div>
 
   <div class="signal-panel">
@@ -469,35 +456,18 @@
     <div class="correlation-grid" id="correlationGrid"></div>
   </div>
 
-  <!-- Methodology Note -->
+  <!-- Methodology -->
   <div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px 24px;">
-    <div style="font-family:'Lucida Bright',Georgia,serif;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:8px;">
-      📊 Data Sources &amp; Methodology
-    </div>
+    <div style="font-family:'Lucida Bright',Georgia,serif;font-size:14px;font-weight:600;color:var(--accent);margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:8px;">📊 Data Sources &amp; Methodology</div>
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:14px;">
-      <div style="display:flex;gap:8px;align-items:flex-start;">
-        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--blue-3);line-height:1;flex-shrink:0;">①</div>
-        <div style="font-size:10px;color:var(--muted);line-height:1.55;"><strong style="color:var(--blue-5);font-weight:500;">WeChat Index:</strong> Weighted engagement score from 1.38B monthly active users (~96% of China adults). Measures public content volume + engagement. Primary signal for mainland consumer sentiment.</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:flex-start;">
-        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--blue-3);line-height:1;flex-shrink:0;">②</div>
-        <div style="font-size:10px;color:var(--muted);line-height:1.55;"><strong style="color:var(--blue-5);font-weight:500;">Google Trends:</strong> Relative popularity 0–100. China data = VPN users (~3%) — tech-savvy, internationally-oriented. Use as directional confirmation only. Global data fully representative.</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:flex-start;">
-        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--blue-3);line-height:1;flex-shrink:0;">③</div>
-        <div style="font-size:10px;color:var(--muted);line-height:1.55;"><strong style="color:var(--blue-5);font-weight:500;">NBS Data:</strong> Official China government statistics. Monthly retail YoY% — NOT adjusted for price factors. Jan &amp; Feb combined (Lunar New Year). Published ~15th at stats.gov.cn/english.</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:flex-start;">
-        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--blue-3);line-height:1;flex-shrink:0;">④</div>
-        <div style="font-size:10px;color:var(--muted);line-height:1.55;"><strong style="color:var(--blue-5);font-weight:500;">Resale (Vestiaire / Xianyu):</strong> VR = median resale price ÷ current retail MSRP, per model per region. US/EU from Vestiaire Collective (authenticated marketplace). China from Xianyu/Goofish (unauthenticated P2P) — filtered for likely replicas by price floor + keyword exclusion; treat as directional, not absolute.</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:flex-start;">
-        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--blue-3);line-height:1;flex-shrink:0;">⑤</div>
-        <div style="font-size:10px;color:var(--muted);line-height:1.55;"><strong style="color:var(--blue-5);font-weight:500;">Disclaimer:</strong> Research tool only — not investment advice. Each source measures a different dimension of consumer behavior. Always combine with LVMH/peer earnings and professional financial analysis before drawing conclusions.</div>
-      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--accent-light);line-height:1;flex-shrink:0;">①</div><div style="font-size:10px;color:var(--text-muted);line-height:1.55;"><strong style="color:var(--text-secondary);font-weight:500;">WeChat Index:</strong> Weighted engagement score from 1.38B monthly active users. Measures public content volume + engagement. Primary signal for mainland consumer sentiment.</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--accent-light);line-height:1;flex-shrink:0;">②</div><div style="font-size:10px;color:var(--text-muted);line-height:1.55;"><strong style="color:var(--text-secondary);font-weight:500;">Google Trends:</strong> Relative popularity 0–100. China data = VPN users (~3%) — directional only. Global data fully representative.</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--accent-light);line-height:1;flex-shrink:0;">③</div><div style="font-size:10px;color:var(--text-muted);line-height:1.55;"><strong style="color:var(--text-secondary);font-weight:500;">NBS Data:</strong> Official China government statistics. Monthly retail YoY%. Published ~15th at stats.gov.cn/english.</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--accent-light);line-height:1;flex-shrink:0;">④</div><div style="font-size:10px;color:var(--text-muted);line-height:1.55;"><strong style="color:var(--text-secondary);font-weight:500;">Resale (Rebag US / Vestiaire EU / Xianyu CN):</strong> VR = median resale ÷ MSRP. US from Rebag (authenticated). EU from Vestiaire Collective (authenticated). China from Xianyu (unauthenticated P2P) — filtered for replicas; treat as directional.</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--accent-light);line-height:1;flex-shrink:0;">⑤</div><div style="font-size:10px;color:var(--text-muted);line-height:1.55;"><strong style="color:var(--text-secondary);font-weight:500;">Disclaimer:</strong> Research tool only — not investment advice. Always combine with LVMH/peer earnings and professional financial analysis.</div></div>
     </div>
     <div style="font-size:9.5px;color:var(--text-light);border-top:1px solid var(--border);padding-top:10px;line-height:1.6;">
-      Resale data auto-refreshed weekly (Mondays, 3am Lima time) via Apify + GitHub Actions from github.com/dlopezandres19-pixel/luxury-resale-tracker (data_v2/) · History begins Sep 10, 2026 and grows weekly · MSRP reference table: msrp_reference.json in the same repo, manually maintained.
+      Resale data auto-refreshed weekly (Mondays, 3am Lima time) via Apify + GitHub Actions · US: Rebag · EU: Vestiaire Collective · China: Xianyu/Goofish · History begins Sep 10, 2026 · MSRP reference: msrp_reference.json in luxury-resale-tracker repo, manually maintained.
     </div>
   </div>
 
@@ -506,1163 +476,265 @@
 <script>
 const C={luxury:'#2e9e6b',hermes:'#e8a020',lv:'#5b9bd5',cartier:'#c0392b',gucci:'#6dba6d',dior:'#7b68ae'};
 
-// ── HEADER DATE BADGE (dynamic) ───────────────────────────────────────────────
-// WeChat & NBS dates are hardcoded (manual update). Google Trends & Resale are
-// auto-detected from fetched JSON data and update the badge on page load.
-const HEADER_DATES = {
-  wechat: 'Sep 8, 2026',
-  nbs:    'Jan\u2013Feb 2026',
-  trends: null,
-  resale: null
-};
-function updateHeaderBadge() {
-  const badge = document.getElementById('headerDateBadge');
-  if (!badge) return;
-  const t = HEADER_DATES.trends || '\u2014';
-  const r = HEADER_DATES.resale || '\u2014';
-  badge.textContent = `WeChat: ${HEADER_DATES.wechat} \u00b7 NBS: ${HEADER_DATES.nbs} \u00b7 Google Trends: ${t} \u00b7 Resale: ${r}`;
+// ── HEADER DATE BADGE ─────────────────────────────────────────────────────────
+const HEADER_DATES = { wechat:'Sep 8, 2026', nbs:'Jul 2026', trends:null, resale:null };
+function updateHeaderBadge(){
+  const badge=document.getElementById('headerDateBadge');
+  if(!badge)return;
+  const t=HEADER_DATES.trends||'—';const r=HEADER_DATES.resale||'auto-weekly';
+  badge.textContent=`WeChat: ${HEADER_DATES.wechat} · NBS: ${HEADER_DATES.nbs} · Google Trends: ${t} · Resale: ${r}`;
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// MACRO DATA — China · Euro Zone · USA ─────────────────────────────────────────
-// Source: NBS stats.gov.cn (China) · Eurostat (Euro Zone) · BEA/Census/UMich (USA)
-// China Jan-Feb always combined per NBS methodology (Lunar New Year)
-
-// GDP YoY% — quarterly (only Q1/Q2 2026 reported so far) + FY2026E forecast
+// ── MACRO DATA ────────────────────────────────────────────────────────────────
 const gdpLabels=['Q1 2026','Q2 2026','2026E'];
-const gdpChina=[5.0, 4.3, 4.6];
-const gdpEuro =[0.5, 1.0, 0.7];
-const gdpUSA  =[2.1, 1.5, 2.1];
-
-// RETAIL SALES YoY% — monthly, China/Euro/USA
-// China Feb-26 has no standalone NBS release (Jan-Feb combined) — value below is a
-// linear interpolation between Jan (2.5%) and Mar (1.5%) for visual continuity only,
-// flagged with a hollow marker + dashed segment in the chart.
+const gdpChina=[5.0,4.3,4.6];const gdpEuro=[0.5,1.0,0.7];const gdpUSA=[2.1,1.5,2.1];
 const retailLabels=['Ene-26','Feb-26*','Mar-26','Abr-26','May-26','Jun-26','Jul-26'];
-const retailChina=[2.5, 2.0, 1.5, -0.1, -0.7, 0.9, 0.5];
-const retailChinaInterpIdx=1; // index of the interpolated point
-const retailEuro =[2.0, 1.7, 1.2, 1.0, 1.6, 0.7, 0.6];
-const retailUSA  =[3.2, 3.7, 4.0, 4.9, 6.5, 6.7, 5.0];
-
-// CONSUMER CONFIDENCE — independent bases, own axis each
-// China: NBS/OECD (neutral=100) · Europe: EA.CONS (Eurostat) · USA: UMCSENT (U. Michigan)
+const retailChina=[2.5,2.0,1.5,-0.1,-0.7,0.9,0.5];const retailChinaInterpIdx=1;
+const retailEuro=[2.0,1.7,1.2,1.0,1.6,0.7,0.6];const retailUSA=[3.2,3.7,4.0,4.9,6.5,6.7,5.0];
 const confLabels=['Ene-26','Feb-26','Mar-26','Abr-26','May-26','Jun-26','Jul-26','Ago-26'];
-const confChina=[90.6, 91.6, 90.0, 89.0, 89.9, null, null, null]; // Jun 2026+ pending NBS release
-const confEuro =[12.5, 12.4, 16.3, 20.5, 18.9, 17.6, 15.9, 15.5];
-const confUSA  =[56.4, 56.6, 53.3, 44.8, 44.8, 49.5, 55.2, 51.7];
-
+const confChina=[90.6,91.6,90.0,89.0,89.9,null,null,null];
+const confEuro=[12.5,12.4,16.3,20.5,18.9,17.6,15.9,15.5];
+const confUSA=[56.4,56.6,53.3,44.8,44.8,49.5,55.2,51.7];
 const tooltipNBS={backgroundColor:'#0d1b2e',borderColor:'#d0d5dd',borderWidth:1,titleColor:'#a8cceb',bodyColor:'#c9e0f4'};
-const scalesNBS={
-  x:{grid:{color:'rgba(46,109,164,0.1)'},ticks:{color:'#667085',font:{size:9}}},
-  y:{grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#667085',font:{size:10}}}
-};
-
-// Region colors — used across GDP / Retail / Confidence macro charts
+const scalesNBS={x:{grid:{color:'rgba(46,109,164,0.1)'},ticks:{color:'#667085',font:{size:9}}},y:{grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#667085',font:{size:10}}}};
 const REG={china:'#4a90c4',euro:'#2ecc71',usa:'#d4a84b'};
 const legendNBS={display:true,position:'bottom',labels:{color:'#667085',font:{size:9},boxWidth:10,padding:8}};
-
-// Helper: builds a line dataset where the LAST point is a forecast/estimate —
-// rendered hollow + with a dashed final segment, everything else solid.
-function makeForecastDs(label,data,color,estimateIdx){
-  return {
-    label,data,borderColor:color,backgroundColor:color+'22',
-    borderWidth:2,tension:0.25,fill:false,
-    pointRadius:data.map((_,i)=>i===estimateIdx?6:3),
-    pointHoverRadius:6,
-    pointBackgroundColor:data.map((_,i)=>i===estimateIdx?'transparent':color),
-    pointBorderColor:color,
-    pointBorderWidth:data.map((_,i)=>i===estimateIdx?2:0),
-    segment:{borderDash:ctx=>ctx.p1DataIndex===estimateIdx?[6,4]:undefined}
-  };
-}
-
-// GDP chart — China · Euro Zone · USA, quarterly + 2026E forecast (hollow/dashed)
-new Chart(document.getElementById('gdpChart'),{
-  type:'line',
-  data:{labels:gdpLabels,datasets:[
-    makeForecastDs('China',gdpChina,REG.china,2),
-    makeForecastDs('Euro Zone',gdpEuro,REG.euro,2),
-    makeForecastDs('USA',gdpUSA,REG.usa,2)
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{
-      label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%${ctx.dataIndex===2?' (2026E forecast)':''}`
-    }}},
-    scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}
-  }
-});
-
-// Retail Sales chart — China · Euro Zone · USA (China Feb-26 interpolated, flagged)
-new Chart(document.getElementById('retailChart'),{
-  type:'line',
-  data:{labels:retailLabels,datasets:[
-    {label:'China',data:retailChina,borderColor:REG.china,backgroundColor:REG.china+'22',
-     borderWidth:2,tension:0.3,fill:false,
-     pointRadius:retailChina.map((_,i)=>i===retailChinaInterpIdx?6:3),pointHoverRadius:6,
-     pointBackgroundColor:retailChina.map((_,i)=>i===retailChinaInterpIdx?'transparent':REG.china),
-     pointBorderColor:REG.china,pointBorderWidth:retailChina.map((_,i)=>i===retailChinaInterpIdx?2:0),
-     segment:{borderDash:ctx=>[ctx.p0DataIndex,ctx.p1DataIndex].includes(retailChinaInterpIdx)?[6,4]:undefined}},
-    {label:'Euro Zone',data:retailEuro,borderColor:REG.euro,backgroundColor:REG.euro+'22',
-     borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false},
-    {label:'USA',data:retailUSA,borderColor:REG.usa,backgroundColor:REG.usa+'22',
-     borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false}
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{
-      label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% YoY${ctx.datasetIndex===0&&ctx.dataIndex===retailChinaInterpIdx?' (interpolated — NBS combines Jan-Feb)':''}`
-    }}},
-    scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}
-  }
-});
-
-// Consumer Confidence chart — China · Euro Zone · USA, each on its own Y axis
-new Chart(document.getElementById('confChart'),{
-  type:'line',
-  data:{labels:confLabels,datasets:[
-    {label:'China',data:confChina,yAxisID:'yChina',borderColor:REG.china,backgroundColor:REG.china+'22',
-     borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false,spanGaps:false},
-    {label:'Euro Zone',data:confEuro,yAxisID:'yEuro',borderColor:REG.euro,backgroundColor:REG.euro+'22',
-     borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false},
-    {label:'USA',data:confUSA,yAxisID:'yUSA',borderColor:REG.usa,backgroundColor:REG.usa+'22',
-     borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false}
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{
-      label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: pending release`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)} pts`
-    }}},
-    scales:{
-      x:scalesNBS.x,
-      yChina:{position:'left',min:80,max:100,grid:{color:'rgba(46,109,164,0.18)'},
-        ticks:{color:REG.china,font:{size:9}},title:{display:true,text:'China (base 100)',color:REG.china,font:{size:8}}},
-      yEuro:{position:'right',min:5,max:30,grid:{display:false},
-        ticks:{color:REG.euro,font:{size:9}},title:{display:true,text:'Euro (EA.CONS)',color:REG.euro,font:{size:8}}},
-      yUSA:{position:'right',min:30,max:70,grid:{display:false},
-        ticks:{color:REG.usa,font:{size:9}},title:{display:true,text:'USA (UMCSENT)',color:REG.usa,font:{size:8}}}
-    }
-  }
-});
+function makeForecastDs(label,data,color,estimateIdx){return{label,data,borderColor:color,backgroundColor:color+'22',borderWidth:2,tension:0.25,fill:false,pointRadius:data.map((_,i)=>i===estimateIdx?6:3),pointHoverRadius:6,pointBackgroundColor:data.map((_,i)=>i===estimateIdx?'transparent':color),pointBorderColor:color,pointBorderWidth:data.map((_,i)=>i===estimateIdx?2:0),segment:{borderDash:ctx=>ctx.p1DataIndex===estimateIdx?[6,4]:undefined}};}
+new Chart(document.getElementById('gdpChart'),{type:'line',data:{labels:gdpLabels,datasets:[makeForecastDs('China',gdpChina,REG.china,2),makeForecastDs('Euro Zone',gdpEuro,REG.euro,2),makeForecastDs('USA',gdpUSA,REG.usa,2)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%${ctx.dataIndex===2?' (2026E forecast)':''}`}}},scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}}});
+new Chart(document.getElementById('retailChart'),{type:'line',data:{labels:retailLabels,datasets:[{label:'China',data:retailChina,borderColor:REG.china,backgroundColor:REG.china+'22',borderWidth:2,tension:0.3,fill:false,pointRadius:retailChina.map((_,i)=>i===retailChinaInterpIdx?6:3),pointHoverRadius:6,pointBackgroundColor:retailChina.map((_,i)=>i===retailChinaInterpIdx?'transparent':REG.china),pointBorderColor:REG.china,pointBorderWidth:retailChina.map((_,i)=>i===retailChinaInterpIdx?2:0),segment:{borderDash:ctx=>[ctx.p0DataIndex,ctx.p1DataIndex].includes(retailChinaInterpIdx)?[6,4]:undefined}},{label:'Euro Zone',data:retailEuro,borderColor:REG.euro,backgroundColor:REG.euro+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false},{label:'USA',data:retailUSA,borderColor:REG.usa,backgroundColor:REG.usa+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% YoY${ctx.datasetIndex===0&&ctx.dataIndex===retailChinaInterpIdx?' (interpolated)':''}`}}},scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}}});
+new Chart(document.getElementById('confChart'),{type:'line',data:{labels:confLabels,datasets:[{label:'China',data:confChina,yAxisID:'yChina',borderColor:REG.china,backgroundColor:REG.china+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false,spanGaps:false},{label:'Euro Zone',data:confEuro,yAxisID:'yEuro',borderColor:REG.euro,backgroundColor:REG.euro+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false},{label:'USA',data:confUSA,yAxisID:'yUSA',borderColor:REG.usa,backgroundColor:REG.usa+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: pending release`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)} pts`}}},scales:{x:scalesNBS.x,yChina:{position:'left',min:80,max:100,grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:REG.china,font:{size:9}},title:{display:true,text:'China (base 100)',color:REG.china,font:{size:8}}},yEuro:{position:'right',min:5,max:30,grid:{display:false},ticks:{color:REG.euro,font:{size:9}},title:{display:true,text:'Euro (EA.CONS)',color:REG.euro,font:{size:8}}},yUSA:{position:'right',min:30,max:70,grid:{display:false},ticks:{color:REG.usa,font:{size:9}},title:{display:true,text:'USA (UMCSENT)',color:REG.usa,font:{size:8}}}}}});
 
 // ── WECHAT DATA ───────────────────────────────────────────────────────────────
-// Source: Tencent WeChat Index mini-program screenshots (Sep 8, 2026).
-// Headline "today" values + day-over-day % are EXACT (read from on-screen text).
-// Historical trend shapes (all other points) are VISUAL ESTIMATES read off each
-// chart's gridlines — WeChat Index does not expose an export/API for daily history.
-const WDATA={
-  '7d':{
-    lineTag:'Last 7 Days',lineSub:'Sep 2 – Sep 8, 2026 · Daily weighted engagement score',
-    barTag:'Last 7 Days',barSub:'Sep 2 – Sep 8, 2026 · Hover bars for exact values',
-    labels:['Sep 2','Sep 3','Sep 4','Sep 5','Sep 6','Sep 7','Sep 8'],
-    luxury:[16.8,16.2,16.9,17.4,17.0,15.9,15.3],
-    hermes:[16.0,13.2,14.0,15.5,15.8,14.9,13.6],
-    lv:[2.3,2.25,2.1,2.0,2.15,2.24,2.20],
-    cartier:[7.0,4.5,3.3,3.1,3.0,3.2,3.21],
-    gucci:[2.4,2.2,2.1,2.3,2.5,6.5,16.1],
-    avgs:[16.5,14.7,2.2,3.9,4.9],
-    insights:[
-      {c:C.gucci,brand:'Gucci',title:'⚠ Gucci explodes +86.5% — from 2.5M to 16.1M in 2 days',
-       text:'Gucci jumped from a flat ~2.3M baseline to 6.5M (Sep 7) and then 16.1M (Sep 8, ▲86.46% day/day) — the largest single-brand move in this dataset, briefly putting Gucci above Hermès and near the Luxury General level. The "public account" source component alone rose +1233% day/day per WeChat Index breakdown, which points to a specific viral post or news event rather than organic demand — recommend verifying what happened on Chinese social media around Sep 7-8 before treating this as a fundamental signal.',
-       source:'Trend observation based on WeChat Index data — cause not yet identified'},
-      {c:C.luxury,brand:'Luxury (General)',title:'Luxury general easing — 17.4M peak (Sep 5) to 15.3M (Sep 8)',
-       text:'The category index eased from a mid-week peak of ~17.4M (Sep 5) to 15.3M on Sep 8 (▼4.26% day/day), a gentle decline within normal weekly volatility, not a sharp break.',
-       source:'Trend observation based on WeChat Index data'},
-      {c:C.hermes,brand:'Hermès',title:'Hermès pulls back to 13.6M — lowest point in the 7-day window',
-       text:'Hermès declined to 13.6M on Sep 8 (▼8.65% day/day), its lowest reading in the current 7-day window, down from a Sep 2 high of 16.0M.',
-       source:'Trend observation based on WeChat Index data'},
-      {c:C.lv,brand:'Louis Vuitton',title:'LV flat at 2.2M — quiet week after the Aug 22 spike',
-       text:'LV held in a narrow 2.0–2.3M band all week, showing no residual effect from the massive Aug 22 spike visible in the 30-day view — that event appears fully resolved.',
-       source:'Trend observation based on WeChat Index data'},
-    ]
-  },
-  '30d':{
-    lineTag:'Last 30 Days',lineSub:'Aug 10 – Sep 8, 2026 · Daily weighted engagement score',
-    barTag:'Last 30 Days',barSub:'Aug 10 – Sep 8, 2026 · Hover bars for exact values',
-    labels:['8/10','8/11','8/12','8/13','8/14','8/15','8/16','8/17','8/18','8/19','8/20','8/21','8/22','8/23','8/24','8/25','8/26','8/27','8/28','8/29','8/30','8/31','9/1','9/2','9/3','9/4','9/5','9/6','9/7','9/8'],
-    luxury:[19.0,17.8,16.9,16.5,17.0,17.8,18.5,19.2,20.5,22.0,23.2,23.8,24.0,22.5,21.0,20.0,19.3,18.7,18.2,17.8,17.4,17.0,16.8,16.8,16.2,16.9,17.4,17.0,15.9,15.3],
-    hermes:[19.0,18.0,16.5,14.5,14.0,14.8,15.5,16.0,17.0,18.5,19.2,19.5,19.0,17.5,16.0,15.2,15.8,16.5,17.0,16.2,15.5,15.0,15.5,16.0,13.2,14.0,15.5,15.8,14.9,13.6],
-    lv:[4.0,3.8,3.5,3.2,3.0,3.3,3.8,4.5,6.0,12.0,25.0,38.0,46.0,30.0,18.0,10.0,6.5,5.0,4.2,3.8,3.5,3.2,3.0,2.3,2.25,2.1,2.0,2.15,2.24,2.20],
-    cartier:[4.0,3.8,3.6,3.5,3.6,3.8,4.2,4.8,5.8,7.0,8.2,9.0,9.3,7.5,6.2,5.5,5.0,5.8,6.2,5.5,4.8,4.2,4.0,7.0,4.5,3.3,3.1,3.0,3.2,3.21],
-    gucci:[2.5,2.3,2.2,2.4,2.8,3.5,4.8,5.8,5.0,4.0,3.2,2.8,2.6,2.5,2.4,2.3,2.4,2.5,2.6,2.5,2.4,2.3,2.3,2.4,2.2,2.1,2.3,2.5,6.5,16.1],
-    avgs:[18.7,16.2,8.6,5.1,3.4],
-    insights:[
-      {c:C.lv,brand:'Louis Vuitton',title:'LV spiked to 46M on Aug 22 — a single-day event, not a trend',
-       text:'LV surged from a ~3-6M baseline to a peak of ~46M on Aug 22 (WeChat flags a same-day chain change of +51.98%, with the public-account source component up +89.24%), then decayed back to ~2.2M within a week. This reads as a discrete news event (product launch, campaign, or controversy) rather than sustained demand shift — the index fully round-tripped back to baseline by Sep 8.',
-       source:'Trend observation based on WeChat Index data — cause not yet identified'},
-      {c:C.cartier,brand:'Cartier',title:'Cartier co-moved with the Aug 22 event — peak 9.3M',
-       text:'Cartier also peaked on Aug 22 (~9.3M, chain change +137.11%, video-source component +166.10%), the same day as the LV spike — suggesting a shared cross-brand trigger (e.g., a luxury-sector news story or event) rather than a Cartier-specific one. It decayed to 3.2M by Sep 8.',
-       source:'Trend observation based on WeChat Index data — cause not yet identified'},
-      {c:C.gucci,brand:'Gucci',title:'Gucci: quiet month, then a vertical spike in the final 2 days',
-       text:'Gucci stayed range-bound (2-6M) for nearly the entire 30-day window, then spiked to 16.1M in the last 2 days (Sep 7-8) — a distinct, more recent event than the Aug 22 LV/Cartier co-movement, and still ongoing as of the latest reading.',
-       source:'Trend observation based on WeChat Index data'},
-      {c:C.hermes,brand:'Hermès',title:'Hermès — steadiest of the tracked brands this month',
-       text:'Hermès moved in a comparatively narrow 13-20M band across the 30-day window, with no single-day anomaly comparable to LV, Cartier or Gucci — the most stable brand signal this period.',
-       source:'Trend observation based on WeChat Index data'},
-    ]
-  },
-  '1y':{
-    lineTag:'All History (1 Year)',lineSub:'Sep 9, 2025 – Sep 8, 2026 · Monthly aggregated trend',
-    barTag:'All History (1 Year)',barSub:'Sep 2025 – Sep 2026 · Hover bars for exact values',
-    labels:['Sep-25','Oct-25','Nov-25','Dec-25','Jan-26','Feb-26','Mar-26','Apr-26','May-26','Jun-26','Jul-26','Aug-26','Sep-26'],
-    luxury:[22.0,54.0,30.0,24.0,20.0,22.0,26.0,28.9,25.0,24.0,26.0,24.0,15.3],
-    hermes:[14.0,15.0,18.0,28.0,16.0,15.0,16.0,22.1,17.0,18.0,19.0,17.5,13.6],
-    lv:[5.0,6.0,8.0,6.5,4.5,5.0,5.5,4.2,5.0,15.0,22.0,9.0,2.2],
-    cartier:[4.0,4.5,5.5,7.0,4.0,3.5,4.2,3.0,4.0,5.5,6.5,6.0,3.2],
-    gucci:[2.5,2.8,3.5,3.0,2.2,2.0,2.8,2.0,2.2,3.2,2.8,3.5,16.1],
-    avgs:[26.2,17.6,7.5,4.7,3.7],
-    insights:[
-      {c:C.lv,brand:'Louis Vuitton',title:'LV: an extraordinary Jun–Jul 2026 spike cluster — peak ~90M',
-       text:'The 1-year view shows LV oscillating in a modest 4-8M range for most of the year, then a cluster of very tall repeated spikes through Jun-Jul 2026 (peaking near 90M — by far the highest reading in the whole dataset), followed by the Aug 22 event and a return to baseline (2.2M) by Sep 2026. This 2-month window is the single most important LV signal of the year and warrants specific research into what drove it.',
-       source:'Trend observation based on WeChat Index data — cause not yet identified'},
-      {c:C.gucci,brand:'Gucci',title:'Gucci ends the year at its highest-ever reading — 16.1M',
-       text:'Gucci spent most of the year in a low 2-4M range with only minor bumps, then closed out the period with its tallest spike of the entire year (16.1M, Sep 8, 2026) — a sharp break from 12 months of structural weakness. Whether this marks a genuine turning point or is a one-off event (as the pattern suggests) is the key open question heading into the next update.',
-       source:'Trend observation based on WeChat Index data'},
-      {c:C.hermes,brand:'Hermès',title:'Hermès: Dec 2025 gifting-season spike to ~36M',
-       text:'Hermès shows a clear seasonal spike around Dec 2025 (year-end gifting), reaching ~36M before settling back into its typical 13-20M range. The Sep 2026 reading of 13.6M sits at the low end of the year\'s range.',
-       source:'Trend observation; consistent with seasonal gifting patterns in luxury'},
-      {c:C.cartier,brand:'Cartier',title:'Cartier: several moderate spikes through the year, none as extreme as Aug',
-       text:'Cartier shows recurring moderate spikes (Dec, Jun, Jul) in the 5.5-6.5M range across the year, but the Aug 22, 2026 event (9.3M single-day peak) was still its most prominent single-day move. Sep 2026 reading of 3.2M is near the low end of its yearly range.',
-       source:'Trend observation based on WeChat Index data'},
-    ]
-  }
-};
+const WDATA={'7d':{lineTag:'Last 7 Days',lineSub:'Sep 2 – Sep 8, 2026 · Daily weighted engagement score',barTag:'Last 7 Days',barSub:'Sep 2 – Sep 8, 2026',labels:['Sep 2','Sep 3','Sep 4','Sep 5','Sep 6','Sep 7','Sep 8'],luxury:[16.8,16.2,16.9,17.4,17.0,15.9,15.3],hermes:[16.0,13.2,14.0,15.5,15.8,14.9,13.6],lv:[2.3,2.25,2.1,2.0,2.15,2.24,2.20],cartier:[7.0,4.5,3.3,3.1,3.0,3.2,3.21],gucci:[2.4,2.2,2.1,2.3,2.5,6.5,16.1],avgs:[16.5,14.7,2.2,3.9,4.9],insights:[{c:C.gucci,brand:'Gucci',title:'⚠ Gucci explodes +86.5% — from 2.5M to 16.1M in 2 days',text:'Gucci jumped from a flat ~2.3M baseline to 6.5M (Sep 7) and then 16.1M (Sep 8, ▲86.46% day/day) — the largest single-brand move in this dataset, briefly putting Gucci above Hermès. Points to a specific viral post or news event rather than organic demand.',source:'Trend observation based on WeChat Index data'},{c:C.luxury,brand:'Luxury (General)',title:'Luxury general easing — 17.4M peak (Sep 5) to 15.3M (Sep 8)',text:'The category index eased from a mid-week peak of ~17.4M to 15.3M on Sep 8 (▼4.26% day/day) — within normal weekly volatility.',source:'Trend observation based on WeChat Index data'},{c:C.hermes,brand:'Hermès',title:'Hermès pulls back to 13.6M — lowest point in the 7-day window',text:'Hermès declined to 13.6M on Sep 8 (▼8.65% day/day), its lowest reading in the current 7-day window, down from a Sep 2 high of 16.0M.',source:'Trend observation based on WeChat Index data'},{c:C.lv,brand:'Louis Vuitton',title:'LV flat at 2.2M — quiet week after the Aug 22 spike',text:'LV held in a narrow 2.0–2.3M band all week, showing no residual effect from the massive Aug 22 spike — that event appears fully resolved.',source:'Trend observation based on WeChat Index data'}]},'30d':{lineTag:'Last 30 Days',lineSub:'Aug 10 – Sep 8, 2026 · Daily weighted engagement score',barTag:'Last 30 Days',barSub:'Aug 10 – Sep 8, 2026',labels:['8/10','8/11','8/12','8/13','8/14','8/15','8/16','8/17','8/18','8/19','8/20','8/21','8/22','8/23','8/24','8/25','8/26','8/27','8/28','8/29','8/30','8/31','9/1','9/2','9/3','9/4','9/5','9/6','9/7','9/8'],luxury:[19.0,17.8,16.9,16.5,17.0,17.8,18.5,19.2,20.5,22.0,23.2,23.8,24.0,22.5,21.0,20.0,19.3,18.7,18.2,17.8,17.4,17.0,16.8,16.8,16.2,16.9,17.4,17.0,15.9,15.3],hermes:[19.0,18.0,16.5,14.5,14.0,14.8,15.5,16.0,17.0,18.5,19.2,19.5,19.0,17.5,16.0,15.2,15.8,16.5,17.0,16.2,15.5,15.0,15.5,16.0,13.2,14.0,15.5,15.8,14.9,13.6],lv:[4.0,3.8,3.5,3.2,3.0,3.3,3.8,4.5,6.0,12.0,25.0,38.0,46.0,30.0,18.0,10.0,6.5,5.0,4.2,3.8,3.5,3.2,3.0,2.3,2.25,2.1,2.0,2.15,2.24,2.20],cartier:[4.0,3.8,3.6,3.5,3.6,3.8,4.2,4.8,5.8,7.0,8.2,9.0,9.3,7.5,6.2,5.5,5.0,5.8,6.2,5.5,4.8,4.2,4.0,7.0,4.5,3.3,3.1,3.0,3.2,3.21],gucci:[2.5,2.3,2.2,2.4,2.8,3.5,4.8,5.8,5.0,4.0,3.2,2.8,2.6,2.5,2.4,2.3,2.4,2.5,2.6,2.5,2.4,2.3,2.3,2.4,2.2,2.1,2.3,2.5,6.5,16.1],avgs:[18.7,16.2,8.6,5.1,3.4],insights:[{c:C.lv,brand:'Louis Vuitton',title:'LV spiked to 46M on Aug 22 — a single-day event, not a trend',text:'LV surged from a ~3-6M baseline to a peak of ~46M on Aug 22, then decayed back to ~2.2M within a week. Reads as a discrete news event rather than sustained demand shift.',source:'Trend observation based on WeChat Index data'},{c:C.cartier,brand:'Cartier',title:'Cartier co-moved with the Aug 22 event — peak 9.3M',text:'Cartier also peaked on Aug 22 (~9.3M), the same day as the LV spike — suggesting a shared cross-brand trigger rather than a Cartier-specific one.',source:'Trend observation based on WeChat Index data'},{c:C.gucci,brand:'Gucci',title:'Gucci: quiet month, then a vertical spike in the final 2 days',text:'Gucci stayed range-bound (2-6M) for nearly the entire 30-day window, then spiked to 16.1M in the last 2 days — a distinct, more recent event, still ongoing as of the latest reading.',source:'Trend observation based on WeChat Index data'},{c:C.hermes,brand:'Hermès',title:'Hermès — steadiest of the tracked brands this month',text:'Hermès moved in a comparatively narrow 13-20M band across the 30-day window, with no single-day anomaly — the most stable brand signal this period.',source:'Trend observation based on WeChat Index data'}]},'1y':{lineTag:'All History (1 Year)',lineSub:'Sep 9, 2025 – Sep 8, 2026 · Monthly aggregated trend',barTag:'All History (1 Year)',barSub:'Sep 2025 – Sep 2026',labels:['Sep-25','Oct-25','Nov-25','Dec-25','Jan-26','Feb-26','Mar-26','Apr-26','May-26','Jun-26','Jul-26','Aug-26','Sep-26'],luxury:[22.0,54.0,30.0,24.0,20.0,22.0,26.0,28.9,25.0,24.0,26.0,24.0,15.3],hermes:[14.0,15.0,18.0,28.0,16.0,15.0,16.0,22.1,17.0,18.0,19.0,17.5,13.6],lv:[5.0,6.0,8.0,6.5,4.5,5.0,5.5,4.2,5.0,15.0,22.0,9.0,2.2],cartier:[4.0,4.5,5.5,7.0,4.0,3.5,4.2,3.0,4.0,5.5,6.5,6.0,3.2],gucci:[2.5,2.8,3.5,3.0,2.2,2.0,2.8,2.0,2.2,3.2,2.8,3.5,16.1],avgs:[26.2,17.6,7.5,4.7,3.7],insights:[{c:C.lv,brand:'Louis Vuitton',title:'LV: an extraordinary Jun–Jul 2026 spike cluster — peak ~90M',text:'The 1-year view shows LV oscillating in a modest 4-8M range for most of the year, then a cluster of very tall repeated spikes through Jun-Jul 2026 (peaking near 90M), followed by the Aug 22 event and a return to baseline (2.2M) by Sep 2026.',source:'Trend observation based on WeChat Index data'},{c:C.gucci,brand:'Gucci',title:'Gucci ends the year at its highest-ever reading — 16.1M',text:'Gucci spent most of the year in a low 2-4M range, then closed out the period with its tallest spike of the entire year (16.1M, Sep 8, 2026) — a sharp break from 12 months of structural weakness.',source:'Trend observation based on WeChat Index data'},{c:C.hermes,brand:'Hermès',title:'Hermès: Dec 2025 gifting-season spike to ~36M',text:'Hermès shows a clear seasonal spike around Dec 2025 (year-end gifting), reaching ~36M before settling back into its typical 13-20M range.',source:'Trend observation; consistent with seasonal gifting patterns in luxury'},{c:C.cartier,brand:'Cartier',title:'Cartier: several moderate spikes through the year',text:'Cartier shows recurring moderate spikes (Dec, Jun, Jul) in the 5.5-6.5M range across the year, but the Aug 22, 2026 event (9.3M) was still its most prominent single-day move.',source:'Trend observation based on WeChat Index data'}]}};
 
 function makeDs(label,data,color,yAxis='y'){return{label,data,borderColor:color,backgroundColor:color+'18',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.4,fill:false,yAxisID:yAxis};}
 const scalesW={x:{grid:{color:'rgba(46,109,164,0.12)'},ticks:{color:'#667085',font:{size:10}}},y:{position:'left',grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#667085',font:{size:10},callback:v=>v+'M'},title:{display:true,text:'Luxury · Hermès (M)',color:'#667085',font:{size:9}}},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#667085',font:{size:10},callback:v=>v+'M'},title:{display:true,text:'LV · Cartier · Gucci (M)',color:'#667085',font:{size:9}}}};
 const plugL={legend:{display:false},tooltip:{backgroundColor:'#0d1b2e',borderColor:'#d0d5dd',borderWidth:1,titleColor:'#a8cceb',bodyColor:'#c9e0f4',callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}M`}}};
-const plugB={legend:{display:false},tooltip:{backgroundColor:'#0d1b2e',borderColor:'#d0d5dd',borderWidth:1,titleColor:'#a8cceb',bodyColor:'#c9e0f4',callbacks:{title:i=>i[0].label,label:ctx=>` Avg: ${ctx.parsed.y.toFixed(1)}M`,afterLabel:()=>'(weighted engagement score)'}}};
-
+const plugB={legend:{display:false},tooltip:{backgroundColor:'#0d1b2e',borderColor:'#d0d5dd',borderWidth:1,titleColor:'#a8cceb',bodyColor:'#c9e0f4',callbacks:{title:i=>i[0].label,label:ctx=>` Avg: ${ctx.parsed.y.toFixed(1)}M`}}};
 const lineChart=new Chart(document.getElementById('lineChart'),{type:'line',data:{labels:[],datasets:[]},options:{responsive:true,maintainAspectRatio:false,plugins:plugL,scales:scalesW}});
-const barChart=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:['Luxury (General)','Hermès','Louis Vuitton','Cartier','Gucci'],datasets:[]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:plugB,scales:{x:{grid:{display:false},ticks:{color:'#667085',font:{size:11}}},y:{grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#667085',font:{size:10},callback:v=>v+'M'}}}},plugins:[{
-  id:'relativeShareLabels',
-  afterDatasetsDraw(chart){
-    const data=chart.data.datasets[0]?.data;
-    if(!data||data.length<5) return;
-    // Relative share computed only among the 4 named brands (indices 1-4):
-    // Hermès, Louis Vuitton, Cartier, Gucci — excludes the "Luxury (General)"
-    // category aggregate at index 0, since that's not a brand.
-    const brandSum=data[1]+data[2]+data[3]+data[4];
-    const ctx=chart.ctx;const meta=chart.getDatasetMeta(0);
-    data.forEach((val,i)=>{
-      if(i===0||val==null) return; // skip Luxury (General)
-      const share=brandSum>0?(val/brandSum*100):0;
-      const bar=meta.data[i];
-      const label=`${share.toFixed(0)}%`;
-      ctx.save();
-      ctx.font='bold 9px Segoe UI';
-      ctx.textAlign='center';
-      const tw=ctx.measureText(label).width;
-      const cx=bar.x, cy=bar.y-14, r=Math.max(tw/2+5,11);
-      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
-      ctx.fillStyle='#ffffff';ctx.fill();
-      ctx.lineWidth=1.5;ctx.strokeStyle='#1b3a5c';ctx.stroke();
-      ctx.fillStyle='#1b3a5c';
-      ctx.textBaseline='middle';
-      ctx.fillText(label,cx,cy+1);
-      ctx.restore();
-    });
-  }
-}]});
+const barChart=new Chart(document.getElementById('barChart'),{type:'bar',data:{labels:['Luxury (General)','Hermès','Louis Vuitton','Cartier','Gucci'],datasets:[]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:plugB,scales:{x:{grid:{display:false},ticks:{color:'#667085',font:{size:11}}},y:{grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#667085',font:{size:10},callback:v=>v+'M'}}}},plugins:[{id:'relativeShareLabels',afterDatasetsDraw(chart){const data=chart.data.datasets[0]?.data;if(!data||data.length<5)return;const brandSum=data[1]+data[2]+data[3]+data[4];const ctx=chart.ctx;const meta=chart.getDatasetMeta(0);data.forEach((val,i)=>{if(i===0||val==null)return;const share=brandSum>0?(val/brandSum*100):0;const bar=meta.data[i];const label=`${share.toFixed(0)}%`;ctx.save();ctx.font='bold 9px Segoe UI';ctx.textAlign='center';const tw=ctx.measureText(label).width;const cx=bar.x,cy=bar.y-14,r=Math.max(tw/2+5,11);ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='#ffffff';ctx.fill();ctx.lineWidth=1.5;ctx.strokeStyle='#1b3a5c';ctx.stroke();ctx.fillStyle='#1b3a5c';ctx.textBaseline='middle';ctx.fillText(label,cx,cy+1);ctx.restore();});}}]});
 
-function renderInsights(view){
-  const d=WDATA[view];const row=document.getElementById('insightsRow');
-  let html='';
-  d.insights.forEach(item=>{html+=`<div class="insight-card"><div class="insight-dot-row"><div class="insight-dot" style="background:${item.c}"></div><div class="insight-brand">${item.brand}</div></div><div class="insight-title">${item.title}</div><div class="insight-text">${item.text}</div><div class="insight-source">Source: ${item.source}</div></div>`;});
-  row.innerHTML=html;row.classList.remove('fade-in');void row.offsetWidth;row.classList.add('fade-in');
-}
+function renderInsights(view){const d=WDATA[view];const row=document.getElementById('insightsRow');let html='';d.insights.forEach(item=>{html+=`<div class="insight-card"><div class="insight-dot-row"><div class="insight-dot" style="background:${item.c}"></div><div class="insight-brand">${item.brand}</div></div><div class="insight-title">${item.title}</div><div class="insight-text">${item.text}</div><div class="insight-source">Source: ${item.source}</div></div>`;});row.innerHTML=html;row.classList.remove('fade-in');void row.offsetWidth;row.classList.add('fade-in');}
+function setView(view,btn){document.querySelectorAll('.time-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const d=WDATA[view];document.getElementById('lineTag').textContent=d.lineTag;document.getElementById('lineSub').textContent=d.lineSub;document.getElementById('barTag').textContent=d.barTag;document.getElementById('barSub').textContent=d.barSub;lineChart.data.labels=d.labels;lineChart.data.datasets=[makeDs('Luxury (General)',d.luxury,C.luxury,'y'),makeDs('Hermès',d.hermes,C.hermes,'y'),makeDs('Louis Vuitton',d.lv,C.lv,'y2'),makeDs('Cartier',d.cartier,C.cartier,'y2'),makeDs('Gucci',d.gucci,C.gucci,'y2')];lineChart.update('active');barChart.data.datasets=[{data:d.avgs,backgroundColor:[C.luxury,C.hermes,C.lv,C.cartier,C.gucci],borderRadius:6,borderSkipped:false}];barChart.update('active');renderInsights(view);}
+(function(){const d=WDATA['30d'];lineChart.data.labels=d.labels;lineChart.data.datasets=[makeDs('Luxury (General)',d.luxury,C.luxury,'y'),makeDs('Hermès',d.hermes,C.hermes,'y'),makeDs('Louis Vuitton',d.lv,C.lv,'y2'),makeDs('Cartier',d.cartier,C.cartier,'y2'),makeDs('Gucci',d.gucci,C.gucci,'y2')];lineChart.update();barChart.data.datasets=[{data:d.avgs,backgroundColor:[C.luxury,C.hermes,C.lv,C.cartier,C.gucci],borderRadius:6,borderSkipped:false}];barChart.update();renderInsights('30d');})();
 
-function setView(view,btn){
-  document.querySelectorAll('.time-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
-  const d=WDATA[view];
-  document.getElementById('lineTag').textContent=d.lineTag;document.getElementById('lineSub').textContent=d.lineSub;
-  document.getElementById('barTag').textContent=d.barTag;document.getElementById('barSub').textContent=d.barSub;
-  lineChart.data.labels=d.labels;
-  lineChart.data.datasets=[makeDs('Luxury (General)',d.luxury,C.luxury,'y'),makeDs('Hermès',d.hermes,C.hermes,'y'),makeDs('Louis Vuitton',d.lv,C.lv,'y2'),makeDs('Cartier',d.cartier,C.cartier,'y2'),makeDs('Gucci',d.gucci,C.gucci,'y2')];
-  lineChart.update('active');
-  barChart.data.datasets=[{data:d.avgs,backgroundColor:[C.luxury,C.hermes,C.lv,C.cartier,C.gucci],borderRadius:6,borderSkipped:false}];
-  barChart.update('active');renderInsights(view);
-}
+// ── GOOGLE TRENDS ─────────────────────────────────────────────────────────────
+const BRANDS={lv:{name:'Louis Vuitton',color:'#5b9bd5',keywords:{cn:'LV',en:'Louis Vuitton'}},dior:{name:'Dior',color:'#7b68ae',keywords:{cn:'迪奥',en:'Dior'}},hermes:{name:'Hermès',color:'#e8a020',keywords:{cn:'爱马仕',en:'Hermès'}},cartier:{name:'Cartier',color:'#c0392b',keywords:{cn:'卡地亚',en:'Cartier'}},gucci:{name:'Gucci',color:'#6dba6d',keywords:{cn:'Gucci',en:'Gucci'}}};
+let trendsData=null;let chartChina=null;let chartGlobal=null;let currentPeriod='7d';
+const chartConfigTrends={type:'line',options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#0d1b2e',borderColor:'#2e6da4',borderWidth:1,titleColor:'#a8cceb',bodyColor:'#c9e0f4'}},scales:{x:{grid:{color:'rgba(46,109,164,0.12)'},ticks:{color:'#8aa8c4',font:{size:10}}},y:{grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#8aa8c4',font:{size:10}}}}}};
+async function loadTrendsData(){try{const response=await fetch('https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-trends-tracker/main/trends_data.json');if(!response.ok)throw new Error('Failed');trendsData=await response.json();try{const lastUpdate=trendsData?.metadata?.last_update;if(lastUpdate){const d=new Date(lastUpdate);if(!isNaN(d)){HEADER_DATES.trends=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});updateHeaderBadge();}}}catch(e){}initTrendsCharts();renderTrendsView('china','7d');renderTrendsView('global','7d');renderCorrelation();}catch(error){console.error('Error loading Google Trends data:',error);}}
+function initTrendsCharts(){const ctxChina=document.getElementById('chartTrendsChina').getContext('2d');const ctxGlobal=document.getElementById('chartTrendsGlobal').getContext('2d');chartChina=new Chart(ctxChina,JSON.parse(JSON.stringify(chartConfigTrends)));chartGlobal=new Chart(ctxGlobal,JSON.parse(JSON.stringify(chartConfigTrends)));}
+function renderTrendsView(region,period){if(!trendsData||!trendsData[region]||!trendsData[region][period])return;const data=trendsData[region][period];const chart=region==='china'?chartChina:chartGlobal;const kpiContainer=region==='china'?'trendsKpiChinaMini':'trendsKpiGlobalMini';let kpiHTML='';Object.keys(BRANDS).forEach(brandKey=>{const brand=BRANDS[brandKey];const keyword=region==='china'?brand.keywords.cn:brand.keywords.en;const latest=data.latest[keyword];if(latest){const changeClass=latest.change>0?'up':latest.change<0?'down':'neutral';const changeSymbol=latest.change>0?'↑':latest.change<0?'↓':'→';kpiHTML+=`<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 10px;position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:2px;background:${brand.color};"></div><div style="font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;">${brand.name}</div><div style="font-size:16px;font-weight:600;color:var(--accent-light);">${latest.value.toFixed(0)}</div><div style="display:inline-flex;align-items:center;gap:3px;margin-top:2px;font-size:9px;font-weight:500;padding:2px 6px;border-radius:12px;background:${changeClass==='up'?'rgba(192,57,43,.15)':changeClass==='down'?'rgba(74,144,196,.15)':'rgba(138,168,196,.15)'};color:${changeClass==='up'?'#e05c4a':changeClass==='down'?'#2e6da4':'var(--text-muted)'};">${changeSymbol} ${Math.abs(latest.change).toFixed(1)}%</div></div>`;}});document.getElementById(kpiContainer).innerHTML=kpiHTML;const datasets=[];Object.keys(BRANDS).forEach(brandKey=>{const brand=BRANDS[brandKey];const keyword=region==='china'?brand.keywords.cn:brand.keywords.en;if(data.datasets[keyword]){datasets.push({label:brand.name,data:data.datasets[keyword],borderColor:brand.color,backgroundColor:brand.color+'18',borderWidth:2,pointRadius:0,pointHoverRadius:4,tension:0.4});}});chart.data={labels:data.labels,datasets:datasets};chart.update();const periodNames={'7d':'Last 7 days','30d':'Last 30 days','12m':'Last 12 months'};const subtitle=periodNames[period]||period;const regionLabel=region==='china'?'Mainland China':'Worldwide';document.getElementById(region==='china'?'trendsChinaSub':'trendsGlobalSub').textContent=`${subtitle} · ${regionLabel} search interest`;}
+function setTrendsViewBoth(period,button){const buttons=document.getElementById('trendsSelectorParent').querySelectorAll('.time-btn');buttons.forEach(b=>b.classList.remove('active'));button.classList.add('active');renderTrendsView('china',period);renderTrendsView('global',period);currentPeriod=period;renderCorrelation();const periodNames={'7d':{long:'last 7 days'},'30d':{long:'last 30 days'},'12m':{long:'last 12 months'}};document.getElementById('crossPlatformSubtitle').textContent=`Comparing WeChat Index + Google Trends (China & Global) + NBS Macro · ${(periodNames[period]||{long:period}).long} comparison`;}
 
-(function(){
-  const d=WDATA['30d'];
-  lineChart.data.labels=d.labels;
-  lineChart.data.datasets=[makeDs('Luxury (General)',d.luxury,C.luxury,'y'),makeDs('Hermès',d.hermes,C.hermes,'y'),makeDs('Louis Vuitton',d.lv,C.lv,'y2'),makeDs('Cartier',d.cartier,C.cartier,'y2'),makeDs('Gucci',d.gucci,C.gucci,'y2')];
-  lineChart.update();
-  barChart.data.datasets=[{data:d.avgs,backgroundColor:[C.luxury,C.hermes,C.lv,C.cartier,C.gucci],borderRadius:6,borderSkipped:false}];
-  barChart.update();renderInsights('30d');
-})();
+function renderCorrelation(){const XPLAT_PERIOD='30d';const WECHAT_PERIOD_MAP={'7d':'7d','30d':'30d','12m':'1y'};if(!trendsData||!trendsData.china[XPLAT_PERIOD]||!trendsData.global[XPLAT_PERIOD]){document.getElementById('correlationGrid').innerHTML=`<div class="corr-item" style="grid-column:1/-1;text-align:center;padding:20px;"><div class="corr-signal mixed">Google Trends data loading...</div></div>`;return;}const chinaData=trendsData.china[XPLAT_PERIOD].latest;const globalData=trendsData.global[XPLAT_PERIOD].latest;function liveWeChatContext(brandKey){const wchatKeyMap={lv:'lv',hermes:'hermes',cartier:'cartier',gucci:'gucci'};const key=wchatKeyMap[brandKey];if(!key||typeof WDATA==='undefined')return null;const d=WDATA[WECHAT_PERIOD_MAP[XPLAT_PERIOD]];if(!d||!d[key]||d[key].length<2)return null;const arr=d[key];const first=arr[0],latest=arr[arr.length-1];const pctChange=first?((latest-first)/first*100):null;return{latest,pctChange};}
+function liveMacroContext(){if(typeof confChina==='undefined')return null;const lastNonNull=arr=>{for(let i=arr.length-1;i>=0;i--)if(arr[i]!=null)return arr[i];return null;};return{conf:lastNonNull(confChina),retail:lastNonNull(retailChina),gdp:lastNonNull(gdpChina)};}
+function livePerformanceContext(brandKey){if(typeof BU_GROWTH==='undefined'||typeof ASIA_GROWTH==='undefined')return null;if(brandKey==='lv'||brandKey==='dior'){const flg=BU_GROWTH['Fashion and Leather Goods'];const latestFlg=flg[flg.length-1];const asiaLvmh=ASIA_GROWTH.LVMH[ASIA_GROWTH.LVMH.length-1];const note=brandKey==='dior'?' (shared BU with LV, not Dior-specific)':'';return{label:'LVMH F&LG',growth:latestFlg,asiaGrowth:asiaLvmh,note};}if(brandKey==='hermes'){const asiaHermes=ASIA_GROWTH.Hermes[ASIA_GROWTH.Hermes.length-1];return{label:'Hermès',growth:null,asiaGrowth:asiaHermes,note:''};}if(brandKey==='gucci'){const asiaKering=ASIA_GROWTH.Kering[ASIA_GROWTH.Kering.length-1];return{label:'Kering',growth:null,asiaGrowth:asiaKering,note:''};}return null;}
+function liveResaleContext(brandKey){const modelMap={hermes:['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28'],lv:['LV Neverfull MM','LV Speedy 25']};const models=modelMap[brandKey];if(!models||typeof RESALE_V2_DATA==='undefined')return null;let sum=0,n=0;['US','EU'].forEach(region=>{models.forEach(m=>{const h=(RESALE_V2_DATA[region]&&RESALE_V2_DATA[region][m])||[];const last=h[h.length-1];if(last&&last.vr_median!=null){sum+=last.vr_median;n++;}});});if(n===0)return null;return{vr:(sum/n)*100,aboveRetail:(sum/n)>1};}
+const macro=liveMacroContext();let html='';Object.keys(BRANDS).forEach(brandKey=>{const brand=BRANDS[brandKey];const chinaLatest=chinaData[brand.keywords.cn];const globalLatest=globalData[brand.keywords.en];if(!chinaLatest||!globalLatest)return;const chinaUp=chinaLatest.change>2,chinaDown=chinaLatest.change<-2;const globalUp=globalLatest.change>2,globalDown=globalLatest.change<-2;const chinaDataLimited=Math.abs(chinaLatest.value)<5;const wechat=liveWeChatContext(brandKey);const perf=livePerformanceContext(brandKey);const resale=liveResaleContext(brandKey);const trendsDir=chinaUp&&globalUp?1:(chinaDown&&globalDown?-1:0);let signal,signalClass,thesis;if(trendsDir===1&&wechat&&wechat.pctChange>0){signal='✓ Converging Signals — China Interest Rising';signalClass='strong';thesis=`Directional read: search and engagement both point up for ${brand.name} this period.`;}else if(trendsDir===-1&&wechat&&wechat.pctChange<0){signal='🔴 Converging Signals — China Interest Softening';signalClass='weak';thesis=`Directional read: search and engagement both point down for ${brand.name} this period.`;}else if(chinaUp&&!globalUp){signal='⚡ China-Specific Divergence';signalClass='mixed';thesis=`Directional read: China-specific strength not mirrored globally for ${brand.name}.`;}else if(globalUp&&!chinaUp){signal=chinaDataLimited?'⚠ Global Rising · China Read Unreliable':'⚠ China Underperforming Global Search';signalClass='mixed';thesis=chinaDataLimited?`Global search is up for ${brand.name}, but China Trends figure is too thin to read.`:`Global interest is outpacing China for ${brand.name}.`;}else{signal='→ Mixed / Inconclusive';signalClass='mixed';thesis=`No clear single story for ${brand.name} this period.`;}
+const wechatLine=wechat?` WeChat (30d): ${wechat.latest.toFixed(1)}M, ${wechat.pctChange>=0?'+':''}${wechat.pctChange.toFixed(0)}% over window.`:' WeChat: not tracked.';const perfLine=perf?(perf.growth!=null?` ${perf.label} organic ${perf.growth>=0?'+':''}${perf.growth.toFixed(1)}%${perf.note}, Asia ex-Japan ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`:` ${perf.label} Asia ex-Japan ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`):' Not in LVMH Performance (different group).';const macroLine=macro?` China: confidence ${macro.conf!=null?macro.conf.toFixed(1)+'pts':'n/a'}, retail ${macro.retail!=null?(macro.retail>=0?'+':'')+macro.retail.toFixed(1)+'%':'n/a'}.`:'';const resaleLine=resale?` Resale ~${resale.vr.toFixed(0)}% VR (US/EU avg).`:'';const trendsLine=` Trends: China ${chinaLatest.change>=0?'+':''}${chinaLatest.change.toFixed(1)}%, Global ${globalLatest.change>=0?'+':''}${globalLatest.change.toFixed(1)}%.`;const text=`${thesis}<br><span style="opacity:.75;">${trendsLine}${wechatLine}${perfLine}${macroLine}${resaleLine}</span>`;html+=`<div class="corr-item"><div class="corr-header"><div class="corr-dot" style="background:${brand.color}"></div><div class="corr-brand">${brand.name}</div></div><div class="corr-signal ${signalClass}">${signal}</div><div class="corr-text">${text}</div></div>`;});document.getElementById('correlationGrid').innerHTML=html;}
 
-// ══════════════════════════════════════════════════════════════════════════════
-// GOOGLE TRENDS DATA & CHARTS
-// ══════════════════════════════════════════════════════════════════════════════
-const BRANDS = {
-  lv: { name: 'Louis Vuitton', color: '#5b9bd5', keywords: { cn: 'LV', en: 'Louis Vuitton' } },
-  dior: { name: 'Dior', color: '#7b68ae', keywords: { cn: '迪奥', en: 'Dior' } },
-  hermes: { name: 'Hermès', color: '#e8a020', keywords: { cn: '爱马仕', en: 'Hermès' } },
-  cartier: { name: 'Cartier', color: '#c0392b', keywords: { cn: '卡地亚', en: 'Cartier' } },
-  gucci: { name: 'Gucci', color: '#6dba6d', keywords: { cn: 'Gucci', en: 'Gucci' } }
-};
+window.addEventListener('DOMContentLoaded',()=>{loadTrendsData();loadResaleData();});
 
-let trendsData = null;
-let chartChina = null;
-let chartGlobal = null;
-let currentPeriod = '7d';
+// ── RESALE V2 DATA ────────────────────────────────────────────────────────────
+const RESALE_V2_BASE='https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-resale-tracker/main/data_v2/';
+const RESALE_V2_MODELS=['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28','LV Neverfull MM','LV Speedy 25'];
+const REGION_COLORS_V2={US:'#d4a84b',EU:'#2ecc71',CN:'#4a90c4'};
+const REGION_FILES={US:'us_resale.json',EU:'eu_resale.json',CN:'cn_resale.json'};
+let RESALE_V2_DATA={US:{},EU:{},CN:{}};
 
-const chartConfigTrends = {
-  type: 'line',
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: '#0d1b2e',
-        borderColor: '#2e6da4',
-        borderWidth: 1,
-        titleColor: '#a8cceb',
-        bodyColor: '#c9e0f4'
-      }
-    },
-    scales: {
-      x: {
-        grid: { color: 'rgba(46,109,164,0.12)' },
-        ticks: { color: '#8aa8c4', font: { size: 10 } }
-      },
-      y: {
-        grid: { color: 'rgba(46,109,164,0.18)' },
-        ticks: { color: '#8aa8c4', font: { size: 10 } }
-      }
-    }
-  }
-};
-
-async function loadTrendsData() {
-  try {
-    const response = await fetch('https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-trends-tracker/main/trends_data.json');
-    if (!response.ok) throw new Error('Failed to fetch Google Trends data');
-    
-    trendsData = await response.json();
-    window.trendsLoaded = true;
-
-    // Update header badge with latest Google Trends date from metadata
-    try {
-      const lastUpdate = trendsData?.metadata?.last_update;
-      if (lastUpdate) {
-        const d = new Date(lastUpdate);
-        if (!isNaN(d)) {
-          HEADER_DATES.trends = d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
-          updateHeaderBadge();
-        }
-      }
-    } catch(e) { /* non-fatal */ }
-
-    initTrendsCharts();
-    renderTrendsView('china', '7d');
-    renderTrendsView('global', '7d');
-    renderCorrelation();
-    
-  } catch (error) {
-    console.error('Error loading Google Trends data:', error);
-    document.getElementById('trendsKpiChina').innerHTML = 
-      '<div style="grid-column:1/-1;padding:20px;text-align:center;color:var(--muted);">Google Trends data unavailable. Please check network connection.</div>';
-    document.getElementById('trendsKpiGlobal').innerHTML = 
-      '<div style="grid-column:1/-1;padding:20px;text-align:center;color:var(--muted);">Google Trends data unavailable. Please check network connection.</div>';
+async function loadResaleData(){
+  try{
+    const[usRes,euRes,cnRes]=await Promise.all([fetch(RESALE_V2_BASE+REGION_FILES.US),fetch(RESALE_V2_BASE+REGION_FILES.EU),fetch(RESALE_V2_BASE+REGION_FILES.CN)]);
+    if(!usRes.ok||!euRes.ok||!cnRes.ok)throw new Error('Fetch failed');
+    const[usData,euData,cnData]=await Promise.all([usRes.json(),euRes.json(),cnRes.json()]);
+    RESALE_V2_DATA={US:usData,EU:euData,CN:cnData};
+    function latestDate(dataObj){const dates=[];Object.values(dataObj).forEach(arr=>{if(arr&&arr.length)dates.push(arr[arr.length-1].date);});return dates.sort().pop()||'';}
+    function fmtDate(iso){return iso?new Date(iso+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'n/a';}
+    const dates={US:latestDate(usData),EU:latestDate(euData),CN:latestDate(cnData)};
+    const oldestFmt=Object.values(dates).filter(Boolean).sort()[0];
+    const sub=document.getElementById('resaleSectionSub');
+    if(sub)sub.textContent=`Value retention across 6 tracked models · Rebag (US) · Vestiaire Collective (EU) · Xianyu/Goofish (China) · US: ${fmtDate(dates.US)} · EU: ${fmtDate(dates.EU)} · China: ${fmtDate(dates.CN)}`;
+    const badge=document.getElementById('indexStalenessBadge');
+    if(badge){if(!oldestFmt){badge.innerHTML='';}else{const days=Math.floor((Date.now()-new Date(oldestFmt+'T12:00:00').getTime())/86400000);if(days>14)badge.innerHTML=`<div class="signal-badge red" style="margin-top:6px;">🔴 Stale — ${days} days since oldest region update</div>`;else if(days>8)badge.innerHTML=`<div class="signal-badge yellow" style="margin-top:6px;">⚠ ${days} days since oldest region update</div>`;else badge.innerHTML='';}}
+    const brandSel=document.getElementById('brandGroupSelector');
+    if(brandSel&&!brandSel._wired){brandSel.addEventListener('change',()=>renderIndexPanel(brandSel.value));brandSel._wired=true;}
+    renderIndexPanel(brandSel?brandSel.value:'hermes');
+    const sel=document.getElementById('modelSelector');
+    if(sel&&!sel._wired){sel.addEventListener('change',()=>renderModelDetail(sel.value));sel._wired=true;}
+    renderModelDetail(sel?sel.value:RESALE_V2_MODELS[0]);
+    // Init price evolution panel after data loads
+    initPriceEvolutionPanel();
+    if(typeof renderCorrelation==='function'&&typeof currentPeriod!=='undefined')renderCorrelation();
+  }catch(err){
+    console.error('Resale v2 load error:',err);
+    const errRow=`<tr><td colspan="5" style="text-align:center;color:#e05c4a;padding:14px;font-size:11px;">Could not load resale data</td></tr>`;
+    document.getElementById('resaleIndexTableBody').innerHTML=errRow;
+    document.getElementById('modelDetailTableBody').innerHTML=errRow;
   }
 }
 
-function initTrendsCharts() {
-  const ctxChina = document.getElementById('chartTrendsChina').getContext('2d');
-  const ctxGlobal = document.getElementById('chartTrendsGlobal').getContext('2d');
-  
-  // Each chart needs its own config object — Chart.js mutates it internally
-  chartChina = new Chart(ctxChina, JSON.parse(JSON.stringify(chartConfigTrends)));
-  chartGlobal = new Chart(ctxGlobal, JSON.parse(JSON.stringify(chartConfigTrends)));
+const BRAND_GROUPS={hermes:['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28'],lvdior:['LV Neverfull MM','LV Speedy 25']};
+const BRAND_GROUP_LABELS={hermes:'Hermès (Birkin 25/30, Kelly 25/28)',lvdior:'Louis Vuitton (Neverfull MM, Speedy 25)'};
+function computeRegionIndex(regionData,modelFilter){const byDate={};Object.entries(regionData||{}).forEach(([model,history])=>{if(modelFilter&&!modelFilter.includes(model))return;(history||[]).forEach(entry=>{if(entry.vr_median==null)return;byDate[entry.date]=byDate[entry.date]||{sum:0,n:0};byDate[entry.date].sum+=entry.vr_median;byDate[entry.date].n+=1;});});return Object.keys(byDate).sort().map(date=>({date,avg:byDate[date].sum/byDate[date].n,nModels:byDate[date].n}));}
+
+let indexChartInstance=null;
+function buildIndexChart(brandGroup){const models=BRAND_GROUPS[brandGroup];const usIdx=computeRegionIndex(RESALE_V2_DATA.US,models);const euIdx=computeRegionIndex(RESALE_V2_DATA.EU,models);const cnIdx=computeRegionIndex(RESALE_V2_DATA.CN,models);const allDates=Array.from(new Set([...usIdx,...euIdx,...cnIdx].map(d=>d.date))).sort();function seriesFor(idx){const map={};idx.forEach(d=>map[d.date]=d.avg);return allDates.map(d=>map[d]!=null?+(map[d]*100).toFixed(2):null);}
+const ctx=document.getElementById('resaleIndexChart');if(indexChartInstance)indexChartInstance.destroy();indexChartInstance=new Chart(ctx,{type:'line',data:{labels:allDates,datasets:[{label:'USA',data:seriesFor(usIdx),borderColor:REGION_COLORS_V2.US,backgroundColor:REGION_COLORS_V2.US+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true},{label:'Europe',data:seriesFor(euIdx),borderColor:REGION_COLORS_V2.EU,backgroundColor:REGION_COLORS_V2.EU+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true},{label:'China ⚠',data:seriesFor(cnIdx),borderColor:REGION_COLORS_V2.CN,backgroundColor:REGION_COLORS_V2.CN+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true,borderDash:[5,4]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% avg VR`}}},scales:{x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}}}});}
+
+function buildIndexTable(brandGroup){const models=BRAND_GROUPS[brandGroup];const nTotal=models.length;const regions=[{key:'US',name:'USA',source:'Rebag'},{key:'EU',name:'Europe',source:'Vestiaire Collective'},{key:'CN',name:'China ⚠',source:'Xianyu / Goofish'}];let rows='';let latestDateOverall='';regions.forEach(r=>{const idx=computeRegionIndex(RESALE_V2_DATA[r.key],models);const latest=idx[idx.length-1];const dotStyle=`display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;if(!latest){rows+=`<tr><td><span style="${dotStyle}"></span>${r.name}</td><td colspan="2" style="color:var(--text-muted)">No data</td><td style="color:var(--text-muted)">${r.source}</td></tr>`;}else{rows+=`<tr><td><span style="${dotStyle}"></span>${r.name}</td><td class="vr-val">${(latest.avg*100).toFixed(1)}%</td><td style="color:var(--text-muted)">${latest.nModels} / ${nTotal}</td><td style="color:var(--text-muted)">${r.source}</td></tr>`;if(latest.date>latestDateOverall)latestDateOverall=latest.date;}});document.getElementById('resaleIndexTableBody').innerHTML=rows;const title=document.getElementById('indexSnapshotTitle');if(title)title.textContent=`Latest Snapshot · ${latestDateOverall?new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—'}`;}
+
+function renderIndexPanel(brandGroup){document.getElementById('indexPanelTitle').textContent=brandGroup==='hermes'?'Resale Value Retention Index — Hermès — By Region':'Resale Value Retention Index — Louis Vuitton — By Region';document.getElementById('indexPanelSubtitle').textContent=`Average VR — ${BRAND_GROUP_LABELS[brandGroup]}`;buildIndexChart(brandGroup);buildIndexTable(brandGroup);}
+
+let modelChartInstance=null;
+const MSRP_REF={'Hermès Birkin 25':{US:13500,EU:9600,CN:115000},'Hermès Birkin 30':{US:14900,EU:10600,CN:125000},'Hermès Kelly 25':{US:13700,EU:9600,CN:115000},'Hermès Kelly 28':{US:14400,EU:10100,CN:108000},'LV Neverfull MM':{US:2240,EU:1550,CN:15100},'LV Speedy 25':{US:1980,EU:1650,CN:15100}};
+const VR_PLAUSIBLE_MIN=0.40,VR_PLAUSIBLE_MAX=3.00;
+
+function renderModelDetail(model){const regions=[{key:'US',name:'USA'},{key:'EU',name:'Europe'},{key:'CN',name:'China ⚠'}];const allDates=new Set();regions.forEach(r=>{const h=(RESALE_V2_DATA[r.key]&&RESALE_V2_DATA[r.key][model])||[];h.forEach(e=>allDates.add(e.date));});const sortedDates=Array.from(allDates).sort();const datasets=regions.map(r=>{const h=(RESALE_V2_DATA[r.key]&&RESALE_V2_DATA[r.key][model])||[];const byDate={};h.forEach(e=>byDate[e.date]=e.vr_median);const data=sortedDates.map(d=>byDate[d]!=null?+(byDate[d]*100).toFixed(2):null);return{label:r.name,data,borderColor:REGION_COLORS_V2[r.key],backgroundColor:REGION_COLORS_V2[r.key]+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true,borderDash:r.key==='CN'?[5,4]:undefined};});const ctx=document.getElementById('modelDetailChart');if(modelChartInstance)modelChartInstance.destroy();modelChartInstance=new Chart(ctx,{type:'line',data:{labels:sortedDates,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{color:'#667085',font:{size:9},boxWidth:10,padding:8}},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% VR`}}},scales:{x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}}}});
+let rows='';let latestDateOverall='';const anomalies=[];regions.forEach(r=>{const h=(RESALE_V2_DATA[r.key]&&RESALE_V2_DATA[r.key][model])||[];const last=h.length?h[h.length-1]:null;const dotStyle=`display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;const msrp=MSRP_REF[model]?MSRP_REF[model][r.key]:null;const currSymbol=r.key==='US'?'$':r.key==='EU'?'€':'¥';const msrpCell=msrp!=null?`${currSymbol}${msrp.toLocaleString()}`:'—';if(!last||last.vr_median==null){const note=(last&&last._caveat)?last._caveat:'No data yet';rows+=`<tr><td><span style="${dotStyle}"></span>${r.name}</td><td style="color:var(--text-muted)">${msrpCell}</td><td colspan="4" style="color:var(--text-muted);font-size:10px;">${note}</td></tr>`;}else{const vr=last.vr_median;const isAnomaly=vr<VR_PLAUSIBLE_MIN||vr>VR_PLAUSIBLE_MAX;if(isAnomaly)anomalies.push(`${r.name} (${(vr*100).toFixed(0)}% VR)`);const vrStyle=isAnomaly?'color:#c0392b;font-weight:700;':'';rows+=`<tr><td><span style="${dotStyle}"></span>${r.name}</td><td style="color:var(--text-muted)">${msrpCell}</td><td style="color:var(--text-muted)">${currSymbol}${last.price_median!=null?last.price_median.toLocaleString():'—'}</td><td class="vr-val" style="${vrStyle}">${(vr*100).toFixed(1)}%${isAnomaly?' ⚠':''}</td><td style="color:var(--text-muted)">${last.n_listings!=null?last.n_listings:'—'}</td></tr>`;if(last.date>latestDateOverall)latestDateOverall=last.date;}});document.getElementById('modelDetailTableBody').innerHTML=rows;const flagEl=document.getElementById('modelAnomalyFlag');if(flagEl)flagEl.innerHTML=anomalies.length?`<div class="signal-badge red" style="margin-top:10px;">🔴 Flagged for validation — ${anomalies.join('; ')}: VR outside plausible 40–300% range.</div>`:'';const title=document.getElementById('modelSnapshotTitle');if(title)title.textContent=`Latest Snapshot · ${model} · ${latestDateOverall?new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—'}`;}
+
+// ── PANEL 3: RESALE PRICE vs RETAIL PRICE — HISTORICAL EVOLUTION ──────────────
+const HERMES_MODELS=['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28'];
+const LV_MODELS=['LV Neverfull MM','LV Speedy 25'];
+const CURRENCY_SYMBOL={US:'$',EU:'€',CN:'¥'};
+let priceEvolutionChartInstance=null;
+
+function getPriceEvolutionData(modelKey,region){
+  const currSymbol=CURRENCY_SYMBOL[region]||'';
+  function historyFor(model){return(RESALE_V2_DATA[region]&&RESALE_V2_DATA[region][model])||[];}
+  if(modelKey==='avg_hermes'||modelKey==='avg_lv'){
+    const models=modelKey==='avg_hermes'?HERMES_MODELS:LV_MODELS;
+    const label=modelKey==='avg_hermes'?'Avg. Hermès':'Avg. Louis Vuitton';
+    const allDates=new Set();models.forEach(m=>historyFor(m).forEach(e=>allDates.add(e.date)));
+    const dates=Array.from(allDates).sort();
+    const resalePrices=dates.map(d=>{let sum=0,n=0;models.forEach(m=>{const entry=historyFor(m).find(e=>e.date===d);if(entry&&entry.price_median!=null){sum+=entry.price_median;n++;}});return n>0?+(sum/n).toFixed(0):null;});
+    const retailPrices=dates.map(d=>{let sum=0,n=0;models.forEach(m=>{const entry=historyFor(m).find(e=>e.date===d);if(entry&&entry.msrp_used!=null){sum+=entry.msrp_used;n++;}});return n>0?+(sum/n).toFixed(0):null;});
+    return{dates,resalePrices,retailPrices,currSymbol,label};
+  }else{
+    const history=historyFor(modelKey);
+    const dates=history.map(e=>e.date);
+    const resalePrices=history.map(e=>e.price_median!=null?+e.price_median.toFixed(0):null);
+    const retailPrices=history.map(e=>e.msrp_used!=null?+e.msrp_used.toFixed(0):null);
+    return{dates,resalePrices,retailPrices,currSymbol,label:modelKey};
+  }
 }
 
-function renderTrendsView(region, period) {
-  if (!trendsData || !trendsData[region] || !trendsData[region][period]) {
-    console.error(`No data for ${region} ${period}`);
+function renderPriceEvolutionKpis(data){
+  const{dates,resalePrices,retailPrices,currSymbol}=data;
+  const container=document.getElementById('priceEvolutionKpis');
+  if(!container)return;
+  const lastIdx=dates.length-1;
+  const lastResale=resalePrices[lastIdx];
+  const lastRetail=retailPrices[lastIdx];
+  const lastDate=dates[lastIdx]?new Date(dates[lastIdx]+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—';
+  const vr=(lastResale!=null&&lastRetail!=null&&lastRetail>0)?(lastResale/lastRetail*100).toFixed(1):null;
+  const vrColor=vr>100?'#2e9e6b':'#c0392b';
+  const prevResale=resalePrices.length>1?resalePrices[lastIdx-1]:null;
+  const wow=(lastResale!=null&&prevResale!=null&&prevResale>0)?((lastResale-prevResale)/prevResale*100).toFixed(1):null;
+  const wowColor=wow>0?'#2e9e6b':'#c0392b';
+  const wowSign=wow>0?'▲ +':'▼ ';
+  container.innerHTML=`
+    <div style="background:var(--bg);border:1px solid var(--border-light);border-radius:9px;padding:14px 16px;">
+      <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Latest Resale Price (median)</div>
+      <div style="font-size:22px;font-weight:600;color:var(--accent-light);">${lastResale!=null?currSymbol+lastResale.toLocaleString():'—'}</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:3px;">${lastDate}</div>
+    </div>
+    <div style="background:var(--bg);border:1px solid var(--border-light);border-radius:9px;padding:14px 16px;">
+      <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Retail Price (MSRP)</div>
+      <div style="font-size:22px;font-weight:600;color:var(--accent);">${lastRetail!=null?currSymbol+lastRetail.toLocaleString():'—'}</div>
+      <div style="font-size:10px;color:var(--text-muted);margin-top:3px;">Current reference</div>
+    </div>
+    <div style="background:var(--bg);border:1px solid var(--border-light);border-radius:9px;padding:14px 16px;">
+      <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;">Value Retention · WoW Δ</div>
+      <div style="font-size:22px;font-weight:600;color:${vrColor};">${vr!=null?vr+'%':'—'}</div>
+      <div style="font-size:10px;color:${wowColor};margin-top:3px;">${wow!=null?wowSign+Math.abs(wow)+'% vs prev week':'First data point'}</div>
+    </div>`;
+}
+
+function renderPriceEvolutionChart(){
+  const modelKey=document.getElementById('priceEvolutionModelSelector')?.value;
+  const region=document.getElementById('priceEvolutionRegionSelector')?.value;
+  if(!modelKey||!region)return;
+  const data=getPriceEvolutionData(modelKey,region);
+  const{dates,resalePrices,retailPrices,currSymbol}=data;
+  renderPriceEvolutionKpis(data);
+  const ctx=document.getElementById('priceEvolutionChart');
+  if(!ctx)return;
+  if(priceEvolutionChartInstance)priceEvolutionChartInstance.destroy();
+  if(!dates.length){
+    document.getElementById('priceEvolutionKpis').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:20px;font-size:11px;">No data available for this selection yet.</div>';
     return;
   }
-  
-  const data = trendsData[region][period];
-  const chart = region === 'china' ? chartChina : chartGlobal;
-  const kpiContainer = region === 'china' ? 'trendsKpiChinaMini' : 'trendsKpiGlobalMini';
-  
-  // Update mini KPI cards (compact version)
-  let kpiHTML = '';
-  Object.keys(BRANDS).forEach(brandKey => {
-    const brand = BRANDS[brandKey];
-    const keyword = region === 'china' ? brand.keywords.cn : brand.keywords.en;
-    const latest = data.latest[keyword];
-    
-    if (latest) {
-      const changeClass = latest.change > 0 ? 'up' : latest.change < 0 ? 'down' : 'neutral';
-      const changeSymbol = latest.change > 0 ? '↑' : latest.change < 0 ? '↓' : '→';
-      
-      kpiHTML += `
-        <div style="background:linear-gradient(160deg,var(--blue-1),var(--steel-1));border:1px solid var(--blue-2);border-radius:8px;padding:8px 10px;position:relative;overflow:hidden;">
-          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:${brand.color};"></div>
-          <div style="font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;">${brand.name}</div>
-          <div style="font-size:16px;font-weight:600;color:var(--blue-5);">${latest.value.toFixed(0)}</div>
-          <div style="display:inline-flex;align-items:center;gap:3px;margin-top:2px;font-size:9px;font-weight:500;padding:2px 6px;border-radius:12px;background:${changeClass === 'up' ? 'rgba(192,57,43,.15)' : changeClass === 'down' ? 'rgba(74,144,196,.15)' : 'rgba(138,168,196,.15)'};color:${changeClass === 'up' ? '#e05c4a' : changeClass === 'down' ? 'var(--blue-4)' : 'var(--muted)'};">${changeSymbol} ${Math.abs(latest.change).toFixed(1)}%</div>
-        </div>
-      `;
-    }
-  });
-  
-  document.getElementById(kpiContainer).innerHTML = kpiHTML;
-  
-  // Update chart
-  const datasets = [];
-  Object.keys(BRANDS).forEach(brandKey => {
-    const brand = BRANDS[brandKey];
-    const keyword = region === 'china' ? brand.keywords.cn : brand.keywords.en;
-    
-    if (data.datasets[keyword]) {
-      datasets.push({
-        label: brand.name,
-        data: data.datasets[keyword],
-        borderColor: brand.color,
-        backgroundColor: brand.color + '18',
-        borderWidth: 2,
-        pointRadius: 0,
-        pointHoverRadius: 4,
-        tension: 0.4
-      });
-    }
-  });
-  
-  chart.data = { labels: data.labels, datasets: datasets };
-  chart.update();
-  
-  // Update subtitle
-  const periodNames = { '7d': 'Last 7 days', '30d': 'Last 30 days', '12m': 'Last 12 months' };
-  const subtitle = periodNames[period] || period;
-  const regionLabel = region === 'china' ? 'Mainland China' : 'Worldwide';
-  document.getElementById(region === 'china' ? 'trendsChinaSub' : 'trendsGlobalSub').textContent = 
-    `${subtitle} · ${regionLabel} search interest`;
-}
-
-function setTrendsViewBoth(period, button) {
-  const buttons = document.getElementById('trendsSelectorParent').querySelectorAll('.time-btn');
-  buttons.forEach(b => b.classList.remove('active'));
-  button.classList.add('active');
-  
-  // Update both China and Global
-  renderTrendsView('china', period);
-  renderTrendsView('global', period);
-  
-  // Update cross-platform analysis
-  currentPeriod = period;
-  renderCorrelation();
-  
-  // Update subtitle
-  const periodNames = {
-    '7d': { short: '7-day', long: 'last 7 days' },
-    '30d': { short: '30-day', long: 'last 30 days' },
-    '12m': { short: '12-month', long: 'last 12 months' }
-  };
-  const periodInfo = periodNames[period] || { short: period, long: period };
-  document.getElementById('crossPlatformSubtitle').textContent = 
-    `Comparing WeChat Index + Google Trends (China & Global) + NBS Macro · ${periodInfo.long} comparison`;
-}
-
-function renderCorrelation() {
-  // Fixed to the 30-day window regardless of whatever period is selected
-  // in the Google Trends buttons above — daily data (7d) is too noisy for
-  // a directional read (e.g. a single viral WeChat post can swing a brand
-  // +80% day/day). 30d smooths that out and is the right basis for a thesis.
-  const XPLAT_PERIOD = '30d';
-  const WECHAT_PERIOD_MAP = { '7d':'7d', '30d':'30d', '12m':'1y' };
-
-  if (!trendsData || !trendsData.china[XPLAT_PERIOD] || !trendsData.global[XPLAT_PERIOD]) {
-    document.getElementById('correlationGrid').innerHTML = `
-      <div class="corr-item" style="grid-column:1/-1;text-align:center;padding:20px;">
-        <div class="corr-signal mixed">Google Trends data loading...</div>
-        <div class="corr-text">Cross-platform analysis will appear once Google Trends data is available.</div>
-      </div>
-    `;
-    return;
-  }
-
-  const chinaData = trendsData.china[XPLAT_PERIOD].latest;
-  const globalData = trendsData.global[XPLAT_PERIOD].latest;
-
-  function liveWeChatContext(brandKey) {
-    const wchatKeyMap = { lv:'lv', hermes:'hermes', cartier:'cartier', gucci:'gucci' };
-    const key = wchatKeyMap[brandKey];
-    if (!key || typeof WDATA === 'undefined') return null;
-    const d = WDATA[WECHAT_PERIOD_MAP[XPLAT_PERIOD]];
-    if (!d || !d[key] || d[key].length < 2) return null;
-    const arr = d[key];
-    const first = arr[0], latest = arr[arr.length-1];
-    const pctChange = first ? ((latest-first)/first*100) : null; // trend over the window, not day/day
-    return { latest, pctChange };
-  }
-
-  function liveMacroContext() {
-    if (typeof confChina === 'undefined') return null;
-    const lastNonNull = arr => { for (let i=arr.length-1;i>=0;i--) if (arr[i]!=null) return arr[i]; return null; };
-    return { conf: lastNonNull(confChina), retail: lastNonNull(retailChina), gdp: lastNonNull(gdpChina) };
-  }
-
-  function livePerformanceContext(brandKey) {
-    if (typeof BU_GROWTH === 'undefined' || typeof ASIA_GROWTH === 'undefined') return null;
-    if (brandKey === 'lv' || brandKey === 'dior') {
-      const flg = BU_GROWTH['Fashion and Leather Goods'];
-      const latestFlg = flg[flg.length-1];
-      const asiaLvmh = ASIA_GROWTH.LVMH[ASIA_GROWTH.LVMH.length-1];
-      const note = brandKey === 'dior' ? ' (shared BU with LV, not Dior-specific)' : '';
-      return { label:'LVMH F&LG', growth:latestFlg, asiaGrowth:asiaLvmh, note };
-    }
-    if (brandKey === 'hermes') {
-      const asiaHermes = ASIA_GROWTH.Hermes[ASIA_GROWTH.Hermes.length-1];
-      return { label:'Hermès', growth:null, asiaGrowth:asiaHermes, note:'' };
-    }
-    if (brandKey === 'gucci') {
-      const asiaKering = ASIA_GROWTH.Kering[ASIA_GROWTH.Kering.length-1];
-      return { label:'Kering', growth:null, asiaGrowth:asiaKering, note:'' };
-    }
-    return null;
-  }
-
-  function liveResaleContext(brandKey) {
-    const modelMap = {
-      hermes: ['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28'],
-      lv: ['LV Neverfull MM','LV Speedy 25'],
-    };
-    const models = modelMap[brandKey];
-    if (!models || typeof RESALE_V2_DATA === 'undefined') return null;
-    let sum = 0, n = 0;
-    ['US','EU'].forEach(region => {
-      models.forEach(m => {
-        const h = (RESALE_V2_DATA[region] && RESALE_V2_DATA[region][m]) || [];
-        const last = h[h.length-1];
-        if (last && last.vr_median != null) { sum += last.vr_median; n++; }
-      });
-    });
-    if (n === 0) return null;
-    const avgVr = sum / n;
-    return { vr: avgVr*100, aboveRetail: avgVr > 1 };
-  }
-
-  const macro = liveMacroContext();
-  let html = '';
-
-  Object.keys(BRANDS).forEach(brandKey => {
-    const brand = BRANDS[brandKey];
-    const chinaLatest = chinaData[brand.keywords.cn];
-    const globalLatest = globalData[brand.keywords.en];
-    if (!chinaLatest || !globalLatest) return;
-
-    const chinaUp = chinaLatest.change > 2, chinaDown = chinaLatest.change < -2;
-    const globalUp = globalLatest.change > 2, globalDown = globalLatest.change < -2;
-    const chinaDataLimited = Math.abs(chinaLatest.value) < 5;
-
-    const wechat = liveWeChatContext(brandKey);
-    const perf = livePerformanceContext(brandKey);
-    const resale = liveResaleContext(brandKey);
-
-    // Count how many of the available signals point the same direction as
-    // Trends, to decide how confidently to state the thesis. Signals that
-    // don't apply to this brand (e.g. Cartier + LVMH Performance) are
-    // simply not counted, not treated as neutral or negative.
-    let agree = 0, total = 0;
-    const trendsDir = chinaUp && globalUp ? 1 : (chinaDown && globalDown ? -1 : 0);
-    if (wechat && wechat.pctChange != null) { total++; if (Math.sign(wechat.pctChange) === trendsDir && trendsDir !== 0) agree++; }
-    if (resale) { total++; if ((resale.aboveRetail ? 1 : -1) === trendsDir && trendsDir !== 0) agree++; }
-
-    let signal, signalClass, thesis;
-    if (trendsDir === 1 && wechat && wechat.pctChange > 0) {
-      signal = '✓ Converging Signals — China Interest Rising'; signalClass = 'strong';
-      thesis = `Directional read: search and engagement both point up for ${brand.name} this period — the more corroborated of the five brands tracked here.`;
-    } else if (trendsDir === -1 && wechat && wechat.pctChange < 0) {
-      signal = '🔴 Converging Signals — China Interest Softening'; signalClass = 'weak';
-      thesis = `Directional read: search and engagement both point down for ${brand.name} this period — worth flagging as a brand to watch.`;
-    } else if (chinaUp && !globalUp) {
-      signal = '⚡ China-Specific Divergence'; signalClass = 'mixed';
-      thesis = `Directional read: China-specific strength not mirrored globally for ${brand.name} — could be local, could be noise; not enough here to call it structural.`;
-    } else if (globalUp && !chinaUp) {
-      signal = chinaDataLimited ? '⚠ Global Rising · China Read Unreliable' : '⚠ China Underperforming Global Search';
-      signalClass = 'mixed';
-      thesis = chinaDataLimited
-        ? `Directional read: global search is up for ${brand.name}, but the China Trends figure is too thin (low mainland Google penetration) to read either way.`
-        : `Directional read: global interest is outpacing China for ${brand.name} — worth checking against WeChat before concluding this is a China-specific slowdown.`;
-    } else {
-      signal = '→ Mixed / Inconclusive'; signalClass = 'mixed';
-      thesis = `Directional read: no clear single story for ${brand.name} this period — signals are mixed or too thin to call.`;
-    }
-
-    const wechatLine = wechat
-      ? ` WeChat (30d trend): ${wechat.latest.toFixed(1)}M, ${wechat.pctChange>=0?'+':''}${wechat.pctChange.toFixed(0)}% over the window.`
-      : ' WeChat: not tracked for this brand.';
-    const perfLine = perf
-      ? (perf.growth != null
-          ? ` ${perf.label} organic growth ${perf.growth>=0?'+':''}${perf.growth.toFixed(1)}%${perf.note}, Asia ex-Japan ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`
-          : ` ${perf.label} Asia ex-Japan organic growth ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`)
-      : ' Not covered in LVMH Performance (different parent group).';
-    const macroLine = macro ? ` China backdrop: confidence ${macro.conf!=null?macro.conf.toFixed(1)+'pts':'n/a'}, retail ${macro.retail!=null?(macro.retail>=0?'+':'')+macro.retail.toFixed(1)+'%':'n/a'}.` : '';
-    const resaleLine = resale ? ` Resale ~${resale.vr.toFixed(0)}% VR (US/EU).` : '';
-    const trendsLine = ` Trends: China ${chinaLatest.change>=0?'+':''}${chinaLatest.change.toFixed(1)}%, Global ${globalLatest.change>=0?'+':''}${globalLatest.change.toFixed(1)}%.`;
-
-    const text = `${thesis}<br><span style="opacity:.75;">${trendsLine}${wechatLine}${perfLine}${macroLine}${resaleLine}</span>`;
-
-    html += `
-      <div class="corr-item">
-        <div class="corr-header">
-          <div class="corr-dot" style="background:${brand.color}"></div>
-          <div class="corr-brand">${brand.name}</div>
-        </div>
-        <div class="corr-signal ${signalClass}">${signal}</div>
-        <div class="corr-text">${text}</div>
-      </div>
-    `;
-  });
-
-  document.getElementById('correlationGrid').innerHTML = html;
-}
-
-// Auto-load Google Trends and Resale on page load
-window.addEventListener('DOMContentLoaded', () => {
-  loadTrendsData();
-  loadResaleData();
-});
-
-// ══════════════════════════════════════════════════════════════════════════════
-// SECTION ⑤ — LUXURY RESALE VALUE RETENTION TRACKER v2 (US / EU / China)
-// Source: github.com/dlopezandres19-pixel/luxury-resale-tracker/data_v2/
-// Files: us_resale.json · eu_resale.json · cn_resale.json
-// Each file: { "<model name>": [ {date, vr_median, vr_mean, n_listings,
-//   avg_days_to_sell, price_median, currency, ...}, ... ], ... }
-// ══════════════════════════════════════════════════════════════════════════════
-
-const RESALE_V2_BASE = 'https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-resale-tracker/main/data_v2/';
-const RESALE_V2_MODELS = ['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28','LV Neverfull MM','LV Speedy 25'];
-const REGION_COLORS_V2 = { US:'#d4a84b', EU:'#2ecc71', CN:'#4a90c4' };
-const REGION_FILES = { US:'us_resale.json', EU:'eu_resale.json', CN:'cn_resale.json' };
-
-let RESALE_V2_DATA = { US:{}, EU:{}, CN:{} };
-
-function resaleV2LoadingState() {
-  const loadingRow = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:14px;font-size:11px;">Loading data from GitHub…</td></tr>`;
-  document.getElementById('resaleIndexTableBody').innerHTML = loadingRow;
-  document.getElementById('modelDetailTableBody').innerHTML = loadingRow;
-}
-
-async function loadResaleData() {
-  resaleV2LoadingState();
-  try {
-    const [usRes, euRes, cnRes] = await Promise.all([
-      fetch(RESALE_V2_BASE + REGION_FILES.US),
-      fetch(RESALE_V2_BASE + REGION_FILES.EU),
-      fetch(RESALE_V2_BASE + REGION_FILES.CN)
-    ]);
-    if (!usRes.ok || !euRes.ok || !cnRes.ok) throw new Error('Fetch failed — one or more data_v2 files not found');
-    const [usData, euData, cnData] = await Promise.all([usRes.json(), euRes.json(), cnRes.json()]);
-    RESALE_V2_DATA = { US: usData, EU: euData, CN: cnData };
-
-    function latestDate(dataObj) {
-      const dates = [];
-      Object.values(dataObj).forEach(arr => { if (arr && arr.length) dates.push(arr[arr.length-1].date); });
-      return dates.sort().pop() || '';
-    }
-    function fmtDate(iso) {
-      return iso ? new Date(iso + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : 'n/a';
-    }
-    const dates = { US: latestDate(usData), EU: latestDate(euData), CN: latestDate(cnData) };
-    const oldestFmt = Object.values(dates).filter(Boolean).sort()[0];
-
-    const sub = document.getElementById('resaleSectionSub');
-    if (sub) sub.textContent = `Value retention across 6 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · US: ${fmtDate(dates.US)} · EU: ${fmtDate(dates.EU)} · China: ${fmtDate(dates.CN)}`;
-
-    const badge = document.getElementById('indexStalenessBadge');
-    if (badge) {
-      if (!oldestFmt) {
-        badge.innerHTML = '';
-      } else {
-        const days = Math.floor((Date.now() - new Date(oldestFmt + 'T12:00:00').getTime()) / 86400000);
-        if (days > 14) badge.innerHTML = `<div class="signal-badge red" style="margin-top:6px;">🔴 Stale — ${days} days since oldest region update</div>`;
-        else if (days > 8) badge.innerHTML = `<div class="signal-badge yellow" style="margin-top:6px;">⚠ ${days} days since oldest region update</div>`;
-        else badge.innerHTML = '';
-      }
-    }
-
-    const brandSel = document.getElementById('brandGroupSelector');
-    if (brandSel && !brandSel._wired) {
-      brandSel.addEventListener('change', () => renderIndexPanel(brandSel.value));
-      brandSel._wired = true;
-    }
-    renderIndexPanel(brandSel.value);
-
-    const sel = document.getElementById('modelSelector');
-    if (sel && !sel._wired) {
-      sel.addEventListener('change', () => renderModelDetail(sel.value));
-      sel._wired = true;
-    }
-    renderModelDetail(sel ? sel.value : RESALE_V2_MODELS[0]);
-
-    // Resale data may finish loading after (or before) Google Trends —
-    // re-render Cross-Platform once it's in, so that section's resale
-    // references reflect real numbers rather than being silently empty.
-    if (typeof renderCorrelation === 'function' && typeof currentPeriod !== 'undefined') {
-      renderCorrelation();
-    }
-
-  } catch (err) {
-    console.error('Resale v2 load error:', err);
-    const errRow = `<tr><td colspan="5" style="text-align:center;color:#e05c4a;padding:14px;font-size:11px;">Could not load resale data — check github.com/dlopezandres19-pixel/luxury-resale-tracker/data_v2/</td></tr>`;
-    document.getElementById('resaleIndexTableBody').innerHTML = errRow;
-    document.getElementById('modelDetailTableBody').innerHTML = errRow;
-  }
-}
-
-// Brand groups for the Regional Index panel — kept separate because
-// blending Hermès (typically >100% VR, pricing power) with LV/Dior
-// (typically <100%, normal depreciation) into one number told neither
-// story clearly.
-const BRAND_GROUPS = {
-  hermes: ['Hermès Birkin 25', 'Hermès Birkin 30', 'Hermès Kelly 25', 'Hermès Kelly 28'],
-  lvdior: ['LV Neverfull MM', 'LV Speedy 25']
-};
-const BRAND_GROUP_LABELS = {
-  hermes: 'Hermès (Birkin 25/30, Kelly 25/28)',
-  lvdior: 'Louis Vuitton (Neverfull MM, Speedy 25)'
-};
-
-// Average vr_median across the models in `modelFilter`, per date (skipping
-// nulls / China zero-signal weeks). Returns [{date, avg, nModels}] sorted.
-function computeRegionIndex(regionData, modelFilter) {
-  const byDate = {};
-  Object.entries(regionData || {}).forEach(([model, history]) => {
-    if (modelFilter && !modelFilter.includes(model)) return;
-    (history || []).forEach(entry => {
-      if (entry.vr_median == null) return;
-      byDate[entry.date] = byDate[entry.date] || {sum:0, n:0};
-      byDate[entry.date].sum += entry.vr_median;
-      byDate[entry.date].n += 1;
-    });
-  });
-  return Object.keys(byDate).sort().map(date => ({
-    date, avg: byDate[date].sum / byDate[date].n, nModels: byDate[date].n
-  }));
-}
-
-let indexChartInstance = null;
-function buildIndexChart(brandGroup) {
-  const models = BRAND_GROUPS[brandGroup];
-  const nTotal = models.length;
-  const usIdx = computeRegionIndex(RESALE_V2_DATA.US, models);
-  const euIdx = computeRegionIndex(RESALE_V2_DATA.EU, models);
-  const cnIdx = computeRegionIndex(RESALE_V2_DATA.CN, models);
-
-  const allDates = Array.from(new Set([...usIdx, ...euIdx, ...cnIdx].map(d => d.date))).sort();
-  function seriesFor(idx) {
-    const map = {}; idx.forEach(d => map[d.date] = d.avg);
-    return allDates.map(d => map[d] != null ? +(map[d]*100).toFixed(2) : null);
-  }
-
-  const ctx = document.getElementById('resaleIndexChart');
-  if (indexChartInstance) indexChartInstance.destroy();
-  indexChartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: allDates,
-      datasets: [
-        {label:'USA', data:seriesFor(usIdx), borderColor:REGION_COLORS_V2.US, backgroundColor:REGION_COLORS_V2.US+'22', borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true},
-        {label:'Europe', data:seriesFor(euIdx), borderColor:REGION_COLORS_V2.EU, backgroundColor:REGION_COLORS_V2.EU+'22', borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true},
-        {label:'China ⚠', data:seriesFor(cnIdx), borderColor:REGION_COLORS_V2.CN, backgroundColor:REGION_COLORS_V2.CN+'22', borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true, borderDash:[5,4]}
-      ]
-    },
-    options: {
-      responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{
-          label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% avg VR`
-        }}
-      },
-      scales:{
-        x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},
-        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
-      }
-    }
-  });
-}
-
-function buildIndexTable(brandGroup) {
-  const models = BRAND_GROUPS[brandGroup];
-  const nTotal = models.length;
-  const regions = [
-    {key:'US', name:'USA', source:'Vestiaire Collective'},
-    {key:'EU', name:'Europe', source:'Vestiaire Collective'},
-    {key:'CN', name:'China ⚠', source:'Xianyu / Goofish'}
-  ];
-  let rows = '';
-  let latestDateOverall = '';
-  regions.forEach(r => {
-    const idx = computeRegionIndex(RESALE_V2_DATA[r.key], models);
-    const latest = idx[idx.length - 1];
-    const dotStyle = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;
-    if (!latest) {
-      rows += `<tr><td><span style="${dotStyle}"></span>${r.name}</td><td colspan="2" style="color:var(--text-muted)">No genuine listings this week</td><td style="color:var(--text-muted)">${r.source}</td></tr>`;
-    } else {
-      rows += `<tr>
-        <td><span style="${dotStyle}"></span>${r.name}</td>
-        <td class="vr-val">${(latest.avg*100).toFixed(1)}%</td>
-        <td style="color:var(--text-muted)">${latest.nModels} / ${nTotal}</td>
-        <td style="color:var(--text-muted)">${r.source}</td>
-      </tr>`;
-      if (latest.date > latestDateOverall) latestDateOverall = latest.date;
-    }
-  });
-  document.getElementById('resaleIndexTableBody').innerHTML = rows;
-  const title = document.getElementById('indexSnapshotTitle');
-  if (title) title.textContent = `Latest Snapshot · ${latestDateOverall ? new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'}`;
-}
-
-function renderIndexPanel(brandGroup) {
-  document.getElementById('indexPanelTitle').textContent = brandGroup === 'hermes'
-    ? 'Resale Value Retention Index — Hermès — By Region'
-    : 'Resale Value Retention Index — Louis Vuitton — By Region';
-  document.getElementById('indexPanelSubtitle').textContent = `Average VR — ${BRAND_GROUP_LABELS[brandGroup]}`;
-  buildIndexChart(brandGroup);
-  buildIndexTable(brandGroup);
-}
-
-let modelChartInstance = null;
-// MSRP reference — mirrors msrp_reference.json in luxury-resale-tracker.
-// Used only to display retail price alongside resale price for context;
-// NOT used in any calculation here (VR itself is computed server-side).
-const MSRP_REF = {
-  'Hermès Birkin 25':      {US:13500, EU:9600,  CN:115000},
-  'Hermès Birkin 30':      {US:14900, EU:10600, CN:125000},
-  'Hermès Kelly 25':       {US:13700, EU:9600,  CN:115000},
-  'Hermès Kelly 28':       {US:14400, EU:10100, CN:108000},
-  'LV Neverfull MM':       {US:2240,  EU:1550,  CN:15100},
-  'LV Speedy 25':          {US:1980,  EU:1650,  CN:15100},
-};
-// VR outside this range is flagged for manual validation rather than
-// trusted at face value — e.g. VR this low usually means the search
-// matched accessories (wallets, keychains) instead of the actual bag.
-const VR_PLAUSIBLE_MIN = 0.40, VR_PLAUSIBLE_MAX = 3.00;
-
-function renderModelDetail(model) {
-  const regions = [
-    {key:'US', name:'USA'},
-    {key:'EU', name:'Europe'},
-    {key:'CN', name:'China ⚠'}
-  ];
-
-  const allDates = new Set();
-  regions.forEach(r => {
-    const h = (RESALE_V2_DATA[r.key] && RESALE_V2_DATA[r.key][model]) || [];
-    h.forEach(e => allDates.add(e.date));
-  });
-  const sortedDates = Array.from(allDates).sort();
-
-  const datasets = regions.map(r => {
-    const h = (RESALE_V2_DATA[r.key] && RESALE_V2_DATA[r.key][model]) || [];
-    const byDate = {}; h.forEach(e => byDate[e.date] = e.vr_median);
-    const data = sortedDates.map(d => byDate[d] != null ? +(byDate[d]*100).toFixed(2) : null);
-    return {
-      label:r.name, data,
-      borderColor:REGION_COLORS_V2[r.key], backgroundColor:REGION_COLORS_V2[r.key]+'22',
-      borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true,
-      borderDash:r.key==='CN'?[5,4]:undefined
-    };
-  });
-
-  const ctx = document.getElementById('modelDetailChart');
-  if (modelChartInstance) modelChartInstance.destroy();
-  modelChartInstance = new Chart(ctx, {
+  priceEvolutionChartInstance=new Chart(ctx,{
     type:'line',
-    data:{labels:sortedDates, datasets},
+    data:{labels:dates,datasets:[
+      {label:'Resale Price (median)',data:resalePrices,borderColor:'#e8a020',backgroundColor:'#e8a02022',borderWidth:2.5,pointRadius:5,pointHoverRadius:7,tension:0.25,fill:false,spanGaps:true},
+      {label:'Retail Price (MSRP)',data:retailPrices,borderColor:'rgba(27,58,92,0.55)',backgroundColor:'rgba(27,58,92,0.04)',borderWidth:2,borderDash:[7,4],pointRadius:0,pointHoverRadius:4,tension:0,fill:false,spanGaps:true}
+    ]},
     options:{
-      responsive:true, maintainAspectRatio:false,
+      responsive:true,maintainAspectRatio:false,
       plugins:{
-        legend:{display:true, position:'bottom', labels:{color:'#667085', font:{size:9}, boxWidth:10, padding:8}},
+        legend:{display:true,position:'bottom',labels:{color:'#667085',font:{size:9},boxWidth:12,padding:10}},
         tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{
-          label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% VR`
+          title:items=>{const d=items[0]?.label;return d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):d;},
+          label:ctx=>{const v=ctx.parsed.y;if(v==null)return` ${ctx.dataset.label}: no data`;return` ${ctx.dataset.label}: ${currSymbol}${v.toLocaleString()}`;},
+          afterBody:items=>{const resale=items.find(i=>i.datasetIndex===0)?.parsed.y;const retail=items.find(i=>i.datasetIndex===1)?.parsed.y;if(resale!=null&&retail!=null&&retail>0){return['',`  Value Retention: ${(resale/retail*100).toFixed(1)}%`];}return[];}
         }}
       },
       scales:{
-        x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},
-        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
-      }
-    }
-  });
-
-  let rows = '';
-  let latestDateOverall = '';
-  const anomalies = [];
-  regions.forEach(r => {
-    const h = (RESALE_V2_DATA[r.key] && RESALE_V2_DATA[r.key][model]) || [];
-    const last = h.length ? h[h.length-1] : null;
-    const dotStyle = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;
-    const msrp = MSRP_REF[model] ? MSRP_REF[model][r.key] : null;
-    const currSymbol = r.key === 'US' ? '$' : r.key === 'EU' ? '€' : '¥';
-    const msrpCell = msrp != null ? `${currSymbol}${msrp.toLocaleString()}` : '—';
-    if (!last || last.vr_median == null) {
-      const note = (last && last._caveat) ? last._caveat : 'No data yet';
-      rows += `<tr><td><span style="${dotStyle}"></span>${r.name}</td><td style="color:var(--text-muted)">${msrpCell}</td><td colspan="4" style="color:var(--text-muted);font-size:10px;">${note}</td></tr>`;
-    } else {
-      const vr = last.vr_median;
-      const isAnomaly = vr < VR_PLAUSIBLE_MIN || vr > VR_PLAUSIBLE_MAX;
-      if (isAnomaly) anomalies.push(`${r.name} (${(vr*100).toFixed(0)}% VR)`);
-      const vrStyle = isAnomaly ? 'color:#c0392b;font-weight:700;' : '';
-      rows += `<tr>
-        <td><span style="${dotStyle}"></span>${r.name}</td>
-        <td style="color:var(--text-muted)">${msrpCell}</td>
-        <td style="color:var(--text-muted)">${currSymbol}${last.price_median!=null?last.price_median.toLocaleString():'—'}</td>
-        <td class="vr-val" style="${vrStyle}">${(vr*100).toFixed(1)}%${isAnomaly?' ⚠':''}</td>
-        <td style="color:var(--text-muted)">${last.n_listings!=null?last.n_listings:'—'}</td>
-      </tr>`;
-      if (last.date > latestDateOverall) latestDateOverall = last.date;
-    }
-  });
-  document.getElementById('modelDetailTableBody').innerHTML = rows;
-  const flagEl = document.getElementById('modelAnomalyFlag');
-  if (flagEl) {
-    flagEl.innerHTML = anomalies.length
-      ? `<div class="signal-badge red" style="margin-top:10px;">🔴 Flagged for validation — ${anomalies.join('; ')}: VR outside the plausible 40–300% range, likely a search-matching issue (e.g. accessories instead of the bag), not a real market reading.</div>`
-      : '';
-  }
-  const title = document.getElementById('modelSnapshotTitle');
-  if (title) title.textContent = `Latest Snapshot · ${model} · ${latestDateOverall ? new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'}`;
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// SECTION ① — LVMH PERFORMANCE (dropdown-driven, full history from 2019)
-// ══════════════════════════════════════════════════════════════════════════════
-
-const BU_LABELS_GROWTH = ['2019','2020','2021','2022','2023','2024','1Q25','2Q25','3Q25','4Q25','FY25','1Q26','2Q26'];
-const BU_LABELS_EBIT = ['2019','2020','2021','2022','2023','2024','1H25','2H25','FY25','1H26'];
-
-const BU_GROWTH = {
-  'LVMH':                         [10,-15.5,35.6,16.9,13.2,0.5,-3,-4,1,1,-1,1,3],
-  'Fashion and Leather Goods':    [17,-3,47,20,14,-1,-5,-9,-2,-3,-5,-2,1],
-  'Wines and Spirits':            [6,-14,26,11,-4,-8,-9,-4,1,-9,-5,5,5],
-  'Perfume and Cosmetics':        [9,-22,27,10,11,4,-1,1,2,-1,0,0,-1],
-  'Watches and Jewelry':          [3,-23,40,12,7,-2,0,0,2,8,3,7,11],
-  'Selective Retailing':          [5,-30,18,17,25,6,-1,4,7,7,4,4,6],
-};
-
-const BU_EBIT = {
-  'LVMH':                         [21.4,18.6,26.7,26.6,26.5,23.1,22.6,22.0,22.0,22.5],
-  'Fashion and Leather Goods':    [33.0,33.9,41.6,40.6,39.9,37.1,34.7,35.2,35.0,34.1],
-  'Wines and Spirits':            [31.0,29.2,31.2,30.4,31.9,23.1,20.2,17.8,19.0,22.4],
-  'Perfume and Cosmetics':        [10.0,1.5,10.4,8.5,8.6,8.0,10.4,7.4,8.9,10.7],
-  'Watches and Jewelry':          [16.7,9.0,18.7,19.1,19.8,14.6,15.0,13.9,14.4,15.9],
-  'Selective Retailing':          [9.4,-2.0,4.5,5.3,7.8,7.6,10.2,9.3,9.7,10.6],
-};
-
-const BU_INSIGHTS = {
-  'LVMH': [
-    '• LVMH total organic growth returned to positive territory in 3Q25 (+1%) after two consecutive negative quarters, and has remained in the 1-3% range since — modest but directionally improved.',
-    '• Group EBIT margin has stabilized around 22.0-22.5% since 2H24, ~4.5pp below the 2021-2023 peak of 26.5-26.7% — the compression appears to have plateaued rather than continued deteriorating.'
-  ],
-  'Fashion and Leather Goods': [
-    '• F&LG organic growth was negative for 5 consecutive quarters (1Q25 to 1Q26, -2% to -9%) before turning positive in 2Q26 (+1%) — the first positive print since 2023.',
-    '• EBIT margin compressed from 37.1% (FY2024) to a 1H26 low of 34.1% — margin pressure has outpaced the recent growth recovery.'
-  ],
-  'Wines and Spirits': [
-    '• W&S has been the weakest BU, with organic growth negative in 7 of the last 8 quarters — the only positive print was a brief +1% in 3Q25, immediately followed by -9% in 4Q25.',
-    '• EBIT margin hit a cycle-low of 17.8% in 2H25 (vs. 31.9% in 2023) before recovering to 22.4% in 1H26 — still well below historical levels.'
-  ],
-  'Perfume and Cosmetics': [
-    '• P&C organic growth has flatlined near 0% since 1Q25, oscillating between -1% and +2% — neither recovering nor deteriorating meaningfully.',
-    '• EBIT margin is volatile semi-annually (10.4% in 1H25 → 7.4% in 2H25 → 10.7% in 1H26) due to seasonality and marketing spend phasing.'
-  ],
-  'Watches and Jewelry': [
-    '• W&J is the standout recovery story: organic growth accelerated from 0% (1Q-2Q25) to +11% (2Q26) — the strongest quarterly growth of any BU in the current period.',
-    '• EBIT margin has recovered from 13.9% (2H25) to 15.9% (1H26), though still well below the 2023 peak of 19.8%.'
-  ],
-  'Selective Retailing': [
-    '• Selective Retailing has been consistently positive since 2Q25, with growth in the 4-7% range — the most stable BU alongside W&J.',
-    '• EBIT margin reached a new high of 10.6% in 1H26, surpassing even the 2023 level of 7.8% — Sephora and DFS driving structural margin improvement.'
-  ],
-};
-
-const ASIA_LABELS = ['2019','2020','2021','2022','2023','2024','1Q25','2Q25','3Q25','4Q25','FY25','1Q26','2Q26'];
-const ASIA_GROWTH = {
-  LVMH:   [null,0,31,0,18,-11,-11,-6,2,1,-4,7,4],
-  Hermes: [17.8,14.4,44.6,21.9,19.1,7.4,1.2,5.2,6.2,8.0,4.9,2.2,2.5],
-  Kering: [20.1,-6.5,32.7,-8.0,10.0,-23.0,-25,-19,-11,-6,-15,-4,-1]
-};
-const ASIA_EXPOSURE_1H26 = {LVMH:28.5, Hermes:40.3, Kering:28.2};
-
-let buGrowthChart = null, buEbitChart = null;
-
-function renderBuCharts(bu) {
-  const growthData = BU_GROWTH[bu];
-  const ebitData = BU_EBIT[bu];
-  const insights = BU_INSIGHTS[bu];
-
-  document.getElementById('buChartTitle').textContent = `${bu === 'LVMH' ? 'LVMH Total' : bu} — Organic Revenue Growth (%)`;
-  document.getElementById('buEbitTitle').textContent = `${bu === 'LVMH' ? 'LVMH Total' : bu} — EBIT Margin (%)`;
-  document.getElementById('buInsights').innerHTML = insights.map(t => `<div style="margin-bottom:6px;">${t}</div>`).join('');
-
-  const isFY = BU_LABELS_GROWTH.map(l => l.startsWith('FY') || (!l.includes('Q') && !l.includes('H') && parseInt(l) >= 2019 && parseInt(l) <= 2024));
-  const colors = growthData.map((v,i) => {
-    if (isFY[i] && v >= 0) return 'rgba(46,158,107,0.4)';
-    if (isFY[i] && v < 0) return 'rgba(192,57,43,0.4)';
-    return v >= 0 ? '#2e9e6b' : '#c0392b';
-  });
-  const borders = growthData.map((v,i) => isFY[i] ? (v >= 0 ? '#2e9e6b' : '#c0392b') : 'transparent');
-
-  const ctx1 = document.getElementById('buGrowthChart');
-  if (buGrowthChart) buGrowthChart.destroy();
-  const gMax = Math.max(...growthData.filter(v=>v!=null));
-  const gMin = Math.min(...growthData.filter(v=>v!=null));
-  buGrowthChart = new Chart(ctx1, {
-    type:'bar',
-    data:{labels:BU_LABELS_GROWTH, datasets:[{
-      data:growthData, backgroundColor:colors, borderColor:borders,
-      borderWidth:isFY.map(f=>f?2:0), borderRadius:3
-    }]},
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      layout:{padding:{top:16,bottom:6}},
-      plugins:{
-        legend:{display:false},
-        tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{
-          label:ctx=>`${ctx.parsed.y>=0?'+':''}${ctx.parsed.y.toFixed(1)}%`
-        }},
-        datalabels:false
-      },
-      scales:{
-        x:{grid:{display:false},ticks:{color:'#667085',font:{size:9,family:'Segoe UI'}}},
-        y:{suggestedMax:gMax+4, suggestedMin:gMin-4, grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
-      }
-    },
-    plugins:[{
-      id:'barLabels',
-      afterDatasetsDraw(chart) {
-        const ctx = chart.ctx;
-        chart.data.datasets[0].data.forEach((val, i) => {
-          if (val == null) return;
-          const meta = chart.getDatasetMeta(0);
-          const bar = meta.data[i];
-          ctx.save();
-          ctx.font = 'bold 9px Segoe UI';
-          ctx.textAlign = 'center';
-          const label = `${val>=0?'+':''}${val.toFixed(1)}%`;
-          // Always show label: inside bar if tall enough, outside if not
-          if (Math.abs(bar.height) > 20) {
-            ctx.fillStyle = '#fff';
-            const y = val >= 0 ? bar.y + 14 : bar.y - 6;
-            ctx.fillText(label, bar.x, y);
-          } else {
-            ctx.fillStyle = val >= 0 ? '#2e9e6b' : '#c0392b';
-            const y = val >= 0 ? bar.y - 5 : bar.y + 12;
-            ctx.fillText(label, bar.x, y);
-          }
-          ctx.restore();
-        });
-      }
-    }]
-  });
-
-  const ctx2 = document.getElementById('buEbitChart');
-  if (buEbitChart) buEbitChart.destroy();
-  const ebitMax = Math.max(...ebitData.filter(v => v != null));
-  const ebitMin = Math.min(...ebitData.filter(v => v != null));
-  buEbitChart = new Chart(ctx2, {
-    type:'line',
-    data:{labels:BU_LABELS_EBIT, datasets:[{
-      data:ebitData, borderColor:'#1b3a5c', backgroundColor:'rgba(27,58,92,0.08)',
-      borderWidth:2, pointRadius:4, pointHoverRadius:6, tension:0.3, fill:true,
-      pointBackgroundColor:'#1b3a5c'
-    }]},
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      layout:{padding:{top:22}},
-      plugins:{
-        legend:{display:false},
-        tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{
-          label:ctx=>`EBIT margin: ${ctx.parsed.y.toFixed(1)}%`
-        }}
-      },
-      scales:{
-        x:{grid:{display:false},ticks:{color:'#667085',font:{size:9,family:'Segoe UI'}}},
-        y:{suggestedMax:ebitMax+4, suggestedMin:Math.min(ebitMin-2,0), grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
-      }
-    },
-    plugins:[{
-      id:'ebitPointLabels',
-      afterDatasetsDraw(chart) {
-        const ctx = chart.ctx;
-        const ds = chart.data.datasets[0];
-        const meta = chart.getDatasetMeta(0);
-        ds.data.forEach((val, i) => {
-          if (val == null) return;
-          const pt = meta.data[i];
-          ctx.save();
-          ctx.fillStyle = '#1b3a5c';
-          ctx.font = 'bold 9px Segoe UI';
-          ctx.textAlign = 'center';
-          ctx.fillText(`${val.toFixed(1)}%`, pt.x, pt.y - 10);
-          ctx.restore();
-        });
-      }
-    }]
-  });
-}
-
-let asiaPeerChartInstance = null;
-function buildAsiaPeerChart() {
-  const sc = {LVMH:'#1b3a5c', Hermes:'#e8a020', Kering:'#5b9bd5'};
-  const ctx = document.getElementById('asiaPeerChart');
-  if (asiaPeerChartInstance) asiaPeerChartInstance.destroy();
-  asiaPeerChartInstance = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels:ASIA_LABELS,
-      datasets:Object.keys(ASIA_GROWTH).map(k=>({
-        label:k==='Hermes'?'Hermès':k,
-        data:ASIA_GROWTH[k],
-        borderColor:sc[k], backgroundColor:sc[k]+'15',
-        borderWidth:2, pointRadius:3, pointHoverRadius:6, tension:0.25, fill:false, spanGaps:true
-      }))
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{
-          label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: n/a`:` ${ctx.dataset.label}: ${ctx.parsed.y>=0?'+':''}${ctx.parsed.y.toFixed(1)}%`
-        }}
-      },
-      scales:{
-        x:{grid:{display:false},ticks:{color:'#667085',font:{size:9,family:'Segoe UI'}}},
-        y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}
+        x:{grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9}}},
+        y:{grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9},callback:v=>currSymbol+v.toLocaleString()}}
       }
     }
   });
 }
 
-function buildAsiaPeerTable() {
-  const names = {LVMH:'LVMH', Hermes:'Hermès', Kering:'Kering'};
-  const dots = {LVMH:'#1b3a5c', Hermes:'#e8a020', Kering:'#5b9bd5'};
-  let rows = '';
-  Object.keys(ASIA_GROWTH).forEach(k => {
-    const g = ASIA_GROWTH[k]; const latest = g[g.length-1];
-    const cls = latest >= 0 ? 'delta-up' : 'delta-down';
-    const sign = latest >= 0 ? '▲ +' : '▼ ';
-    const dotStyle = `display:inline-block;width:8px;height:8px;border-radius:50%;background:${dots[k]};margin-right:5px;`;
-    rows += `<tr><td><span style="${dotStyle}"></span>${names[k]}</td><td class="${cls}">${sign}${Math.abs(latest).toFixed(1)}%</td><td style="color:var(--text-muted)">${ASIA_EXPOSURE_1H26[k].toFixed(1)}%</td></tr>`;
-  });
-  document.getElementById('asiaPeerTableBody').innerHTML = rows;
+function initPriceEvolutionPanel(){
+  const modelSel=document.getElementById('priceEvolutionModelSelector');
+  const regionSel=document.getElementById('priceEvolutionRegionSelector');
+  if(modelSel&&!modelSel._wiredPE){modelSel.addEventListener('change',renderPriceEvolutionChart);modelSel._wiredPE=true;}
+  if(regionSel&&!regionSel._wiredPE){regionSel.addEventListener('change',renderPriceEvolutionChart);regionSel._wiredPE=true;}
+  renderPriceEvolutionChart();
 }
 
-// Wire up dropdown
-const buSel = document.getElementById('buSelector');
-buSel.addEventListener('change', () => renderBuCharts(buSel.value));
+// ── LVMH PERFORMANCE ─────────────────────────────────────────────────────────
+const BU_LABELS_GROWTH=['2019','2020','2021','2022','2023','2024','1Q25','2Q25','3Q25','4Q25','FY25','1Q26','2Q26'];
+const BU_LABELS_EBIT=['2019','2020','2021','2022','2023','2024','1H25','2H25','FY25','1H26'];
+const BU_GROWTH={'LVMH':[10,-15.5,35.6,16.9,13.2,0.5,-3,-4,1,1,-1,1,3],'Fashion and Leather Goods':[17,-3,47,20,14,-1,-5,-9,-2,-3,-5,-2,1],'Wines and Spirits':[6,-14,26,11,-4,-8,-9,-4,1,-9,-5,5,5],'Perfume and Cosmetics':[9,-22,27,10,11,4,-1,1,2,-1,0,0,-1],'Watches and Jewelry':[3,-23,40,12,7,-2,0,0,2,8,3,7,11],'Selective Retailing':[5,-30,18,17,25,6,-1,4,7,7,4,4,6]};
+const BU_EBIT={'LVMH':[21.4,18.6,26.7,26.6,26.5,23.1,22.6,22.0,22.0,22.5],'Fashion and Leather Goods':[33.0,33.9,41.6,40.6,39.9,37.1,34.7,35.2,35.0,34.1],'Wines and Spirits':[31.0,29.2,31.2,30.4,31.9,23.1,20.2,17.8,19.0,22.4],'Perfume and Cosmetics':[10.0,1.5,10.4,8.5,8.6,8.0,10.4,7.4,8.9,10.7],'Watches and Jewelry':[16.7,9.0,18.7,19.1,19.8,14.6,15.0,13.9,14.4,15.9],'Selective Retailing':[9.4,-2.0,4.5,5.3,7.8,7.6,10.2,9.3,9.7,10.6]};
+const BU_INSIGHTS={'LVMH':['• LVMH total organic growth returned to positive territory in 3Q25 (+1%) after two consecutive negative quarters, and has remained in the 1-3% range since.','• Group EBIT margin has stabilized around 22.0-22.5% since 2H24, ~4.5pp below the 2021-2023 peak.'],'Fashion and Leather Goods':['• F&LG organic growth was negative for 5 consecutive quarters (1Q25 to 1Q26, -2% to -9%) before turning positive in 2Q26 (+1%) — the first positive print since 2023.','• EBIT margin compressed from 37.1% (FY2024) to a 1H26 low of 34.1%.'],'Wines and Spirits':['• W&S has been the weakest BU, with organic growth negative in 7 of the last 8 quarters.','• EBIT margin hit a cycle-low of 17.8% in 2H25 before recovering to 22.4% in 1H26.'],'Perfume and Cosmetics':['• P&C organic growth has flatlined near 0% since 1Q25, oscillating between -1% and +2%.','• EBIT margin is volatile semi-annually due to seasonality and marketing spend phasing.'],'Watches and Jewelry':['• W&J is the standout recovery story: organic growth accelerated from 0% (1Q-2Q25) to +11% (2Q26).','• EBIT margin has recovered from 13.9% (2H25) to 15.9% (1H26).'],'Selective Retailing':['• Selective Retailing has been consistently positive since 2Q25, with growth in the 4-7% range.','• EBIT margin reached a new high of 10.6% in 1H26, surpassing even the 2023 level.']};
+const ASIA_LABELS=['2019','2020','2021','2022','2023','2024','1Q25','2Q25','3Q25','4Q25','FY25','1Q26','2Q26'];
+const ASIA_GROWTH={LVMH:[null,0,31,0,18,-11,-11,-6,2,1,-4,7,4],Hermes:[17.8,14.4,44.6,21.9,19.1,7.4,1.2,5.2,6.2,8.0,4.9,2.2,2.5],Kering:[20.1,-6.5,32.7,-8.0,10.0,-23.0,-25,-19,-11,-6,-15,-4,-1]};
+const ASIA_EXPOSURE_1H26={LVMH:28.5,Hermes:40.3,Kering:28.2};
+
+let buGrowthChart=null,buEbitChart=null;
+function renderBuCharts(bu){
+  const growthData=BU_GROWTH[bu];const ebitData=BU_EBIT[bu];const insights=BU_INSIGHTS[bu];
+  document.getElementById('buChartTitle').textContent=`${bu==='LVMH'?'LVMH Total':bu} — Organic Revenue Growth (%)`;
+  document.getElementById('buEbitTitle').textContent=`${bu==='LVMH'?'LVMH Total':bu} — EBIT Margin (%)`;
+  document.getElementById('buInsights').innerHTML=insights.map(t=>`<div style="margin-bottom:6px;">${t}</div>`).join('');
+  const isFY=BU_LABELS_GROWTH.map(l=>l.startsWith('FY')||(!l.includes('Q')&&!l.includes('H')&&parseInt(l)>=2019&&parseInt(l)<=2024));
+  const colors=growthData.map((v,i)=>{if(isFY[i]&&v>=0)return'rgba(46,158,107,0.4)';if(isFY[i]&&v<0)return'rgba(192,57,43,0.4)';return v>=0?'#2e9e6b':'#c0392b';});
+  const borders=growthData.map((v,i)=>isFY[i]?(v>=0?'#2e9e6b':'#c0392b'):'transparent');
+  const ctx1=document.getElementById('buGrowthChart');if(buGrowthChart)buGrowthChart.destroy();
+  const gMax=Math.max(...growthData.filter(v=>v!=null));const gMin=Math.min(...growthData.filter(v=>v!=null));
+  buGrowthChart=new Chart(ctx1,{type:'bar',data:{labels:BU_LABELS_GROWTH,datasets:[{data:growthData,backgroundColor:colors,borderColor:borders,borderWidth:isFY.map(f=>f?2:0),borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:16,bottom:6}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>`${ctx.parsed.y>=0?'+':''}${ctx.parsed.y.toFixed(1)}%`}}},scales:{x:{grid:{display:false},ticks:{color:'#667085',font:{size:9}}},y:{suggestedMax:gMax+4,suggestedMin:gMin-4,grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}}},plugins:[{id:'barLabels',afterDatasetsDraw(chart){const ctx=chart.ctx;chart.data.datasets[0].data.forEach((val,i)=>{if(val==null)return;const meta=chart.getDatasetMeta(0);const bar=meta.data[i];ctx.save();ctx.font='bold 9px Segoe UI';ctx.textAlign='center';const label=`${val>=0?'+':''}${val.toFixed(1)}%`;if(Math.abs(bar.height)>20){ctx.fillStyle='#fff';const y=val>=0?bar.y+14:bar.y-6;ctx.fillText(label,bar.x,y);}else{ctx.fillStyle=val>=0?'#2e9e6b':'#c0392b';const y=val>=0?bar.y-5:bar.y+12;ctx.fillText(label,bar.x,y);}ctx.restore();});}}]});
+  const ctx2=document.getElementById('buEbitChart');if(buEbitChart)buEbitChart.destroy();
+  const ebitMax=Math.max(...ebitData.filter(v=>v!=null));const ebitMin=Math.min(...ebitData.filter(v=>v!=null));
+  buEbitChart=new Chart(ctx2,{type:'line',data:{labels:BU_LABELS_EBIT,datasets:[{data:ebitData,borderColor:'#1b3a5c',backgroundColor:'rgba(27,58,92,0.08)',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.3,fill:true,pointBackgroundColor:'#1b3a5c'}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:22}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>`EBIT margin: ${ctx.parsed.y.toFixed(1)}%`}}},scales:{x:{grid:{display:false},ticks:{color:'#667085',font:{size:9}}},y:{suggestedMax:ebitMax+4,suggestedMin:Math.min(ebitMin-2,0),grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}}},plugins:[{id:'ebitPointLabels',afterDatasetsDraw(chart){const ctx=chart.ctx;const ds=chart.data.datasets[0];const meta=chart.getDatasetMeta(0);ds.data.forEach((val,i)=>{if(val==null)return;const pt=meta.data[i];ctx.save();ctx.fillStyle='#1b3a5c';ctx.font='bold 9px Segoe UI';ctx.textAlign='center';ctx.fillText(`${val.toFixed(1)}%`,pt.x,pt.y-10);ctx.restore();});}}]});
+}
+
+let asiaPeerChartInstance=null;
+function buildAsiaPeerChart(){const sc={LVMH:'#1b3a5c',Hermes:'#e8a020',Kering:'#5b9bd5'};const ctx=document.getElementById('asiaPeerChart');if(asiaPeerChartInstance)asiaPeerChartInstance.destroy();asiaPeerChartInstance=new Chart(ctx,{type:'line',data:{labels:ASIA_LABELS,datasets:Object.keys(ASIA_GROWTH).map(k=>({label:k==='Hermes'?'Hermès':k,data:ASIA_GROWTH[k],borderColor:sc[k],backgroundColor:sc[k]+'15',borderWidth:2,pointRadius:3,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: n/a`:` ${ctx.dataset.label}: ${ctx.parsed.y>=0?'+':''}${ctx.parsed.y.toFixed(1)}%`}}},scales:{x:{grid:{display:false},ticks:{color:'#667085',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(Math.round(v*100)/100)+'%'}}}}});}
+
+function buildAsiaPeerTable(){const names={LVMH:'LVMH',Hermes:'Hermès',Kering:'Kering'};const dots={LVMH:'#1b3a5c',Hermes:'#e8a020',Kering:'#5b9bd5'};let rows='';Object.keys(ASIA_GROWTH).forEach(k=>{const g=ASIA_GROWTH[k];const latest=g[g.length-1];const cls=latest>=0?'delta-up':'delta-down';const sign=latest>=0?'▲ +':'▼ ';const dotStyle=`display:inline-block;width:8px;height:8px;border-radius:50%;background:${dots[k]};margin-right:5px;`;rows+=`<tr><td><span style="${dotStyle}"></span>${names[k]}</td><td class="${cls}">${sign}${Math.abs(latest).toFixed(1)}%</td><td style="color:var(--text-muted)">${ASIA_EXPOSURE_1H26[k].toFixed(1)}%</td></tr>`;});document.getElementById('asiaPeerTableBody').innerHTML=rows;}
+
+const buSel=document.getElementById('buSelector');
+buSel.addEventListener('change',()=>renderBuCharts(buSel.value));
 renderBuCharts(buSel.value);
 buildAsiaPeerChart();
 buildAsiaPeerTable();
 
-
 </script>
-
 </body>
 </html>
