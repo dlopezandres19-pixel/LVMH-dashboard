@@ -704,31 +704,37 @@ function renderPriceEvolutionChart(){
     document.getElementById('priceEvolutionKpis').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:20px;font-size:11px;">No data available for this selection yet.</div>';
     return;
   }
-  // Plugin: draws conditional fill between resale and retail lines
-  // 🟢 green when resale > retail (pricing power), 🔴 red when resale < retail (depreciation)
   const conditionalFillPlugin={
     id:'conditionalFill',
-    beforeDatasetsDraw(chart){
+    afterDraw(chart){
       const{ctx:c,chartArea,scales}=chart;
       if(!chartArea)return;
-      const meta0=chart.getDatasetMeta(0); // resale
-      const meta1=chart.getDatasetMeta(1); // retail
-      if(!meta0.data.length||!meta1.data.length)return;
+      const scaleX=scales.x, scaleY=scales.y;
+      if(!scaleX||!scaleY)return;
+      const resaleDs=chart.data.datasets[0].data;
+      const retailDs=chart.data.datasets[1].data;
+      if(!resaleDs||!retailDs||resaleDs.length<2)return;
       c.save();
       c.beginPath();
       c.rect(chartArea.left,chartArea.top,chartArea.width,chartArea.height);
       c.clip();
-      for(let i=0;i<meta0.data.length-1;i++){
-        const x0=meta0.data[i].x,   yr0=meta0.data[i].y,   yt0=meta1.data[i]?.y;
-        const x1=meta0.data[i+1].x, yr1=meta0.data[i+1].y, yt1=meta1.data[i+1]?.y;
-        if(yr0==null||yt0==null||yr1==null||yt1==null)continue;
-        // In canvas: lower y = higher value. resale > retail means yr < yt
-        const aboveRetail=(yr0<yt0||yr1<yt1);
+      for(let i=0;i<resaleDs.length-1;i++){
+        const r0=resaleDs[i], t0=retailDs[i];
+        const r1=resaleDs[i+1], t1=retailDs[i+1];
+        if(r0==null||t0==null||r1==null||t1==null)continue;
+        const x0=scaleX.getPixelForValue(i);
+        const x1=scaleX.getPixelForValue(i+1);
+        const yr0=scaleY.getPixelForValue(r0);
+        const yt0=scaleY.getPixelForValue(t0);
+        const yr1=scaleY.getPixelForValue(r1);
+        const yt1=scaleY.getPixelForValue(t1);
+        // resale > retail → green; resale < retail → red
+        const aboveRetail=(r0>t0||r1>t1);
         c.beginPath();
         c.moveTo(x0,yr0); c.lineTo(x1,yr1);
         c.lineTo(x1,yt1); c.lineTo(x0,yt0);
         c.closePath();
-        c.fillStyle=aboveRetail?'rgba(46,158,107,0.10)':'rgba(192,57,43,0.07)';
+        c.fillStyle=aboveRetail?'rgba(46,158,107,0.12)':'rgba(192,57,43,0.08)';
         c.fill();
       }
       c.restore();
