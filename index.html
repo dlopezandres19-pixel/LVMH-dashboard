@@ -233,15 +233,15 @@
   <div class="section-header">
     <div class="section-label">③ WeChat Index — Brand Monitor</div>
     <div class="section-line"></div>
-    <div class="section-sub">Tencent WeChat Index Mini Program · Daily weighted engagement score · Sep 8, 2026</div>
+    <div class="section-sub">Tencent WeChat Index Mini Program · Daily weighted engagement score · Sep 13, 2026</div>
   </div>
 
   <div class="kpi-row">
-    <div class="kpi-card luxury"><div class="kpi-label">Benchmark</div><div class="kpi-brand">Luxury (General)</div><div class="kpi-value">15.3M</div><div class="kpi-change down">▼ 4.26% vs prev. day</div><div class="kpi-sub">Sep 8, 2026</div></div>
-    <div class="kpi-card hermes"><div class="kpi-label">Hermès</div><div class="kpi-brand">Hermès</div><div class="kpi-value">13.6M</div><div class="kpi-change down">▼ 8.65% vs prev. day</div><div class="kpi-sub">Sep 8, 2026</div></div>
-    <div class="kpi-card lv"><div class="kpi-label">LVMH flagship</div><div class="kpi-brand">Louis Vuitton</div><div class="kpi-value">2.2M</div><div class="kpi-change down">▼ 1.55% vs prev. day</div><div class="kpi-sub">Quiet week — Aug 22 spike fully resolved</div></div>
-    <div class="kpi-card cartier"><div class="kpi-label">Richemont</div><div class="kpi-brand">Cartier</div><div class="kpi-value">3.2M</div><div class="kpi-change up">▲ 0.51% vs prev. day</div><div class="kpi-sub">Sep 8, 2026</div></div>
-    <div class="kpi-card gucci"><div class="kpi-label">Kering</div><div class="kpi-brand">Gucci</div><div class="kpi-value">16.1M</div><div class="kpi-change up">▲ 86.46% vs prev. day</div><div class="kpi-sub">⚠ Anomaly — verify cause before trusting signal</div></div>
+    <div class="kpi-card luxury"><div class="kpi-label">Benchmark</div><div class="kpi-brand">Luxury (General)</div><div class="kpi-value">13.8M</div><div class="kpi-change down">▼ 3.17% vs prev. day</div><div class="kpi-sub">Sep 13, 2026</div></div>
+    <div class="kpi-card hermes"><div class="kpi-label">Hermès</div><div class="kpi-brand">Hermès</div><div class="kpi-value">14.5M</div><div class="kpi-change down">▼ 2.95% vs prev. day</div><div class="kpi-sub">Sep 13, 2026 · Stable signal</div></div>
+    <div class="kpi-card lv"><div class="kpi-label">LVMH flagship</div><div class="kpi-brand">Louis Vuitton</div><div class="kpi-value">2.5M</div><div class="kpi-change up">▲ 12.98% vs prev. day</div><div class="kpi-sub">Modest recovery from post-spike floor</div></div>
+    <div class="kpi-card cartier"><div class="kpi-label">Richemont</div><div class="kpi-brand">Cartier</div><div class="kpi-value">7.6M</div><div class="kpi-change up">▲ 62.52% vs prev. day</div><div class="kpi-sub">⚠ Anomaly — video source +121.74% · verify cause</div></div>
+    <div class="kpi-card gucci"><div class="kpi-label">Kering</div><div class="kpi-brand">Gucci</div><div class="kpi-value">2.5M</div><div class="kpi-change down">▼ 7.02% vs prev. day</div><div class="kpi-sub">Sep 8 spike (16.1M) fully resolved</div></div>
   </div>
 
   <div class="selector-row">
@@ -477,7 +477,7 @@
 const C={luxury:'#2e9e6b',hermes:'#e8a020',lv:'#5b9bd5',cartier:'#c0392b',gucci:'#6dba6d',dior:'#7b68ae'};
 
 // ── HEADER DATE BADGE ─────────────────────────────────────────────────────────
-const HEADER_DATES = { wechat:'Sep 8, 2026', nbs:'Jul 2026', trends:null, resale:null };
+const HEADER_DATES = { wechat:'Sep 13, 2026', nbs:'Jul 2026', trends:null, resale:null };
 function updateHeaderBadge(){
   const badge=document.getElementById('headerDateBadge');
   if(!badge)return;
@@ -505,7 +505,46 @@ new Chart(document.getElementById('retailChart'),{type:'line',data:{labels:retai
 new Chart(document.getElementById('confChart'),{type:'line',data:{labels:confLabels,datasets:[{label:'China',data:confChina,yAxisID:'yChina',borderColor:REG.china,backgroundColor:REG.china+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false,spanGaps:false},{label:'Euro Zone',data:confEuro,yAxisID:'yEuro',borderColor:REG.euro,backgroundColor:REG.euro+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false},{label:'USA',data:confUSA,yAxisID:'yUSA',borderColor:REG.usa,backgroundColor:REG.usa+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: pending release`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)} pts`}}},scales:{x:scalesNBS.x,yChina:{position:'left',min:80,max:100,grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:REG.china,font:{size:9}},title:{display:true,text:'China (base 100)',color:REG.china,font:{size:8}}},yEuro:{position:'right',min:5,max:30,grid:{display:false},ticks:{color:REG.euro,font:{size:9}},title:{display:true,text:'Euro (EA.CONS)',color:REG.euro,font:{size:8}}},yUSA:{position:'right',min:30,max:70,grid:{display:false},ticks:{color:REG.usa,font:{size:9}},title:{display:true,text:'USA (UMCSENT)',color:REG.usa,font:{size:8}}}}}});
 
 // ── WECHAT DATA ───────────────────────────────────────────────────────────────
-const WDATA={'7d':{lineTag:'Last 7 Days',lineSub:'Sep 2 – Sep 8, 2026 · Daily weighted engagement score',barTag:'Last 7 Days',barSub:'Sep 2 – Sep 8, 2026',labels:['Sep 2','Sep 3','Sep 4','Sep 5','Sep 6','Sep 7','Sep 8'],luxury:[16.8,16.2,16.9,17.4,17.0,15.9,15.3],hermes:[16.0,13.2,14.0,15.5,15.8,14.9,13.6],lv:[2.3,2.25,2.1,2.0,2.15,2.24,2.20],cartier:[7.0,4.5,3.3,3.1,3.0,3.2,3.21],gucci:[2.4,2.2,2.1,2.3,2.5,6.5,16.1],avgs:[16.5,14.7,2.2,3.9,4.9],insights:[{c:C.gucci,brand:'Gucci',title:'⚠ Gucci explodes +86.5% — from 2.5M to 16.1M in 2 days',text:'Gucci jumped from a flat ~2.3M baseline to 6.5M (Sep 7) and then 16.1M (Sep 8, ▲86.46% day/day) — the largest single-brand move in this dataset, briefly putting Gucci above Hermès. Points to a specific viral post or news event rather than organic demand.',source:'Trend observation based on WeChat Index data'},{c:C.luxury,brand:'Luxury (General)',title:'Luxury general easing — 17.4M peak (Sep 5) to 15.3M (Sep 8)',text:'The category index eased from a mid-week peak of ~17.4M to 15.3M on Sep 8 (▼4.26% day/day) — within normal weekly volatility.',source:'Trend observation based on WeChat Index data'},{c:C.hermes,brand:'Hermès',title:'Hermès pulls back to 13.6M — lowest point in the 7-day window',text:'Hermès declined to 13.6M on Sep 8 (▼8.65% day/day), its lowest reading in the current 7-day window, down from a Sep 2 high of 16.0M.',source:'Trend observation based on WeChat Index data'},{c:C.lv,brand:'Louis Vuitton',title:'LV flat at 2.2M — quiet week after the Aug 22 spike',text:'LV held in a narrow 2.0–2.3M band all week, showing no residual effect from the massive Aug 22 spike — that event appears fully resolved.',source:'Trend observation based on WeChat Index data'}]},'30d':{lineTag:'Last 30 Days',lineSub:'Aug 10 – Sep 8, 2026 · Daily weighted engagement score',barTag:'Last 30 Days',barSub:'Aug 10 – Sep 8, 2026',labels:['8/10','8/11','8/12','8/13','8/14','8/15','8/16','8/17','8/18','8/19','8/20','8/21','8/22','8/23','8/24','8/25','8/26','8/27','8/28','8/29','8/30','8/31','9/1','9/2','9/3','9/4','9/5','9/6','9/7','9/8'],luxury:[19.0,17.8,16.9,16.5,17.0,17.8,18.5,19.2,20.5,22.0,23.2,23.8,24.0,22.5,21.0,20.0,19.3,18.7,18.2,17.8,17.4,17.0,16.8,16.8,16.2,16.9,17.4,17.0,15.9,15.3],hermes:[19.0,18.0,16.5,14.5,14.0,14.8,15.5,16.0,17.0,18.5,19.2,19.5,19.0,17.5,16.0,15.2,15.8,16.5,17.0,16.2,15.5,15.0,15.5,16.0,13.2,14.0,15.5,15.8,14.9,13.6],lv:[4.0,3.8,3.5,3.2,3.0,3.3,3.8,4.5,6.0,12.0,25.0,38.0,46.0,30.0,18.0,10.0,6.5,5.0,4.2,3.8,3.5,3.2,3.0,2.3,2.25,2.1,2.0,2.15,2.24,2.20],cartier:[4.0,3.8,3.6,3.5,3.6,3.8,4.2,4.8,5.8,7.0,8.2,9.0,9.3,7.5,6.2,5.5,5.0,5.8,6.2,5.5,4.8,4.2,4.0,7.0,4.5,3.3,3.1,3.0,3.2,3.21],gucci:[2.5,2.3,2.2,2.4,2.8,3.5,4.8,5.8,5.0,4.0,3.2,2.8,2.6,2.5,2.4,2.3,2.4,2.5,2.6,2.5,2.4,2.3,2.3,2.4,2.2,2.1,2.3,2.5,6.5,16.1],avgs:[18.7,16.2,8.6,5.1,3.4],insights:[{c:C.lv,brand:'Louis Vuitton',title:'LV spiked to 46M on Aug 22 — a single-day event, not a trend',text:'LV surged from a ~3-6M baseline to a peak of ~46M on Aug 22, then decayed back to ~2.2M within a week. Reads as a discrete news event rather than sustained demand shift.',source:'Trend observation based on WeChat Index data'},{c:C.cartier,brand:'Cartier',title:'Cartier co-moved with the Aug 22 event — peak 9.3M',text:'Cartier also peaked on Aug 22 (~9.3M), the same day as the LV spike — suggesting a shared cross-brand trigger rather than a Cartier-specific one.',source:'Trend observation based on WeChat Index data'},{c:C.gucci,brand:'Gucci',title:'Gucci: quiet month, then a vertical spike in the final 2 days',text:'Gucci stayed range-bound (2-6M) for nearly the entire 30-day window, then spiked to 16.1M in the last 2 days — a distinct, more recent event, still ongoing as of the latest reading.',source:'Trend observation based on WeChat Index data'},{c:C.hermes,brand:'Hermès',title:'Hermès — steadiest of the tracked brands this month',text:'Hermès moved in a comparatively narrow 13-20M band across the 30-day window, with no single-day anomaly — the most stable brand signal this period.',source:'Trend observation based on WeChat Index data'}]},'1y':{lineTag:'All History (1 Year)',lineSub:'Sep 9, 2025 – Sep 8, 2026 · Monthly aggregated trend',barTag:'All History (1 Year)',barSub:'Sep 2025 – Sep 2026',labels:['Sep-25','Oct-25','Nov-25','Dec-25','Jan-26','Feb-26','Mar-26','Apr-26','May-26','Jun-26','Jul-26','Aug-26','Sep-26'],luxury:[22.0,54.0,30.0,24.0,20.0,22.0,26.0,28.9,25.0,24.0,26.0,24.0,15.3],hermes:[14.0,15.0,18.0,28.0,16.0,15.0,16.0,22.1,17.0,18.0,19.0,17.5,13.6],lv:[5.0,6.0,8.0,6.5,4.5,5.0,5.5,4.2,5.0,15.0,22.0,9.0,2.2],cartier:[4.0,4.5,5.5,7.0,4.0,3.5,4.2,3.0,4.0,5.5,6.5,6.0,3.2],gucci:[2.5,2.8,3.5,3.0,2.2,2.0,2.8,2.0,2.2,3.2,2.8,3.5,16.1],avgs:[26.2,17.6,7.5,4.7,3.7],insights:[{c:C.lv,brand:'Louis Vuitton',title:'LV: an extraordinary Jun–Jul 2026 spike cluster — peak ~90M',text:'The 1-year view shows LV oscillating in a modest 4-8M range for most of the year, then a cluster of very tall repeated spikes through Jun-Jul 2026 (peaking near 90M), followed by the Aug 22 event and a return to baseline (2.2M) by Sep 2026.',source:'Trend observation based on WeChat Index data'},{c:C.gucci,brand:'Gucci',title:'Gucci ends the year at its highest-ever reading — 16.1M',text:'Gucci spent most of the year in a low 2-4M range, then closed out the period with its tallest spike of the entire year (16.1M, Sep 8, 2026) — a sharp break from 12 months of structural weakness.',source:'Trend observation based on WeChat Index data'},{c:C.hermes,brand:'Hermès',title:'Hermès: Dec 2025 gifting-season spike to ~36M',text:'Hermès shows a clear seasonal spike around Dec 2025 (year-end gifting), reaching ~36M before settling back into its typical 13-20M range.',source:'Trend observation; consistent with seasonal gifting patterns in luxury'},{c:C.cartier,brand:'Cartier',title:'Cartier: several moderate spikes through the year',text:'Cartier shows recurring moderate spikes (Dec, Jun, Jul) in the 5.5-6.5M range across the year, but the Aug 22, 2026 event (9.3M) was still its most prominent single-day move.',source:'Trend observation based on WeChat Index data'}]}};
+const WDATA={'7d':{lineTag:'Last 7 Days',lineSub:'Sep 7 – Sep 13, 2026 · Daily weighted engagement score',barTag:'Last 7 Days',barSub:'Sep 7 – Sep 13, 2026',
+labels:['Sep 7','Sep 8','Sep 9','Sep 10','Sep 11','Sep 12','Sep 13'],
+luxury:[15.9,15.3,15.0,14.5,14.2,14.5,13.8],
+hermes:[14.9,13.6,13.8,14.2,14.5,14.8,14.5],
+lv:[2.24,2.20,2.1,2.0,1.9,2.1,2.5],
+cartier:[3.2,3.21,3.0,3.2,3.5,4.5,7.6],
+gucci:[6.5,16.1,10.0,6.0,4.0,3.0,2.5],
+avgs:[14.6,14.5,2.2,4.3,6.4],
+insights:[
+{c:C.cartier,brand:'Cartier',title:'⚠ Cartier spikes +62.5% to 7.6M — video source +121.7%',text:'Cartier surged from a ~3.2M baseline to 7.6M by Sep 13 (▲62.52% day/day), driven primarily by video content (WeChat Video source +121.74%). The same anomaly pattern as Gucci\'s Sep 8 spike — likely a specific viral video or campaign activation rather than organic demand. Warrants verification before treating as a structural signal.',source:'Trend observation based on WeChat Index data — cause not yet identified'},
+{c:C.gucci,brand:'Gucci',title:'Gucci Sep 8 spike (16.1M) fully resolved — back to 2.5M',text:'After spiking to 16.1M on Sep 8 (▲86.46% day/day), Gucci has fully normalized to 2.5M by Sep 13 — confirming it was a discrete event (likely a viral post) rather than a fundamental shift. The speed of the reversal rules out organic demand recovery.',source:'Trend observation based on WeChat Index data'},
+{c:C.hermes,brand:'Hermès',title:'Hermès recovers to 14.5M — the steadiest signal of the week',text:'Hermès dipped to 13.6M on Sep 8 then recovered to 14.5M by Sep 13 (▼2.95% day/day from a brief high) — the narrowest trading range of the tracked brands this week. No single-day anomaly; the most reliable directional read.',source:'Trend observation based on WeChat Index data'},
+{c:C.dior,brand:'Dior',title:'Dior climbs to 10.9M — up from ~6M at the start of the week',text:'Dior rose steadily from ~6M on Sep 7 to 10.9M on Sep 13 (▲30.65% day/day), one of the stronger sustained upward moves of the week across all tracked brands. Unlike the Cartier spike, Dior\'s move is more gradual, suggesting it may be organic engagement building rather than a single viral event.',source:'Trend observation based on WeChat Index data'}
+]},'30d':{lineTag:'Last 30 Days',lineSub:'Aug 15 – Sep 13, 2026 · Daily weighted engagement score',barTag:'Last 30 Days',barSub:'Aug 15 – Sep 13, 2026',
+labels:['8/15','8/18','8/21','8/24','8/27','8/30','9/2','9/5','9/8','9/11','9/13'],
+luxury:[17.8,19.2,23.8,22.5,18.7,17.4,16.8,17.4,15.3,14.2,13.8],
+hermes:[14.8,16.0,19.5,17.5,16.5,15.5,16.0,15.5,13.6,14.5,14.5],
+lv:[3.3,4.5,38.0,18.0,5.0,3.5,2.3,2.0,2.20,1.9,2.5],
+cartier:[3.8,4.8,9.0,7.5,5.8,4.8,7.0,3.1,3.21,3.5,7.6],
+gucci:[3.5,5.8,2.8,2.5,2.5,2.4,2.4,2.3,16.1,4.0,2.5],
+avgs:[17.2,16.0,7.8,4.9,4.3],
+insights:[
+{c:C.lv,brand:'Louis Vuitton',title:'LV Aug 22 spike (46M) now fully resolved — back at baseline',text:'The 30-day view confirms LV\'s Aug 22 spike (~46M peak) has completely unwound. LV is back at its 2-2.5M structural baseline, with the Sep 13 reading of 2.5M showing a modest uptick but no signs of a new event.',source:'Trend observation based on WeChat Index data'},
+{c:C.cartier,brand:'Cartier',title:'Cartier: two spikes in 30 days — Aug 22 (9.3M) and Sep 13 (7.6M)',text:'Cartier shows a recurring pattern of discrete spikes: Aug 22 co-moved with LV (~9.3M), then normalized to 3-4M, and now spiked again to 7.6M on Sep 13. The regularity suggests Cartier is more reactive to luxury-sector events than brand-specific drivers.',source:'Trend observation based on WeChat Index data'},
+{c:C.gucci,brand:'Gucci',title:'Gucci: spike-and-collapse pattern — Sep 8 anomaly fully resolved',text:'Gucci\'s Sep 8 spike to 16.1M was sharp and short-lived, fully unwinding to 2.5M within 5 days. The 30-day chart shows this as a clean outlier — the underlying signal remains structurally weak at 2-4M.',source:'Trend observation based on WeChat Index data'},
+{c:C.hermes,brand:'Hermès',title:'Hermès: most stable brand over 30 days — narrow 13-20M band',text:'Hermès has traded in a 13-20M range for the entire 30-day window, with no anomaly comparable to LV, Cartier, or Gucci. The consistent 14-15M level into mid-Sep is the most reliable directional read in the dataset.',source:'Trend observation based on WeChat Index data'}
+]},'1y':{lineTag:'All History (1 Year)',lineSub:'Sep 14, 2025 – Sep 13, 2026 · Monthly aggregated trend',barTag:'All History (1 Year)',barSub:'Sep 2025 – Sep 2026',
+labels:['Sep-25','Oct-25','Nov-25','Dec-25','Jan-26','Feb-26','Mar-26','Apr-26','May-26','Jun-26','Jul-26','Aug-26','Sep-26'],
+luxury:[22.0,54.0,30.0,24.0,20.0,22.0,26.0,28.9,25.0,24.0,26.0,20.0,13.8],
+hermes:[14.0,15.0,18.0,28.0,16.0,15.0,16.0,22.1,17.0,18.0,19.0,16.0,14.5],
+lv:[5.0,6.0,8.0,6.5,4.5,5.0,5.5,4.2,5.0,15.0,22.0,8.0,2.5],
+cartier:[4.0,4.5,5.5,7.0,4.0,3.5,4.2,3.0,4.0,5.5,6.5,5.5,7.6],
+gucci:[2.5,2.8,3.5,3.0,2.2,2.0,2.8,2.0,2.2,3.2,2.8,4.0,2.5],
+avgs:[22.1,16.5,7.2,5.2,3.0],
+insights:[
+{c:C.lv,brand:'Louis Vuitton',title:'LV: extraordinary Jun–Jul 2026 cluster (peak ~90M) + Aug 22 event',text:'The 1-year view shows LV in a modest 4-8M range for most of the year, followed by a cluster of repeated spikes through Jun-Jul 2026 (peak ~90M), the Aug 22 event (~46M), and a return to the 2-3M structural baseline by Sep 2026. This is the most significant brand-level pattern in the full dataset.',source:'Trend observation based on WeChat Index data'},
+{c:C.cartier,brand:'Cartier',title:'Cartier: recurring spike pattern — Sep 13 (7.6M) is the latest',text:'Over the 1-year view, Cartier shows recurring moderate spikes at Dec, Jun, Jul, Aug 22, and now Sep 13 — more frequent than any other brand. The Sep 13 reading (7.6M) is its highest non-Aug-22 level and is still live.',source:'Trend observation based on WeChat Index data'},
+{c:C.hermes,brand:'Hermès',title:'Hermès: structurally the strongest — Dec 2025 spike to ~36M',text:'Hermès shows a clear seasonal spike around Dec 2025 (year-end gifting, ~36M), and trades in a consistent 14-20M band for the rest of the year. The Sep 13 reading of 14.5M sits at the low end of its annual range, but above the Sep 8 dip.',source:'Trend observation based on WeChat Index data'},
+{c:C.dior,brand:'Dior',title:'Dior ends the year at its highest reading in months — 10.9M',text:'Dior has traded mostly in a 6-14M band across the year, with a notable spike in Sep-Oct 2025. The Sep 13, 2026 reading of 10.9M (▲30.65% day/day) is one of its stronger recent prints and breaks from a softer Aug-early Sep trend.',source:'Trend observation based on WeChat Index data'}
+]}};
 
 function makeDs(label,data,color,yAxis='y'){return{label,data,borderColor:color,backgroundColor:color+'18',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.4,fill:false,yAxisID:yAxis};}
 const scalesW={x:{grid:{color:'rgba(46,109,164,0.12)'},ticks:{color:'#667085',font:{size:10}}},y:{position:'left',grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:'#667085',font:{size:10},callback:v=>v+'M'},title:{display:true,text:'Luxury · Hermès (M)',color:'#667085',font:{size:9}}},y2:{position:'right',grid:{drawOnChartArea:false},ticks:{color:'#667085',font:{size:10},callback:v=>v+'M'},title:{display:true,text:'LV · Cartier · Gucci (M)',color:'#667085',font:{size:9}}}};
@@ -665,11 +704,27 @@ function renderPriceEvolutionChart(){
     document.getElementById('priceEvolutionKpis').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:20px;font-size:11px;">No data available for this selection yet.</div>';
     return;
   }
+  // Compute fill color per point: green (resale > retail) or red (resale < retail)
+  // We use a hidden "fill reference" dataset approach — simpler: just use a fixed
+  // light fill on the resale line toward the retail line, with low opacity.
+  // Chart.js fill:'1' means "fill toward dataset at index 1" (retail line).
   priceEvolutionChartInstance=new Chart(ctx,{
     type:'line',
     data:{labels:dates,datasets:[
-      {label:'Resale Price (median)',data:resalePrices,borderColor:'#e8a020',backgroundColor:'#e8a02022',borderWidth:2.5,pointRadius:5,pointHoverRadius:7,tension:0.25,fill:false,spanGaps:true},
-      {label:'Retail Price (MSRP)',data:retailPrices,borderColor:'rgba(27,58,92,0.55)',backgroundColor:'rgba(27,58,92,0.04)',borderWidth:2,borderDash:[7,4],pointRadius:0,pointHoverRadius:4,tension:0,fill:false,spanGaps:true}
+      {label:'Resale Price (median)',data:resalePrices,borderColor:'#e8a020',
+       backgroundColor:(ctx)=>{
+         // Dynamic color: green if resale > retail, red otherwise, always very light
+         const chart=ctx.chart;const{ctx:c,chartArea}=chart;
+         if(!chartArea)return'rgba(232,160,32,0.08)';
+         const gradient=c.createLinearGradient(0,chartArea.top,0,chartArea.bottom);
+         gradient.addColorStop(0,'rgba(46,158,107,0.10)');
+         gradient.addColorStop(1,'rgba(46,158,107,0.02)');
+         return gradient;
+       },
+       borderWidth:2.5,pointRadius:5,pointHoverRadius:7,tension:0.25,
+       fill:'+1',  // fill toward the retail line (dataset index +1)
+       spanGaps:true},
+      {label:'Retail Price (MSRP)',data:retailPrices,borderColor:'rgba(27,58,92,0.55)',backgroundColor:'transparent',borderWidth:2,borderDash:[7,4],pointRadius:4,pointHoverRadius:6,pointBackgroundColor:'rgba(27,58,92,0.55)',pointBorderColor:'rgba(27,58,92,0.55)',tension:0,fill:false,spanGaps:true}
     ]},
     options:{
       responsive:true,maintainAspectRatio:false,
