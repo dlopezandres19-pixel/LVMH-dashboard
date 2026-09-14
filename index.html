@@ -393,7 +393,7 @@
   <div class="section-header">
     <div class="section-label">⑤ Luxury Resale Value Retention — USA · Europe · China</div>
     <div class="section-line"></div>
-    <div class="section-sub" id="resaleSectionSub">Value retention & liquidity across 8 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · Auto-updated weekly</div>
+    <div class="section-sub" id="resaleSectionSub">Value retention across 6 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · Auto-updated weekly</div>
   </div>
   <div style="font-size:11px;color:var(--white);opacity:0.7;margin-top:-10px;margin-bottom:4px;font-style:italic;">China is an unauthenticated P2P marketplace — shown separately, filtered for likely replicas, and flagged when no genuine listings pass the filter. Not directly comparable to US/EU.</div>
 
@@ -410,7 +410,7 @@
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
         <select id="brandGroupSelector" class="bu-select">
           <option value="hermes" selected>Hermès</option>
-          <option value="lvdior">LV &amp; Dior</option>
+          <option value="lvdior">Louis Vuitton</option>
         </select>
         <div class="legend" style="flex-direction:column;gap:5px;align-items:flex-end;">
           <div class="legend-item"><div class="legend-dot" style="background:#d4a84b"></div>USA</div>
@@ -442,15 +442,13 @@
           <option value="Hermès Kelly 28">Hermès Kelly 28</option>
           <option value="LV Neverfull MM">LV Neverfull MM</option>
           <option value="LV Speedy 25">LV Speedy 25</option>
-          <option value="LV Capucines BB">LV Capucines BB</option>
-          <option value="Dior Lady Dior Small">Dior Lady Dior Small</option>
         </select>
       </div>
     </div>
     <div class="resale-chart-wrap"><canvas id="modelDetailChart"></canvas></div>
     <div class="resale-table-title" id="modelSnapshotTitle">Latest Snapshot · Loading…</div>
     <table class="resale-table">
-      <thead><tr><th>Region</th><th>Retail Price (MSRP)</th><th>Median Resale Price</th><th>VR</th><th>Avg days to sell</th><th>n listings</th></tr></thead>
+      <thead><tr><th>Region</th><th>Retail Price (MSRP)</th><th>Median Resale Price</th><th>VR</th><th>n listings</th></tr></thead>
       <tbody id="modelDetailTableBody"></tbody>
     </table>
     <div id="modelAnomalyFlag"></div>
@@ -1030,8 +1028,7 @@ function renderCorrelation() {
   function liveResaleContext(brandKey) {
     const modelMap = {
       hermes: ['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28'],
-      lv: ['LV Neverfull MM','LV Speedy 25','LV Capucines BB'],
-      dior: ['Dior Lady Dior Small'],
+      lv: ['LV Neverfull MM','LV Speedy 25'],
     };
     const models = modelMap[brandKey];
     if (!models || typeof RESALE_V2_DATA === 'undefined') return null;
@@ -1139,7 +1136,7 @@ window.addEventListener('DOMContentLoaded', () => {
 // ══════════════════════════════════════════════════════════════════════════════
 
 const RESALE_V2_BASE = 'https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-resale-tracker/main/data_v2/';
-const RESALE_V2_MODELS = ['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28','LV Neverfull MM','LV Speedy 25','LV Capucines BB','Dior Lady Dior Small'];
+const RESALE_V2_MODELS = ['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28','LV Neverfull MM','LV Speedy 25'];
 const REGION_COLORS_V2 = { US:'#d4a84b', EU:'#2ecc71', CN:'#4a90c4' };
 const REGION_FILES = { US:'us_resale.json', EU:'eu_resale.json', CN:'cn_resale.json' };
 
@@ -1175,7 +1172,7 @@ async function loadResaleData() {
     const oldestFmt = Object.values(dates).filter(Boolean).sort()[0];
 
     const sub = document.getElementById('resaleSectionSub');
-    if (sub) sub.textContent = `Value retention & liquidity across 8 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · US: ${fmtDate(dates.US)} · EU: ${fmtDate(dates.EU)} · China: ${fmtDate(dates.CN)}`;
+    if (sub) sub.textContent = `Value retention across 6 tracked models · Vestiaire Collective (US/EU) · Xianyu/Goofish (China) · US: ${fmtDate(dates.US)} · EU: ${fmtDate(dates.EU)} · China: ${fmtDate(dates.CN)}`;
 
     const badge = document.getElementById('indexStalenessBadge');
     if (badge) {
@@ -1224,11 +1221,11 @@ async function loadResaleData() {
 // story clearly.
 const BRAND_GROUPS = {
   hermes: ['Hermès Birkin 25', 'Hermès Birkin 30', 'Hermès Kelly 25', 'Hermès Kelly 28'],
-  lvdior: ['LV Neverfull MM', 'LV Speedy 25', 'LV Capucines BB', 'Dior Lady Dior Small']
+  lvdior: ['LV Neverfull MM', 'LV Speedy 25']
 };
 const BRAND_GROUP_LABELS = {
   hermes: 'Hermès (Birkin 25/30, Kelly 25/28)',
-  lvdior: 'LV & Dior (Neverfull, Speedy 25, Capucines BB, Lady Dior Small)'
+  lvdior: 'Louis Vuitton (Neverfull MM, Speedy 25)'
 };
 
 // Average vr_median across the models in `modelFilter`, per date (skipping
@@ -1325,7 +1322,7 @@ function buildIndexTable(brandGroup) {
 function renderIndexPanel(brandGroup) {
   document.getElementById('indexPanelTitle').textContent = brandGroup === 'hermes'
     ? 'Resale Value Retention Index — Hermès — By Region'
-    : 'Resale Value Retention Index — LV & Dior — By Region';
+    : 'Resale Value Retention Index — Louis Vuitton — By Region';
   document.getElementById('indexPanelSubtitle').textContent = `Average VR — ${BRAND_GROUP_LABELS[brandGroup]}`;
   buildIndexChart(brandGroup);
   buildIndexTable(brandGroup);
@@ -1342,8 +1339,6 @@ const MSRP_REF = {
   'Hermès Kelly 28':       {US:14400, EU:10100, CN:108000},
   'LV Neverfull MM':       {US:2240,  EU:1550,  CN:15100},
   'LV Speedy 25':          {US:1980,  EU:1650,  CN:15100},
-  'LV Capucines BB':       {US:7200,  EU:6100,  CN:55000},
-  'Dior Lady Dior Small':  {US:6400,  EU:5700,  CN:49500},
 };
 // VR outside this range is flagged for manual validation rather than
 // trusted at face value — e.g. VR this low usually means the search
@@ -1419,7 +1414,6 @@ function renderModelDetail(model) {
         <td style="color:var(--text-muted)">${msrpCell}</td>
         <td style="color:var(--text-muted)">${currSymbol}${last.price_median!=null?last.price_median.toLocaleString():'—'}</td>
         <td class="vr-val" style="${vrStyle}">${(vr*100).toFixed(1)}%${isAnomaly?' ⚠':''}</td>
-        <td style="color:var(--text-muted)">${last.avg_days_to_sell!=null?last.avg_days_to_sell+'d':'—'}</td>
         <td style="color:var(--text-muted)">${last.n_listings!=null?last.n_listings:'—'}</td>
       </tr>`;
       if (last.date > latestDateOverall) latestDateOverall = last.date;
