@@ -735,7 +735,7 @@ function renderDouyinCharts(period) {
       plugins: {
         legend: {display: false},
         tooltip: {...tooltipCfg, callbacks: {
-          label: ctx => ctx.parsed.y == null ? ` ${ctx.dataset.label}: no data` : ` ${ctx.dataset.label}: ${ctx.parsed.y>=1000?(ctx.parsed.y/1000).toFixed(1)+'M':Math.round(ctx.parsed.y)+'K'}`,
+          label: ctx => ctx.parsed.y == null ? ` ${ctx.dataset.label}: no data` : ` ${ctx.dataset.label}: ${ctx.parsed.y>=1000000?(ctx.parsed.y/1000000).toFixed(1)+'M':ctx.parsed.y>=1000?(ctx.parsed.y/1000).toFixed(0)+'K':ctx.parsed.y.toFixed(0)}`,
         }}
       },
       scales: {
