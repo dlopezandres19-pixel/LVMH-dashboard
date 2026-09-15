@@ -308,7 +308,6 @@
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-hermes)"></div>Hermès</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-lv)"></div>Louis Vuitton</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--c-dior)"></div>Dior</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-cartier)"></div>Cartier</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-gucci)"></div>Gucci</div>
       </div>
@@ -616,11 +615,10 @@ const wechatLine=wechat?` WeChat (30d): ${wechat.latest.toFixed(1)}M, ${wechat.p
 
 // ── DOUYIN DATA ───────────────────────────────────────────────────────────────
 const DOUYIN_BASE = 'https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-resale-tracker/main/data_v2/douyin_data.json';
-const DOUYIN_BRANDS = ['Hermès','Louis Vuitton','Dior','Cartier','Gucci'];
+const DOUYIN_BRANDS = ['Hermès','Louis Vuitton','Cartier','Gucci'];
 const DOUYIN_COLORS = {
   'Hermès': '#e8a020',
   'Louis Vuitton': '#5b9bd5',
-  'Dior': '#7b68ae',
   'Cartier': '#c0392b',
   'Gucci': '#6dba6d',
 };
@@ -662,7 +660,7 @@ function renderDouyinKpis() {
     const wowSign = wow > 0 ? '▲ +' : '▼ ';
     const wowColor = wow > 0 ? '#2e9e6b' : '#c0392b';
     const cardClass = brand === 'Hermès' ? 'hermes' : brand === 'Louis Vuitton' ? 'lv' :
-                      brand === 'Dior' ? 'dior' : brand === 'Cartier' ? 'cartier' : 'gucci';
+                      brand === 'Cartier' ? 'cartier' : 'gucci';
     html += `<div class="kpi-card ${cardClass}">
       <div class="kpi-label">Douyin Score</div>
       <div class="kpi-brand">${brand}</div>
