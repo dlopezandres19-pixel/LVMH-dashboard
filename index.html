@@ -677,7 +677,7 @@ function renderDouyinKpis() {
     html += `<div class="kpi-card ${cardClass}">
       <div class="kpi-label">Douyin Score</div>
       <div class="kpi-brand">${brand}</div>
-      <div class="kpi-value">${last.score >= 1000 ? (last.score/1000).toFixed(1)+'M' : Math.round(last.score)+'K'}</div>
+      <div class="kpi-value">${last.score>=1000000?(last.score/1000000).toFixed(1)+'M':last.score>=1000?(last.score/1000).toFixed(0)+'K':Math.round(last.score)+' '}</div>
       ${wow !== null ? `<div class="kpi-change ${wow > 0 ? 'up' : 'down'}" style="color:${wowColor}">${wowSign}${Math.abs(wow)}% vs prev week</div>` : ''}
       <div class="kpi-sub">${last.date} · ${last.n_videos} videos</div>
     </div>`;
@@ -740,7 +740,7 @@ function renderDouyinCharts(period) {
       },
       scales: {
         x: {grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9}}},
-        y: {grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9},callback:v=>v>=1000?(v/1000).toFixed(1)+'M':Math.round(v)+'K'}}
+        y: {grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9},callback:v=>v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':Math.round(v)+' '}}
       }
     }
   });
@@ -761,12 +761,12 @@ function renderDouyinCharts(period) {
       plugins: {
         legend: {display: false},
         tooltip: {...tooltipCfg, callbacks: {
-          label: ctx => ctx.parsed.y == null ? ' No data' : ` Avg: ${ctx.parsed.y>=1000?(ctx.parsed.y/1000).toFixed(1)+'M':Math.round(ctx.parsed.y)+'K'}`
+          label: ctx => ctx.parsed.y == null ? ' No data' : ` Avg: ${ctx.parsed.y>=1000000?(ctx.parsed.y/1000000).toFixed(1)+'M':ctx.parsed.y>=1000?(ctx.parsed.y/1000).toFixed(0)+'K':Math.round(ctx.parsed.y)+' '}`
         }}
       },
       scales: {
         x: {grid:{display:false},ticks:{color:'#667085',font:{size:11}}},
-        y: {grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9},callback:v=>v>=1000?(v/1000).toFixed(1)+'M':Math.round(v)+'K'}}
+        y: {grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9},callback:v=>v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':Math.round(v)+' '}}
       }
     },
     plugins:[{id:'douyinShareLabels',afterDatasetsDraw(chart){
