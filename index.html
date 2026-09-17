@@ -208,7 +208,7 @@
     <div class="section-sub">National Bureau of Statistics China · Eurostat · BEA/Census · Latest available: Jul 2026 (GDP/Retail) · May 2026 (Confidence)</div>
   </div>
 
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;">
     <div class="panel">
       <div class="panel-title">Consumer Confidence — China · Euro Zone · USA</div>
       <div class="signal-badge yellow" style="margin-bottom:8px;">⚠ Different bases, own axis each — China near cycle-low, Europe past its Abr peak, USA rebounding off May trough</div>
@@ -227,13 +227,44 @@
       <div class="panel-subtitle">Quarterly (Q1–Q2 2026) + FY2026E forecast · Source: NBS · Eurostat · BEA</div>
       <div class="chart-wrap"><canvas id="gdpChart"></canvas></div>
     </div>
-    <div class="panel">
-      <div class="panel-title">China Tier-1 Affluent Housing Wealth Proxy (YoY %)</div>
-      <div class="signal-badge yellow" style="margin-bottom:8px;">⚠ Tier-1 avg still negative but decelerating — from -7.2% (Feb) to -3.8% (Jul), a meaningful recovery trend</div>
-      <div class="panel-subtitle">Avg of Beijing, Shanghai, Shenzhen, Guangzhou · Second-hand residential >144m² · Source: NBS 70-city index · Jan–Jul 2026</div>
-      <div class="chart-wrap"><canvas id="housingChart"></canvas></div>
-      <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.6;">
-        Large-home prices in Tier-1 cities proxy the <strong>wealth effect of affluent consumers</strong>: when asset values rise, perceived household wealth improves, supporting discretionary and luxury spending. Trend is improving but still contractionary — a headwind for luxury demand that is gradually easing.
+    <div class="panel" style="grid-column: 1 / -1;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div class="panel-title">China Tier-1 Affluent Housing Wealth Proxy (YoY %)</div>
+          <div class="panel-subtitle">Second-hand residential · Beijing, Shanghai, Shenzhen, Guangzhou · Source: NBS 70-city index · Jan 2019 – Aug 2026</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;gap:3px;">
+            <label style="font-size:9px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;">City</label>
+            <select id="housingCitySelector" class="bu-select">
+              <option value="Tier-1 Avg" selected>Tier-1 Avg</option>
+              <option value="Beijing">Beijing</option>
+              <option value="Shanghai">Shanghai</option>
+              <option value="Shenzhen">Shenzhen</option>
+              <option value="Guangzhou">Guangzhou</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="legend" style="margin-bottom:10px;">
+        <div class="legend-item"><div class="legend-dot" style="background:#5b9bd5"></div>&lt;90m² — Mass Market / Aspirational</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#e8a020"></div>90–144m² — Upper Middle / Affluent</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2e9e6b"></div>&gt;144m² — Luxury / HNWI Proxy</div>
+      </div>
+      <div style="position:relative;height:220px;margin-bottom:10px;">
+        <canvas id="housingChart"></canvas>
+      </div>
+      <!-- Start Date Slider -->
+      <div style="padding:8px 4px 4px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:10px;color:var(--text-muted);white-space:nowrap;" id="housingSliderStartLabel">Jan-19</span>
+          <input type="range" id="housingSlider" min="0" max="91" value="0" style="flex:1;cursor:pointer;accent-color:#1b3a5c;">
+          <span style="font-size:10px;color:var(--text-muted);white-space:nowrap;" id="housingSliderEndLabel">Aug-26</span>
+        </div>
+        <div style="text-align:center;font-size:9px;color:var(--text-muted);margin-top:2px;">← Drag to set start date · End date fixed at latest data point</div>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.6;">
+        Large-home prices (&gt;144m²) in Tier-1 cities proxy the <strong>wealth effect of affluent consumers</strong>: when asset values rise, perceived household wealth improves, supporting luxury spending. Trend is improving but still contractionary — a headwind gradually easing (from –7.2% in Feb-26 to –2.9% in Aug-26).
       </div>
     </div>
   </div>
@@ -542,7 +573,7 @@ const retailLabels=['Ene-26','Feb-26*','Mar-26','Abr-26','May-26','Jun-26','Jul-
 const retailChina=[2.5,2.0,1.5,-0.1,-0.7,0.9,0.5];const retailChinaInterpIdx=1;
 const retailEuro=[2.0,1.7,1.2,1.0,1.6,0.7,0.6];const retailUSA=[3.2,3.7,4.0,4.9,6.5,6.7,5.0];
 const confLabels=['Ene-26','Feb-26','Mar-26','Abr-26','May-26','Jun-26','Jul-26','Ago-26'];
-const confChina=[90.6,91.6,90.0,89.0,89.9,null,null,null];
+const confChina=[90.6,91.6,90.0,89.0,89.9,89.4,89.2,null];
 const confEuro=[12.5,12.4,16.3,20.5,18.9,17.6,15.9,15.5];
 const confUSA=[56.4,56.6,53.3,44.8,44.8,49.5,55.2,51.7];
 const tooltipNBS={backgroundColor:'#0d1b2e',borderColor:'#d0d5dd',borderWidth:1,titleColor:'#a8cceb',bodyColor:'#c9e0f4'};
@@ -552,10 +583,150 @@ const legendNBS={display:true,position:'bottom',labels:{color:'#667085',font:{si
 function makeForecastDs(label,data,color,estimateIdx){return{label,data,borderColor:color,backgroundColor:color+'22',borderWidth:2,tension:0.25,fill:false,pointRadius:data.map((_,i)=>i===estimateIdx?6:3),pointHoverRadius:6,pointBackgroundColor:data.map((_,i)=>i===estimateIdx?'transparent':color),pointBorderColor:color,pointBorderWidth:data.map((_,i)=>i===estimateIdx?2:0),segment:{borderDash:ctx=>ctx.p1DataIndex===estimateIdx?[6,4]:undefined}};}
 new Chart(document.getElementById('gdpChart'),{type:'line',data:{labels:gdpLabels,datasets:[makeForecastDs('China',gdpChina,REG.china,2),makeForecastDs('Euro Zone',gdpEuro,REG.euro,2),makeForecastDs('USA',gdpUSA,REG.usa,2)]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%${ctx.dataIndex===2?' (2026E forecast)':''}`}}},scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}}});
 new Chart(document.getElementById('retailChart'),{type:'line',data:{labels:retailLabels,datasets:[{label:'China',data:retailChina,borderColor:REG.china,backgroundColor:REG.china+'22',borderWidth:2,tension:0.3,fill:false,pointRadius:retailChina.map((_,i)=>i===retailChinaInterpIdx?6:3),pointHoverRadius:6,pointBackgroundColor:retailChina.map((_,i)=>i===retailChinaInterpIdx?'transparent':REG.china),pointBorderColor:REG.china,pointBorderWidth:retailChina.map((_,i)=>i===retailChinaInterpIdx?2:0),segment:{borderDash:ctx=>[ctx.p0DataIndex,ctx.p1DataIndex].includes(retailChinaInterpIdx)?[6,4]:undefined}},{label:'Euro Zone',data:retailEuro,borderColor:REG.euro,backgroundColor:REG.euro+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false},{label:'USA',data:retailUSA,borderColor:REG.usa,backgroundColor:REG.usa+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}% YoY${ctx.datasetIndex===0&&ctx.dataIndex===retailChinaInterpIdx?' (interpolated)':''}`}}},scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}}});
-// Housing chart
-const housingLabels=['Ene-26','Feb-26','Mar-26','Abr-26','May-26','Jun-26','Jul-26'];
-const housingTier1=[-7.0,-7.2,-7.1,-6.7,-5.7,-4.8,-3.8];
-new Chart(document.getElementById('housingChart'),{type:'line',data:{labels:housingLabels,datasets:[{label:'Tier-1 Avg Index',data:housingTier1,borderColor:'#4a90c4',backgroundColor:'rgba(74,144,196,0.1)',borderWidth:2.5,pointRadius:4,pointHoverRadius:6,tension:0.3,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...tooltipNBS,callbacks:{label:ctx=>` Tier-1 Avg: ${ctx.parsed.y.toFixed(1)}%`}}},scales:{...scalesNBS,y:{...scalesNBS.y,ticks:{...scalesNBS.y.ticks,callback:v=>+(Math.round(v*100)/100)+'%'}}}}});
+// ── HOUSING DATA ─────────────────────────────────────────────────────────────
+const HOUSING_DATES = ["2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08"];
+const HOUSING_CITY_DATA = {"<90m2": {"Beijing": [-0.6, 0.2, 0.9, 1.4, 1, 0.3, -0.3, -0.6, -1.2, -1.7, -1.6, -0.9, -0.8, -1.4, -1.7, -0.9, 0.9, 1.8, 1.7, 2.4, 3.8, 4.7, 5.4, 5.3, 6.5, 8.5, 9.6, 9.6, 8.9, 9.8, 10.7, 10.6, 9.6, 8.4, 8, 8.9, 7.9, 7, 6.9, 6.2, 4.7, 3.8, 3.4, 3.5, 4.3, 5.1, 4.8, 3.1, 3.9, 4.3, 3.7, 3, 2.6, 1.2, 0.2, 0.6, 1.1, -0.4, -2, -3.2, -4.8, -7, -8, -10.1, -10.7, -9.6, -9, -10.5, -12.3, -9.6, -6.4, -4.5, -4, -3, -2.2, -0.6, -0.2, -1.7, -2.8, -3.2, -2.9, -5.3, -7.9, -10, -9.9, -9.4, -8.9, -7.9, -7.2, -6.1, -5.2, -3.9], "Shanghai": [-3.3, -3.8, -2.6, -1.7, -1, -0.9, -0.1, 0.1, 0.9, 1.4, 1.5, 1.5, 1.4, 2.3, 1.6, 1.8, 2, 2.7, 2.6, 3.5, 3.8, 4.8, 5.2, 6.2, 8, 9.2, 10.6, 10.5, 10.7, 10.6, 11, 9.8, 8.1, 6.8, 6.6, 6, 5.1, 4.3, 3.7, 2.8, 2, 1.7, 2, 2.4, 3.7, 3.5, 3, 2.3, 2.1, 2.3, 2.5, 2.1, 1.2, 0, -1.6, -2.3, -2, -2.6, -3.9, -4.5, -5.5, -6.7, -7.7, -8.1, -9.1, -7.3, -6.9, -7, -9.3, -8, -6.1, -3.9, -3.1, -2.8, -2.4, -1.5, -0.6, -2, -2.5, -3, -2.4, -3.6, -4.6, -6.3, -7.2, -6.6, -6.3, -5.6, -4, -2.9, -1.7, -0.4], "Shenzhen": [1.8, 2.1, 1.7, 2.3, 2, 1.6, 2.1, 0.8, 2.4, 11.7, 6.6, 8.8, 10.2, 9.7, 10.5, 11.1, 12.7, 15.1, 16, 17.5, 17.4, 17, 16.1, 15.8, 16.6, 17.6, 16.2, 14.3, 12.1, 9.9, 7.4, 5.3, 3.4, 2.3, 2.8, 0.3, -1.9, -2.9, -3.5, -2.6, -2.7, -4.1, -3.7, -3.8, -3.5, -3.2, -3.6, -3.6, -2.8, -2.3, -1.4, -1.7, -1.9, -1.1, -1.9, -1.6, -1.4, -1.7, -2.7, -3.2, -5.4, -6.1, -7.7, -8.6, -9.1, -9.3, -9.3, -10.7, -11.9, -11.1, -9.1, -8.4, -6.5, -5.8, -4.2, -3.9, -3.4, -3.1, -3, -2, -1.7, -3.1, -4.7, -5.2, -6.3, -7, -6.8, -6.3, -5.6, -4.8, -3.9, -2.8], "Guangzhou": [0.7, 0.3, -0.3, -1.3, -2.2, -2.2, -2.1, -2.7, -3.4, -0.5, -3.1, -2.6, -2, -2.2, -1.9, -1.5, -0.7, 0.4, 2, 3.6, 4.3, 5, 6, 6.9, 8.4, 10, 11.6, 12.7, 13.1, 12.7, 11, 9.8, 9.1, 7.8, 5.6, 5.8, 4.6, 4.3, 3.3, 2.3, 1.1, 0.7, 0.3, -0.3, -0.6, -0.4, -0.7, -0.8, -0.9, -0.8, -0.9, -0.7, -0.8, -1.1, -2.2, -3.1, -3.4, -3.9, -3.8, -5.1, -6.2, -7.8, -8.6, -10.4, -11.8, -12.8, -12.4, -12, -12.5, -11.9, -12, -10.9, -9.9, -9.2, -8.5, -7.2, -6.3, -5, -6.1, -6.6, -6.2, -6.4, -7.1, -7.7, -8.2, -8.7, -8.5, -8.2, -7.3, -6.6, -5.1, -3.8], "Tier-1 Avg": [-0.35, -0.3, -0.07, 0.17, -0.05, -0.3, -0.1, -0.6, -0.33, 2.72, 0.85, 1.7, 2.2, 2.1, 2.12, 2.62, 3.72, 5.0, 5.58, 6.75, 7.33, 7.88, 8.17, 8.55, 9.88, 11.33, 12.0, 11.78, 11.2, 10.75, 10.03, 8.88, 7.55, 6.33, 5.75, 5.25, 3.92, 3.17, 2.6, 2.17, 1.27, 0.53, 0.5, 0.45, 0.97, 1.25, 0.88, 0.25, 0.58, 0.88, 0.97, 0.67, 0.28, -0.25, -1.38, -1.6, -1.43, -2.15, -3.1, -4.0, -5.47, -6.9, -8.0, -9.3, -10.17, -9.75, -9.4, -10.05, -11.5, -10.15, -8.4, -6.93, -5.88, -5.2, -4.33, -3.3, -2.62, -2.95, -3.6, -3.7, -3.3, -4.6, -6.08, -7.3, -7.9, -7.92, -7.62, -7.0, -6.02, -5.1, -3.97, -2.72]}, "90-144m2": {"Beijing": [-2.1, -1.5, -1, -0.4, -1, -0.5, -0.9, -1.4, -1.2, -1.1, -0.8, 0.1, 0.9, 0.4, 0, 0.3, 2.3, 2.8, 2.8, 4.1, 4.3, 5.1, 6.1, 5.9, 6.1, 7.8, 9.6, 9.7, 9.1, 9.6, 10.5, 10.2, 9.9, 9.2, 8.4, 8.3, 7.9, 7.5, 7.2, 6.6, 5.7, 4.7, 4.2, 4.1, 4.8, 4.9, 5, 4, 4.1, 3.8, 3.6, 3.4, 2.8, 1.4, 0.8, 0.5, 0.9, -0.3, -1.1, -0.9, -2.1, -3.6, -5.2, -6.4, -6.8, -6, -5.8, -6.7, -8.9, -7.3, -6.1, -5, -4, -3, -2, -1.4, -1.4, -2.2, -3.2, -3.2, -2.8, -4.3, -6.2, -7.7, -8.3, -8.2, -8.3, -7.7, -6.5, -5.7, -4.5, -3.5], "Shanghai": [-2.9, -1.5, -0.8, -0.4, 0.3, 0.6, 0.8, 0.8, 1.3, 1.5, 1.5, 1.9, 2.5, 1.9, 2.5, 3.9, 4.2, 4.2, 4.1, 4.6, 5.3, 5.5, 5.9, 6.5, 7.5, 8.8, 9.2, 8.3, 8.6, 9.7, 9.7, 9.6, 7.9, 7.4, 6.8, 7.1, 6.4, 6, 5.1, 4.4, 3.6, 2.9, 2.9, 3.3, 4.2, 4.2, 3.8, 2.8, 2.6, 2.4, 3, 3, 1.9, 0.1, -1, -1.8, -2, -2.3, -3.2, -3, -4, -5.6, -6.6, -7.2, -6.8, -5.4, -4.5, -5.2, -6, -5.2, -3.1, -2.6, -1.4, -1.4, -0.3, 0.4, 0.4, -0.6, -2, -1.9, -2.2, -3.4, -5, -5.9, -6.8, -6.1, -6.3, -5.4, -4.3, -3.4, -2.5, -1.4], "Shenzhen": [4.9, 3.1, 3.3, 4, 2.6, 2.2, 1.2, 0.8, 1.7, 4, 4.2, 5, 6, 6.7, 8.3, 9.3, 11.7, 14.1, 14.3, 15.4, 15.5, 15.7, 14.6, 13.7, 14.6, 15.1, 13.6, 12.1, 10, 7.4, 6.8, 5.5, 3.6, 2.6, 3.3, 1.2, -1, -2.1, -3.4, -3.4, -2.7, -2.6, -3.2, -3.4, -3.2, -3.8, -3.7, -3.9, -3, -2.1, -1.5, -1.2, -1.6, -1.7, -1.9, -1.7, -1.2, -1.4, -2.6, -3.3, -5.3, -6.9, -7.6, -8.9, -9.7, -10, -10.5, -10.6, -11.7, -10.1, -8.8, -7.3, -5.5, -4.6, -3.9, -3.3, -2.9, -2.5, -2.1, -2.4, -2.1, -3.9, -4.9, -5.7, -6.5, -7, -6.9, -6.4, -5, -4, -2.5, -1.9], "Guangzhou": [3.2, 2.6, 2.1, 1.4, -0.2, -0.9, -0.7, -1, -1.4, 3, -1, -0.7, 0.1, 0.5, 0.6, 0.8, 1.2, 1.9, 2.8, 4.5, 6, 6.9, 8, 8.5, 9.6, 10.2, 12, 13.6, 14.2, 13.8, 13.1, 11.7, 10, 8.3, 6.4, 5.6, 3.2, 2.9, 1.9, 1.6, 1.5, 1.4, 0.7, 0.3, 0.1, 0, 0, -0.2, -0.3, -0.7, -0.8, -1.2, -1.8, -2.9, -4, -3.9, -4, -3.7, -5, -5.4, -6.1, -7.3, -8.6, -10.2, -11.2, -12.3, -12.6, -13, -13.4, -13.3, -12.1, -11.2, -10.4, -9.9, -9.1, -8, -7.2, -5.1, -6, -6.1, -5.7, -6.3, -7.1, -7.9, -8.3, -8, -7.7, -7.4, -6.9, -5.4, -3.9, -3.5], "Tier-1 Avg": [0.78, 0.67, 0.9, 1.15, 0.42, 0.35, 0.1, -0.2, 0.1, 1.85, 0.97, 1.58, 2.38, 2.38, 2.85, 3.58, 4.85, 5.75, 6.0, 7.15, 7.78, 8.3, 8.65, 8.65, 9.45, 10.47, 11.1, 10.92, 10.47, 10.12, 10.03, 9.25, 7.85, 6.88, 6.22, 5.55, 4.12, 3.58, 2.7, 2.3, 2.03, 1.6, 1.15, 1.07, 1.47, 1.33, 1.28, 0.67, 0.85, 0.85, 1.08, 1.0, 0.33, -0.78, -1.53, -1.72, -1.58, -1.92, -2.97, -3.15, -4.38, -5.85, -7.0, -8.18, -8.62, -8.42, -8.35, -8.88, -10.0, -8.97, -7.52, -6.53, -5.33, -4.72, -3.83, -3.08, -2.78, -2.6, -3.32, -3.4, -3.2, -4.47, -5.8, -6.8, -7.47, -7.33, -7.3, -6.73, -5.67, -4.62, -3.35, -2.58]}, ">144m2": {"Beijing": [-2.1, -1.6, -1.1, 0, 0.3, 0.9, -0.6, -0.8, -0.9, -1.7, -1.3, -0.2, 0.4, 0.7, 0.6, 0.4, 2, 2.4, 4.1, 6.1, 6.5, 8.1, 9.6, 9.5, 9.5, 9.9, 11.1, 11.7, 10.8, 10.7, 10.8, 9.9, 9.8, 9.2, 8.1, 7.5, 8.2, 8.2, 7.9, 7.1, 6.1, 6, 5.6, 4.6, 5.1, 6, 6.4, 5.9, 5.6, 5.4, 4.5, 3.9, 3.5, 2.5, 1.4, 1.9, 1.7, 0.7, -0.5, -1.8, -3.7, -4, -4.4, -5.5, -6.1, -5.9, -4.9, -6.1, -7.7, -7.1, -5.9, -3.9, -2.9, -2.6, -1.9, -1.3, -0.8, -1.6, -2.5, -2.5, -2, -3.5, -4.7, -6.2, -6.6, -6.5, -6.9, -5.8, -5, -3.7, -2.9, -2.5], "Shanghai": [-1.5, -1, -0.6, -0.2, -1, -0.8, -0.1, -0.2, 0.5, -0.5, -0.3, -0.4, -0.4, -0.3, -0.3, 0.6, 2.1, 2.8, 3.6, 4.7, 4.9, 5.8, 5.7, 6.4, 6.3, 7.4, 8, 7.9, 7.5, 9.3, 9.5, 9.4, 8, 6.8, 6.4, 6.8, 6.7, 7.1, 6.3, 5.3, 5.1, 3.1, 2.6, 2.9, 3.9, 4.5, 4.3, 2.9, 2.4, 3, 3, 2.9, 2.5, 0.9, -0.6, -1.7, -1.5, -1.3, -1.6, -1.1, -2.9, -4.8, -5.5, -6, -6.5, -5, -3.8, -4, -5.8, -5.7, -5.1, -3.6, -1.8, -1.4, -1, 0.3, 0.7, -0.6, -2, -2.7, -2.6, -2.9, -3.7, -5.8, -5.9, -5.8, -5.8, -5.8, -4.9, -3.4, -2, -0.8], "Shenzhen": [5.6, 3.9, 4.9, 6.6, 5.7, 5.2, 5.8, 4.8, 6, 10.9, 9.3, 9.8, 10.1, 9.8, 9.9, 10.3, 11.1, 13.1, 13.5, 13.5, 12.7, 12.5, 11.8, 11.4, 11.7, 11.5, 10.6, 9.1, 8.5, 6.7, 5.7, 5.2, 4.2, 3.3, 4.2, 0.8, -0.7, -2.2, -2.1, -2.2, -2.2, -2.4, -3.3, -3.4, -3.8, -4.2, -3.8, -3.5, -2, -0.8, -0.7, -0.3, -0.4, -0.9, -0.3, -0.1, 0.4, 0.4, -1.2, -2.1, -4.2, -5.2, -5.8, -7.3, -8.8, -9.6, -10.6, -11.5, -12.5, -11.4, -9, -7.2, -5.8, -4.8, -4.4, -3.8, -3.3, -1.9, -1.2, -0.8, -0.6, -2.7, -5.1, -5.8, -6.8, -7.4, -7.4, -7, -5.9, -5.6, -4.8, -3.7], "Guangzhou": [4, 4.2, 1.5, 0.4, -1.2, -0.8, -0.9, -1.8, -2, 0.6, -3, -3.1, -2.7, -2.5, -1.5, -1, -0.2, 0.3, 1, 3, 3.9, 4.6, 5.6, 6.9, 7.2, 8.3, 9.8, 11.5, 12.7, 13.1, 12.9, 11.4, 10.3, 9.7, 7, 6.3, 5.2, 4.8, 3.4, 2.2, 1.2, 1.7, 1.2, 0.4, 0.3, -0.1, 0, -0.5, 0, -0.4, -0.6, -1, -1.6, -3, -3.9, -4.5, -4.6, -4.5, -4.2, -5.1, -5.8, -7.4, -8.3, -9.7, -11, -11.6, -11.7, -12.3, -12, -11.7, -11.5, -10.1, -9.5, -8.4, -8.1, -6.5, -6.3, -5.5, -6, -5.8, -6.1, -6.7, -7.4, -8, -8.5, -8.9, -8.2, -8.1, -7, -6.5, -5.4, -4.5], "Tier-1 Avg": [1.5, 1.38, 1.18, 1.7, 0.95, 1.12, 1.05, 0.5, 0.9, 2.33, 1.17, 1.53, 1.85, 1.92, 2.17, 2.58, 3.75, 4.65, 5.55, 6.83, 7.0, 7.75, 8.17, 8.55, 8.67, 9.28, 9.88, 10.05, 9.88, 9.95, 9.72, 8.98, 8.08, 7.25, 6.42, 5.35, 4.85, 4.47, 3.88, 3.1, 2.55, 2.1, 1.53, 1.12, 1.38, 1.55, 1.72, 1.2, 1.5, 1.8, 1.55, 1.38, 1.0, -0.12, -0.85, -1.1, -1.0, -1.17, -1.88, -2.52, -4.15, -5.35, -6.0, -7.12, -8.1, -8.03, -7.75, -8.47, -9.5, -8.97, -7.88, -6.2, -5.0, -4.3, -3.85, -2.83, -2.42, -2.4, -2.92, -2.95, -2.82, -3.95, -5.22, -6.45, -6.95, -7.15, -7.08, -6.68, -5.7, -4.8, -3.78, -2.88]}};
+const HOUSING_SEGMENTS = {
+  '<90m2':    { label: '<90m² — Mass Market / Aspirational', color: '#5b9bd5' },
+  '90-144m2': { label: '90–144m² — Upper Middle / Affluent',  color: '#e8a020' },
+  '>144m2':   { label: '>144m² — Luxury / HNWI Proxy',        color: '#2e9e6b' },
+};
+
+let housingChartInstance = null;
+let housingStartIdx = 0;
+
+function getHousingLabels(startIdx) {
+  const dates = HOUSING_DATES.slice(startIdx);
+  const totalMonths = dates.length;
+  const labels = new Array(totalMonths).fill('');
+  // Always show first and last
+  labels[0] = formatHousingDate(dates[0]);
+  labels[totalMonths - 1] = formatHousingDate(dates[totalMonths - 1]);
+  // For long periods: show Dec of each year
+  if (totalMonths > 24) {
+    dates.forEach((d, i) => {
+      if (d.endsWith('-12')) labels[i] = formatHousingDate(d);
+    });
+    labels[0] = formatHousingDate(dates[0]);
+    labels[totalMonths - 1] = formatHousingDate(dates[totalMonths - 1]);
+  } else if (totalMonths > 12) {
+    // Show every 3 months
+    dates.forEach((d, i) => {
+      const m = parseInt(d.split('-')[1]);
+      if (m % 3 === 1) labels[i] = formatHousingDate(d);
+    });
+    labels[0] = formatHousingDate(dates[0]);
+    labels[totalMonths - 1] = formatHousingDate(dates[totalMonths - 1]);
+  } else {
+    // Show every month
+    dates.forEach((d, i) => { labels[i] = formatHousingDate(d); });
+  }
+  return labels;
+}
+
+function formatHousingDate(d) {
+  const [y, m] = d.split('-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return months[parseInt(m)-1] + '-' + y.slice(2);
+}
+
+function getYearBoundaries(startIdx) {
+  const dates = HOUSING_DATES.slice(startIdx);
+  const boundaries = [];
+  dates.forEach((d, i) => {
+    if (d.endsWith('-01') && i > 0) boundaries.push(i);
+  });
+  return boundaries;
+}
+
+function renderHousingChart() {
+  const city = document.getElementById('housingCitySelector')?.value || 'Tier-1 Avg';
+  const startIdx = housingStartIdx;
+  const dates = HOUSING_DATES.slice(startIdx);
+  const labels = getHousingLabels(startIdx);
+
+  const datasets = Object.entries(HOUSING_SEGMENTS).map(([key, seg]) => {
+    const vals = HOUSING_CITY_DATA[key][city].slice(startIdx).map(v => v !== null ? +(v).toFixed(2) : null);
+    return {
+      label: seg.label,
+      data: vals,
+      borderColor: seg.color,
+      backgroundColor: seg.color + '15',
+      borderWidth: 2,
+      pointRadius: dates.length <= 24 ? 3 : 0,
+      pointHoverRadius: 5,
+      tension: 0.3,
+      fill: false,
+      spanGaps: true,
+    };
+  });
+
+  // Year boundary vertical lines via annotation-like plugin
+  const yearBounds = getYearBoundaries(startIdx);
+
+  const ctx = document.getElementById('housingChart');
+  if (housingChartInstance) housingChartInstance.destroy();
+
+  housingChartInstance = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          borderColor: '#d0d5dd',
+          borderWidth: 1,
+          padding: 10,
+          titleColor: '#1a1a2e',
+          bodyColor: '#344054',
+          callbacks: {
+            title: items => formatHousingDate(HOUSING_DATES[startIdx + items[0].dataIndex]),
+            label: ctx => ` ${ctx.dataset.label.split('—')[0].trim()}: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toFixed(1)}%`,
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: ctx2 => yearBounds.includes(ctx2.index) ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.04)', lineWidth: ctx2 => yearBounds.includes(ctx2.index) ? 1 : 1, borderDash: ctx2 => yearBounds.includes(ctx2.index) ? [4,3] : [] },
+          ticks: { color: '#667085', font: { size: 9 }, maxRotation: 90, minRotation: 45, autoSkip: false }
+        },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.06)' },
+          min: (() => { const allVals = datasets.flatMap(ds => ds.data.filter(v => v != null)); return allVals.length ? Math.floor(Math.min(...allVals) - 1.5) : undefined; })(),
+          max: (() => { const allVals = datasets.flatMap(ds => ds.data.filter(v => v != null)); return allVals.length ? Math.ceil(Math.max(...allVals) + 1.5) : undefined; })(),
+          ticks: { color: '#667085', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%' }
+        }
+      }
+    }
+  });
+}
+
+function initHousingChart() {
+  const slider = document.getElementById('housingSlider');
+  const startLabel = document.getElementById('housingSliderStartLabel');
+  const endLabel = document.getElementById('housingSliderEndLabel');
+  const citySelector = document.getElementById('housingCitySelector');
+
+  if (slider) {
+    slider.max = HOUSING_DATES.length - 1;
+    slider.value = 0;
+    endLabel.textContent = formatHousingDate(HOUSING_DATES[HOUSING_DATES.length - 1]);
+
+    slider.addEventListener('input', () => {
+      housingStartIdx = parseInt(slider.value);
+      startLabel.textContent = formatHousingDate(HOUSING_DATES[housingStartIdx]);
+      renderHousingChart();
+    });
+  }
+  if (citySelector && !citySelector._wiredH) {
+    citySelector.addEventListener('change', renderHousingChart);
+    citySelector._wiredH = true;
+  }
+  renderHousingChart();
+}
 new Chart(document.getElementById('confChart'),{type:'line',data:{labels:confLabels,datasets:[{label:'China',data:confChina,yAxisID:'yChina',borderColor:REG.china,backgroundColor:REG.china+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false,spanGaps:false},{label:'Euro Zone',data:confEuro,yAxisID:'yEuro',borderColor:REG.euro,backgroundColor:REG.euro+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false},{label:'USA',data:confUSA,yAxisID:'yUSA',borderColor:REG.usa,backgroundColor:REG.usa+'22',borderWidth:2,pointRadius:3,pointHoverRadius:5,tension:0.3,fill:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:legendNBS,tooltip:{...tooltipNBS,callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: pending release`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)} pts`}}},scales:{x:scalesNBS.x,yChina:{position:'left',min:80,max:100,grid:{color:'rgba(46,109,164,0.18)'},ticks:{color:REG.china,font:{size:9}},title:{display:true,text:'China (base 100)',color:REG.china,font:{size:8}}},yEuro:{position:'right',min:5,max:30,grid:{display:false},ticks:{color:REG.euro,font:{size:9}},title:{display:true,text:'Euro (EA.CONS)',color:REG.euro,font:{size:8}}},yUSA:{position:'right',min:30,max:70,grid:{display:false},ticks:{color:REG.usa,font:{size:9}},title:{display:true,text:'USA (UMCSENT)',color:REG.usa,font:{size:8}}}}}});
 
 // ── WECHAT DATA ───────────────────────────────────────────────────────────────
@@ -805,6 +976,7 @@ window.addEventListener('DOMContentLoaded', () => {
   loadTrendsData();
   loadResaleData();
   loadDouyinData();
+  initHousingChart();
 });
 
 
