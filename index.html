@@ -659,8 +659,8 @@ function renderHousingChart() {
     label: 'LVMH Organic Growth — annual data, interpolated monthly for visualization',
     data: lvmhSlice,
     yAxisID: 'yLVMH',
-    borderColor: 'rgba(150,150,150,0.4)',
-    backgroundColor: 'rgba(180,180,180,0.10)',
+    borderColor: 'rgba(100,100,100,0.55)',
+    backgroundColor: 'rgba(120,120,120,0.18)',
     borderWidth: 1,
     pointRadius: 0,
     pointHoverRadius: 4,
@@ -741,15 +741,15 @@ function renderHousingChart() {
           min: (() => { const hVals = datasets.filter(d=>d.yAxisID==='yHousing').flatMap(ds => ds.data.filter(v => v != null)); return hVals.length ? Math.floor(Math.min(...hVals) - 1.5) : undefined; })(),
           max: (() => { const hVals = datasets.filter(d=>d.yAxisID==='yHousing').flatMap(ds => ds.data.filter(v => v != null)); return hVals.length ? Math.ceil(Math.max(...hVals) + 1.5) : undefined; })(),
           ticks: { color: '#667085', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%' },
-          title: { display: true, text: 'Housing YoY (%)', color: '#667085', font: { size: 8 } }
+          title: { display: true, text: 'Housing YoY (%)', color: '#667085', font: { size: 9 } }
         },
         yLVMH: {
           position: 'right',
           grid: { drawOnChartArea: false },
           min: (() => { const lVals = lvmhSlice.filter(v => v != null); return lVals.length ? Math.floor(Math.min(...lVals) - 2) : undefined; })(),
           max: (() => { const lVals = lvmhSlice.filter(v => v != null); return lVals.length ? Math.ceil(Math.max(...lVals) + 2) : undefined; })(),
-          ticks: { color: '#aaa', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(0) + '%' },
-          title: { display: true, text: 'LVMH Organic Growth (%)', color: '#aaa', font: { size: 8 } }
+          ticks: { color: '#667085', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(0) + '%' },
+          title: { display: true, text: 'LVMH Organic Growth (%)', color: '#667085', font: { size: 9 } }
         }
       }
     }
