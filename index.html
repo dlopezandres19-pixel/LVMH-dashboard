@@ -217,7 +217,7 @@
     </div>
     <div class="panel">
       <div class="panel-title">Retail Sales Growth (YoY %) — China · Euro Zone · USA</div>
-      <div class="signal-badge red" style="margin-bottom:8px;">🔴 China turns negative Abr–May before a fragile recovery; Euro holds ~1%; USA accelerates to 5–7%</div>
+      <div class="signal-badge red" style="margin-bottom:8px;">🔴 China turns negative Abr–May before a fragile recovery (+0.5% Jul); Euro holds ~1%; USA accelerates to 5–7%</div>
       <div class="panel-subtitle">NBS · Eurostat · US Census · Jan–Jul 2026 · *China Feb interpolated — NBS reports Jan-Feb combined (Lunar New Year)</div>
       <div class="chart-wrap"><canvas id="retailChart"></canvas></div>
     </div>
@@ -263,9 +263,7 @@
         </div>
         <div style="text-align:center;font-size:9px;color:var(--text-muted);margin-top:2px;">← Drag to set start date · End date fixed at latest data point</div>
       </div>
-      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.6;">
-        Large-home prices (&gt;144m²) in Tier-1 cities proxy the <strong>wealth effect of affluent consumers</strong>: when asset values rise, perceived household wealth improves, supporting luxury spending. Trend is improving but still contractionary — a headwind gradually easing (from –7.2% in Feb-26 to –2.9% in Aug-26).
-      </div>
+      <div id="housingDynamicNote" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted);line-height:1.6;"></div>
     </div>
   </div>
 
@@ -702,6 +700,80 @@ function renderHousingChart() {
       }
     }
   });
+
+  renderHousingNote(startIdx);
+}
+
+
+function renderHousingNote(startIdx) {
+  const city = document.getElementById('housingCitySelector')?.value || 'Tier-1 Avg';
+  const note = document.getElementById('housingDynamicNote');
+  if (!note) return;
+
+  // Get latest values for each segment
+  const segs = {
+    '<90m2':    { label: 'Mass Market / Aspirational (<90m²)',  color: '#5b9bd5' },
+    '90-144m2': { label: 'Upper Middle / Affluent (90–144m²)',  color: '#e8a020' },
+    '>144m2':   { label: 'Luxury / HNWI Proxy (>144m²)',        color: '#2e9e6b' },
+  };
+
+  // Latest non-null value in visible range for each segment
+  function latestVal(segKey) {
+    const vals = HOUSING_CITY_DATA[segKey][city].slice(startIdx).filter(v => v != null);
+    return vals.length ? vals[vals.length - 1] : null;
+  }
+  function minVal(segKey) {
+    const vals = HOUSING_CITY_DATA[segKey][city].slice(startIdx).filter(v => v != null);
+    return vals.length ? Math.min(...vals) : null;
+  }
+
+  const v144  = latestVal('>144m2');
+  const v9014 = latestVal('90-144m2');
+  const v90   = latestVal('<90m2');
+  const min144 = minVal('>144m2');
+
+  // Badge color based on >144m2 latest value
+  let badgeClass, badgeIcon, signal;
+  if (v144 === null) { return; }
+  if (v144 >= 0) {
+    badgeClass = 'green'; badgeIcon = '✓';
+    signal = 'Luxury segment in positive territory — wealth effect supportive of luxury demand.';
+  } else if (v144 >= -5) {
+    badgeClass = 'yellow'; badgeIcon = '⚠';
+    signal = 'Luxury segment still contractionary but decelerating — headwind gradually easing.';
+  } else {
+    badgeClass = 'red'; badgeIcon = '🔴';
+    signal = 'Luxury segment deeply contractionary — meaningful headwind for luxury demand.';
+  }
+
+  const fmt = v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+  const latestDate = (() => {
+    const dates = HOUSING_DATES.slice(startIdx);
+    const vals144 = HOUSING_CITY_DATA['>144m2'][city].slice(startIdx);
+    for (let i = vals144.length - 1; i >= 0; i--) {
+      if (vals144[i] != null) {
+        const [y, m] = dates[i].split('-');
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[parseInt(m)-1] + '-' + y.slice(2);
+      }
+    }
+    return '';
+  })();
+
+  const troughNote = min144 !== null && min144 < v144
+    ? ` — recovering from trough of ${fmt(min144)} within the selected period`
+    : '';
+
+  note.innerHTML = `
+    <div class="signal-badge ${badgeClass}" style="margin-bottom:8px;">${badgeIcon} ${signal}</div>
+    <span style="color:#2e9e6b;font-weight:600;">&gt;144m² (Luxury/HNWI Proxy): ${fmt(v144)}</span> &nbsp;·&nbsp;
+    <span style="color:#e8a020;font-weight:600;">90–144m² (Upper Middle/Affluent): ${fmt(v9014)}</span> &nbsp;·&nbsp;
+    <span style="color:#5b9bd5;font-weight:600;">&lt;90m² (Mass Market/Aspirational): ${fmt(v90)}</span>
+    &nbsp;— all as of ${latestDate} for ${city}${troughNote}.
+    Large-home prices (&gt;144m²) in Tier-1 cities proxy the <strong>wealth effect of affluent consumers</strong>:
+    when asset values rise, perceived household wealth improves, supporting luxury spending.
+    The convergence across segments suggests broad-based dynamics rather than segment-specific moves.
+  `;
 }
 
 function initHousingChart() {
