@@ -250,6 +250,7 @@
         <div class="legend-item"><div class="legend-dot" style="background:#5b9bd5"></div>&lt;90m² — Mass Market / Aspirational</div>
         <div class="legend-item"><div class="legend-dot" style="background:#e8a020"></div>90–144m² — Upper Middle / Affluent</div>
         <div class="legend-item"><div class="legend-dot" style="background:#2e9e6b"></div>&gt;144m² — Luxury / HNWI Proxy</div>
+        <div class="legend-item"><div style="width:22px;height:10px;background:rgba(180,180,180,0.35);border:1px solid rgba(150,150,150,0.5);border-radius:2px;display:inline-block;margin-right:5px;"></div>LVMH Organic Growth (right axis, interpolated)</div>
       </div>
       <div style="position:relative;height:220px;margin-bottom:10px;">
         <canvas id="housingChart"></canvas>
@@ -590,6 +591,12 @@ const HOUSING_SEGMENTS = {
   '>144m2':   { label: '>144m² — Luxury / HNWI Proxy',        color: '#2e9e6b' },
 };
 
+// ── LVMH ORGANIC GROWTH — monthly interpolated series ──────────────────────
+const LVMH_MONTHLY   = [10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 7.875, 5.75, 3.625, 1.5, -0.625, -2.75, -4.875, -7.0, -9.125, -11.25, -13.375, -15.5, -11.242, -6.983, -2.725, 1.533, 5.792, 10.05, 14.308, 18.567, 22.825, 27.083, 31.342, 35.6, 34.042, 32.483, 30.925, 29.367, 27.808, 26.25, 24.692, 23.133, 21.575, 20.017, 18.458, 16.9, 16.592, 16.283, 15.975, 15.667, 15.358, 15.05, 14.742, 14.433, 14.125, 13.817, 13.508, 13.2, 12.142, 11.083, 10.025, 8.967, 7.908, 6.85, 5.792, 4.733, 3.675, 2.617, 1.558, 0.5, -0.667, -1.833, -3.0, -3.333, -3.667, -4.0, -2.333, -0.667, 1.0, 0.333, -0.333, -1.0, -0.333, 0.333, 1.0, 1.667, 2.333, 3.0, 3.667, 4.333];
+const LVMH_IS_ACTUAL = [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, true, false, false, true, false, false, true, false, false, true, false, false, true, false, false];
+const LVMH_LABELS    = ["", "", "", "", "", "", "", "", "", "", "", "FY2019", "", "", "", "", "", "", "", "", "", "", "", "FY2020", "", "", "", "", "", "", "", "", "", "", "", "FY2021", "", "", "", "", "", "", "", "", "", "", "", "FY2022", "", "", "", "", "", "", "", "", "", "", "", "FY2023", "", "", "", "", "", "", "", "", "", "", "", "FY2024", "", "", "1Q25", "", "", "2Q25", "", "", "3Q25", "", "", "FY25", "", "", "1Q26", "", "", "2Q26", "", ""];
+
+
 let housingChartInstance = null;
 let housingStartIdx = 0;
 
@@ -643,21 +650,46 @@ function renderHousingChart() {
   const dates = HOUSING_DATES.slice(startIdx);
   const labels = getHousingLabels(startIdx);
 
-  const datasets = Object.entries(HOUSING_SEGMENTS).map(([key, seg]) => {
-    const vals = HOUSING_CITY_DATA[key][city].slice(startIdx).map(v => v !== null ? +(v).toFixed(2) : null);
-    return {
-      label: seg.label,
-      data: vals,
-      borderColor: seg.color,
-      backgroundColor: seg.color + '15',
-      borderWidth: 2,
-      pointRadius: dates.length <= 24 ? 3 : 0,
-      pointHoverRadius: 5,
-      tension: 0.3,
-      fill: false,
-      spanGaps: true,
-    };
-  });
+  // LVMH background series (interpolated monthly)
+  const lvmhSlice = LVMH_MONTHLY.slice(startIdx).map(v => v !== null ? +v.toFixed(2) : null);
+  const lvmhActualSlice = LVMH_IS_ACTUAL.slice(startIdx);
+  const lvmhLabelSlice  = LVMH_LABELS.slice(startIdx);
+
+  const lvmhDataset = {
+    label: 'LVMH Organic Growth — annual data, interpolated monthly for visualization',
+    data: lvmhSlice,
+    yAxisID: 'yLVMH',
+    borderColor: 'rgba(150,150,150,0.4)',
+    backgroundColor: 'rgba(180,180,180,0.10)',
+    borderWidth: 1,
+    pointRadius: 0,
+    pointHoverRadius: 4,
+    tension: 0.4,
+    fill: true,
+    spanGaps: true,
+    order: 10,  // render behind housing lines
+  };
+
+  const datasets = [
+    lvmhDataset,
+    ...Object.entries(HOUSING_SEGMENTS).map(([key, seg]) => {
+      const vals = HOUSING_CITY_DATA[key][city].slice(startIdx).map(v => v !== null ? +(v).toFixed(2) : null);
+      return {
+        label: seg.label,
+        data: vals,
+        borderColor: seg.color,
+        backgroundColor: seg.color + '15',
+        borderWidth: 2,
+        pointRadius: dates.length <= 24 ? 3 : 0,
+        pointHoverRadius: 5,
+        tension: 0.3,
+        fill: false,
+        spanGaps: true,
+        yAxisID: 'yHousing',
+        order: 1,
+      };
+    })
+  ];
 
   // Year boundary vertical lines via annotation-like plugin
   const yearBounds = getYearBoundaries(startIdx);
@@ -682,7 +714,19 @@ function renderHousingChart() {
           bodyColor: '#344054',
           callbacks: {
             title: items => formatHousingDate(HOUSING_DATES[startIdx + items[0].dataIndex]),
-            label: ctx => ` ${ctx.dataset.label.split('—')[0].trim()}: ${ctx.parsed.y >= 0 ? '+' : ''}${ctx.parsed.y.toFixed(1)}%`,
+            label: ctx => {
+              const v = ctx.parsed.y;
+              if (v == null) return null;
+              const isLVMH = ctx.dataset.yAxisID === 'yLVMH';
+              if (isLVMH) {
+                const localIdx = ctx.dataIndex;
+                const actual = lvmhActualSlice[localIdx];
+                const lbl = lvmhLabelSlice[localIdx];
+                const tag = actual ? ` [${lbl}]` : ' [Interpolated]';
+                return ` LVMH Organic Growth: ${v >= 0 ? '+' : ''}${v.toFixed(1)}%${tag}`;
+              }
+              return ` ${ctx.dataset.label.split('—')[0].trim()}: ${v >= 0 ? '+' : ''}${v.toFixed(1)}%`;
+            },
           }
         }
       },
@@ -691,11 +735,21 @@ function renderHousingChart() {
           grid: { color: ctx2 => yearBounds.includes(ctx2.index) ? 'rgba(0,0,0,0.15)' : 'rgba(0,0,0,0.04)', lineWidth: ctx2 => yearBounds.includes(ctx2.index) ? 1 : 1, borderDash: ctx2 => yearBounds.includes(ctx2.index) ? [4,3] : [] },
           ticks: { color: '#667085', font: { size: 9 }, maxRotation: 90, minRotation: 45, autoSkip: false }
         },
-        y: {
+        yHousing: {
+          position: 'left',
           grid: { color: 'rgba(0,0,0,0.06)' },
-          min: (() => { const allVals = datasets.flatMap(ds => ds.data.filter(v => v != null)); return allVals.length ? Math.floor(Math.min(...allVals) - 1.5) : undefined; })(),
-          max: (() => { const allVals = datasets.flatMap(ds => ds.data.filter(v => v != null)); return allVals.length ? Math.ceil(Math.max(...allVals) + 1.5) : undefined; })(),
-          ticks: { color: '#667085', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%' }
+          min: (() => { const hVals = datasets.filter(d=>d.yAxisID==='yHousing').flatMap(ds => ds.data.filter(v => v != null)); return hVals.length ? Math.floor(Math.min(...hVals) - 1.5) : undefined; })(),
+          max: (() => { const hVals = datasets.filter(d=>d.yAxisID==='yHousing').flatMap(ds => ds.data.filter(v => v != null)); return hVals.length ? Math.ceil(Math.max(...hVals) + 1.5) : undefined; })(),
+          ticks: { color: '#667085', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%' },
+          title: { display: true, text: 'Housing YoY (%)', color: '#667085', font: { size: 8 } }
+        },
+        yLVMH: {
+          position: 'right',
+          grid: { drawOnChartArea: false },
+          min: (() => { const lVals = lvmhSlice.filter(v => v != null); return lVals.length ? Math.floor(Math.min(...lVals) - 2) : undefined; })(),
+          max: (() => { const lVals = lvmhSlice.filter(v => v != null); return lVals.length ? Math.ceil(Math.max(...lVals) + 2) : undefined; })(),
+          ticks: { color: '#aaa', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(0) + '%' },
+          title: { display: true, text: 'LVMH Organic Growth (%)', color: '#aaa', font: { size: 8 } }
         }
       }
     }
