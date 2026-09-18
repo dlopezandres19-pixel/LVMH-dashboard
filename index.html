@@ -250,7 +250,7 @@
         <div class="legend-item"><div class="legend-dot" style="background:#5b9bd5"></div>&lt;90m² — Mass Market / Aspirational</div>
         <div class="legend-item"><div class="legend-dot" style="background:#e8a020"></div>90–144m² — Upper Middle / Affluent</div>
         <div class="legend-item"><div class="legend-dot" style="background:#2e9e6b"></div>&gt;144m² — Luxury / HNWI Proxy</div>
-        <div class="legend-item"><div style="width:22px;height:10px;background:rgba(180,180,180,0.35);border:1px solid rgba(150,150,150,0.5);border-radius:2px;display:inline-block;margin-right:5px;"></div>LVMH Organic Growth (right axis, interpolated)</div>
+        <div class="legend-item"><div style="width:22px;height:10px;background:rgba(180,180,180,0.35);border:1px solid rgba(150,150,150,0.5);border-radius:2px;display:inline-block;margin-right:5px;"></div>LVMH Asia ex Japan Organic Growth (right axis, interpolated)</div>
       </div>
       <div style="position:relative;height:220px;margin-bottom:10px;">
         <canvas id="housingChart"></canvas>
@@ -592,7 +592,7 @@ const HOUSING_SEGMENTS = {
 };
 
 // ── LVMH ORGANIC GROWTH — monthly interpolated series ──────────────────────
-const LVMH_MONTHLY   = [10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 7.875, 5.75, 3.625, 1.5, -0.625, -2.75, -4.875, -7.0, -9.125, -11.25, -13.375, -15.5, -11.242, -6.983, -2.725, 1.533, 5.792, 10.05, 14.308, 18.567, 22.825, 27.083, 31.342, 35.6, 34.042, 32.483, 30.925, 29.367, 27.808, 26.25, 24.692, 23.133, 21.575, 20.017, 18.458, 16.9, 16.592, 16.283, 15.975, 15.667, 15.358, 15.05, 14.742, 14.433, 14.125, 13.817, 13.508, 13.2, 12.142, 11.083, 10.025, 8.967, 7.908, 6.85, 5.792, 4.733, 3.675, 2.617, 1.558, 0.5, -0.667, -1.833, -3.0, -3.333, -3.667, -4.0, -2.333, -0.667, 1.0, 0.333, -0.333, -1.0, -0.333, 0.333, 1.0, 1.667, 2.333, 3.0, 3.667, 4.333];
+const LVMH_MONTHLY   = [14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 14.0, 12.5, 11.0, 9.5, 8.0, 6.5, 5.0, 3.5, 2.0, 0.5, -1.0, -2.5, -4.0, -1.083, 1.833, 4.75, 7.667, 10.583, 13.5, 16.417, 19.333, 22.25, 25.167, 28.083, 31.0, 28.417, 25.833, 23.25, 20.667, 18.083, 15.5, 12.917, 10.333, 7.75, 5.167, 2.583, 0.0, 1.5, 3.0, 4.5, 6.0, 7.5, 9.0, 10.5, 12.0, 13.5, 15.0, 16.5, 18.0, 15.583, 13.167, 10.75, 8.333, 5.917, 3.5, 1.083, -1.333, -3.75, -6.167, -8.583, -11.0, -11.0, -11.0, -11.0, -9.333, -7.667, -6.0, -3.333, -0.667, 2.0, 0.0, -2.0, -4.0, -0.333, 3.333, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0];
 const LVMH_IS_ACTUAL = [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, true, false, false, true, false, false, true, false, false, true, false, false, true, false, false, true, false, false];
 const LVMH_LABELS    = ["", "", "", "", "", "", "", "", "", "", "", "FY2019", "", "", "", "", "", "", "", "", "", "", "", "FY2020", "", "", "", "", "", "", "", "", "", "", "", "FY2021", "", "", "", "", "", "", "", "", "", "", "", "FY2022", "", "", "", "", "", "", "", "", "", "", "", "FY2023", "", "", "", "", "", "", "", "", "", "", "", "FY2024", "", "", "1Q25", "", "", "2Q25", "", "", "3Q25", "", "", "FY25", "", "", "1Q26", "", "", "2Q26", "", ""];
 
@@ -656,7 +656,7 @@ function renderHousingChart() {
   const lvmhLabelSlice  = LVMH_LABELS.slice(startIdx);
 
   const lvmhDataset = {
-    label: 'LVMH Organic Growth — annual data, interpolated monthly for visualization',
+    label: 'LVMH Asia ex Japan Organic Growth — annual data, interpolated monthly for visualization',
     data: lvmhSlice,
     yAxisID: 'yLVMH',
     borderColor: 'rgba(100,100,100,0.55)',
@@ -723,7 +723,7 @@ function renderHousingChart() {
                 const actual = lvmhActualSlice[localIdx];
                 const lbl = lvmhLabelSlice[localIdx];
                 const tag = actual ? ` [${lbl}]` : ' [Interpolated]';
-                return ` LVMH Organic Growth: ${v >= 0 ? '+' : ''}${v.toFixed(1)}%${tag}`;
+                return ` LVMH Asia ex Japan: ${v >= 0 ? '+' : ''}${v.toFixed(1)}%${tag}`;
               }
               return ` ${ctx.dataset.label.split('—')[0].trim()}: ${v >= 0 ? '+' : ''}${v.toFixed(1)}%`;
             },
@@ -749,7 +749,7 @@ function renderHousingChart() {
           min: (() => { const lVals = lvmhSlice.filter(v => v != null); return lVals.length ? Math.floor(Math.min(...lVals) - 2) : undefined; })(),
           max: (() => { const lVals = lvmhSlice.filter(v => v != null); return lVals.length ? Math.ceil(Math.max(...lVals) + 2) : undefined; })(),
           ticks: { color: '#667085', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(0) + '%' },
-          title: { display: true, text: 'LVMH Organic Growth (%)', color: '#667085', font: { size: 9 } }
+          title: { display: true, text: 'LVMH Asia ex Japan Growth (%)', color: '#667085', font: { size: 9 } }
         }
       }
     }
@@ -1313,7 +1313,7 @@ const BU_GROWTH={'LVMH':[10,-15.5,35.6,16.9,13.2,0.5,-3,-4,1,1,-1,1,3],'Fashion 
 const BU_EBIT={'LVMH':[21.4,18.6,26.7,26.6,26.5,23.1,22.6,22.0,22.0,22.5],'Fashion and Leather Goods':[33.0,33.9,41.6,40.6,39.9,37.1,34.7,35.2,35.0,34.1],'Wines and Spirits':[31.0,29.2,31.2,30.4,31.9,23.1,20.2,17.8,19.0,22.4],'Perfume and Cosmetics':[10.0,1.5,10.4,8.5,8.6,8.0,10.4,7.4,8.9,10.7],'Watches and Jewelry':[16.7,9.0,18.7,19.1,19.8,14.6,15.0,13.9,14.4,15.9],'Selective Retailing':[9.4,-2.0,4.5,5.3,7.8,7.6,10.2,9.3,9.7,10.6]};
 const BU_INSIGHTS={'LVMH':['• LVMH total organic growth returned to positive territory in 3Q25 (+1%) after two consecutive negative quarters, and has remained in the 1-3% range since.','• Group EBIT margin has stabilized around 22.0-22.5% since 2H24, ~4.5pp below the 2021-2023 peak.'],'Fashion and Leather Goods':['• F&LG organic growth was negative for 5 consecutive quarters (1Q25 to 1Q26, -2% to -9%) before turning positive in 2Q26 (+1%) — the first positive print since 2023.','• EBIT margin compressed from 37.1% (FY2024) to a 1H26 low of 34.1%.'],'Wines and Spirits':['• W&S has been the weakest BU, with organic growth negative in 7 of the last 8 quarters.','• EBIT margin hit a cycle-low of 17.8% in 2H25 before recovering to 22.4% in 1H26.'],'Perfume and Cosmetics':['• P&C organic growth has flatlined near 0% since 1Q25, oscillating between -1% and +2%.','• EBIT margin is volatile semi-annually due to seasonality and marketing spend phasing.'],'Watches and Jewelry':['• W&J is the standout recovery story: organic growth accelerated from 0% (1Q-2Q25) to +11% (2Q26).','• EBIT margin has recovered from 13.9% (2H25) to 15.9% (1H26).'],'Selective Retailing':['• Selective Retailing has been consistently positive since 2Q25, with growth in the 4-7% range.','• EBIT margin reached a new high of 10.6% in 1H26, surpassing even the 2023 level.']};
 const ASIA_LABELS=['2019','2020','2021','2022','2023','2024','1Q25','2Q25','3Q25','4Q25','FY25','1Q26','2Q26'];
-const ASIA_GROWTH={LVMH:[null,0,31,0,18,-11,-11,-6,2,1,-4,7,4],Hermes:[17.8,14.4,44.6,21.9,19.1,7.4,1.2,5.2,6.2,8.0,4.9,2.2,2.5],Kering:[20.1,-6.5,32.7,-8.0,10.0,-23.0,-25,-19,-11,-6,-15,-4,-1]};
+const ASIA_GROWTH={LVMH:[14,-4,31,0,18,-11,-11,-6,2,1,-4,7,4],Hermes:[17.8,14.4,44.6,21.9,19.1,7.4,1.2,5.2,6.2,8.0,4.9,2.2,2.5],Kering:[20.1,-6.5,32.7,-8.0,10.0,-23.0,-25,-19,-11,-6,-15,-4,-1]};
 const ASIA_EXPOSURE_1H26={LVMH:28.5,Hermes:40.3,Kering:28.2};
 
 let buGrowthChart=null,buEbitChart=null;
