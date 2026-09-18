@@ -145,7 +145,7 @@
 
   <!-- ══ SECTION 0/1: LVMH F&LG + ASIA ══ -->
   <div class="section-header">
-    <div class="section-label">① LVMH Performance — F&amp;LG &amp; Asia (ex. Japan)</div>
+    <div class="section-label">① LVMH Performance — per LoBs &amp; Asia (ex. Japan)</div>
     <div class="section-line"></div>
     <div class="section-sub" id="lvmhSectionSub">LVMH quarterly filings · Peer 10-Qs (Hermès, Kering) · Updated quarterly on earnings release</div>
   </div>
@@ -1167,7 +1167,7 @@ function drawPointLabels(chart){
       const v=ds.data[j];
       if(v==null)return;
       // Near right edge? align right so text doesn't clip
-      const nearRight=(pt.x>area.right-10);
+      const nearRight=(pt.x>area.right-5);
       labels.push({x:pt.x,y:pt.y,v:v,color:ds.borderColor,nearRight:nearRight});
     });
   });
@@ -1189,15 +1189,21 @@ function drawPointLabels(chart){
       l.ty=ty;
     });
   });
+  // Mark last point per dataset
+  const lastX={};
+  labels.forEach(function(l){if(!lastX[l.color]||l.x>lastX[l.color])lastX[l.color]=l.x;});
+  labels.forEach(function(l){l.isLast=(l.x===lastX[l.color]);});
   labels.forEach(function(l){
     if(l.x<area.left||l.x>area.right+2)return;
     if(l.ty<area.top-2||l.ty>area.bottom)return;
     c.save();
     c.font='600 8px Inter,sans-serif';
     c.fillStyle=l.color;
-    c.textAlign=l.nearRight?'right':'center';
+    // Last point: align right and offset left so text stays inside canvas
+    const isEdge=l.isLast&&(l.x>area.right-40);
+    c.textAlign=isEdge?'right':'center';
     c.textBaseline='bottom';
-    const xOff=l.nearRight?-4:0;
+    const xOff=isEdge?-6:0;
     c.fillText(l.v.toFixed(2)+'x',l.x+xOff,l.ty);
     c.restore();
   });
