@@ -324,7 +324,7 @@
   <div class="section-header">
     <div class="section-label">④ Douyin Brand Monitor — China Engagement</div>
     <div class="section-line"></div>
-    <div class="section-sub">抖音 · ~750M daily users · Weekly brand engagement score · Auto-updated from GitHub repo · Proxy for Douyin Index (巨量算数)</div>
+    <div class="section-sub">抖音 · ~750M daily users · Weekly video volume · Videos published on Douyin mentioning each brand · Auto-updated from GitHub repo</div>
   </div>
 
   <div class="kpi-row" id="douyinKpiRow">
@@ -342,8 +342,8 @@
 
   <div class="charts-row">
     <div class="panel">
-      <div class="panel-title">Brand Engagement Score <span class="period-tag" id="douyinLineTag">Last 4 Weeks</span></div>
-      <div class="panel-subtitle" id="douyinLineSub">Weekly engagement score = likes + comments + shares + saves · Top 10 most-liked videos published in the prior 7 days · Displayed in thousands (K)</div>
+      <div class="panel-title">Weekly Video Volume <span class="period-tag" id="douyinLineTag">Last 4 Weeks</span></div>
+      <div class="panel-subtitle" id="douyinLineSub">Number of videos published on Douyin mentioning each brand in the prior 7 days · Higher = more organic buzz</div>
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-hermes)"></div>Hermès</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--c-lv)"></div>Louis Vuitton</div>
@@ -353,8 +353,8 @@
       <div class="chart-wrap-tall"><canvas id="douyinLineChart"></canvas></div>
     </div>
     <div class="panel">
-      <div class="panel-title">Average Score by Brand <span class="period-tag" id="douyinBarTag">Last 4 Weeks</span></div>
-      <div class="panel-subtitle" id="douyinBarSub">Average weekly engagement score across the selected period</div>
+      <div class="panel-title">Avg Weekly Videos by Brand <span class="period-tag" id="douyinBarTag">Last 4 Weeks</span></div>
+      <div class="panel-subtitle" id="douyinBarSub">Average number of videos published per week across the selected period</div>
       <div style="height:34px"></div>
       <div class="chart-wrap-tall"><canvas id="douyinBarChart"></canvas></div>
     </div>
@@ -925,7 +925,7 @@ function renderCorrelation(){const XPLAT_PERIOD='30d';const WECHAT_PERIOD_MAP={'
 function liveMacroContext(){if(typeof confChina==='undefined')return null;const lastNonNull=arr=>{for(let i=arr.length-1;i>=0;i--)if(arr[i]!=null)return arr[i];return null;};return{conf:lastNonNull(confChina),retail:lastNonNull(retailChina),gdp:lastNonNull(gdpChina)};}
 function livePerformanceContext(brandKey){if(typeof BU_GROWTH==='undefined'||typeof ASIA_GROWTH==='undefined')return null;if(brandKey==='lv'||brandKey==='dior'){const flg=BU_GROWTH['Fashion and Leather Goods'];const latestFlg=flg[flg.length-1];const asiaLvmh=ASIA_GROWTH.LVMH[ASIA_GROWTH.LVMH.length-1];const note=brandKey==='dior'?' (shared BU with LV, not Dior-specific)':'';return{label:'LVMH F&LG',growth:latestFlg,asiaGrowth:asiaLvmh,note};}if(brandKey==='hermes'){const asiaHermes=ASIA_GROWTH.Hermes[ASIA_GROWTH.Hermes.length-1];return{label:'Hermès',growth:null,asiaGrowth:asiaHermes,note:''};}if(brandKey==='gucci'){const asiaKering=ASIA_GROWTH.Kering[ASIA_GROWTH.Kering.length-1];return{label:'Kering',growth:null,asiaGrowth:asiaKering,note:''};}return null;}
 function liveResaleContext(brandKey){const modelMap={hermes:['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28'],lv:['LV Neverfull MM','LV Speedy 25']};const models=modelMap[brandKey];if(!models||typeof RESALE_V2_DATA==='undefined')return null;let sum=0,n=0;['US','EU'].forEach(region=>{models.forEach(m=>{const h=(RESALE_V2_DATA[region]&&RESALE_V2_DATA[region][m])||[];const last=h[h.length-1];if(last&&last.vr_median!=null){sum+=last.vr_median;n++;}});});if(n===0)return null;return{vr:(sum/n)*100,aboveRetail:(sum/n)>1};}
-function liveDouyinContext(brandKey){const douyinKeyMap={lv:'Louis Vuitton',hermes:'Hermès',cartier:'Cartier',gucci:'Gucci'};const key=douyinKeyMap[brandKey];if(!key||typeof douyinData==='undefined'||!douyinData[key])return null;const history=[...(douyinData[key]||[])].sort((a,b)=>a.date.localeCompare(b.date));const last=history[history.length-1];if(!last)return null;const fmt=v=>v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v.toFixed(0);return{fmt:fmt(last.score),date:last.date,n:last.n_videos};}
+function liveDouyinContext(brandKey){const douyinKeyMap={lv:'Louis Vuitton',hermes:'Hermès',cartier:'Cartier',gucci:'Gucci'};const key=douyinKeyMap[brandKey];if(!key||typeof douyinData==='undefined'||!douyinData[key])return null;const history=[...(douyinData[key]||[])].sort((a,b)=>a.date.localeCompare(b.date));const last=history[history.length-1];if(!last)return null;return{fmt:last.n_videos!=null?last.n_videos+' videos':'—',date:last.date,n:last.n_videos};}
 const macro=liveMacroContext();let html='';Object.keys(BRANDS).forEach(brandKey=>{const brand=BRANDS[brandKey];const chinaLatest=chinaData[brand.keywords.cn];const globalLatest=globalData[brand.keywords.en];if(!chinaLatest||!globalLatest)return;const chinaUp=chinaLatest.change>2,chinaDown=chinaLatest.change<-2;const globalUp=globalLatest.change>2,globalDown=globalLatest.change<-2;const chinaDataLimited=Math.abs(chinaLatest.value)<5;const wechat=liveWeChatContext(brandKey);const perf=livePerformanceContext(brandKey);const resale=liveResaleContext(brandKey);const douyin=liveDouyinContext(brandKey);const trendsDir=chinaUp&&globalUp?1:(chinaDown&&globalDown?-1:0);let signal,signalClass,thesis;if(trendsDir===1&&wechat&&wechat.pctChange>0){signal='✓ Converging Signals — China Interest Rising';signalClass='strong';thesis=`Directional read: search and engagement both point up for ${brand.name} this period.`;}else if(trendsDir===-1&&wechat&&wechat.pctChange<0){signal='🔴 Converging Signals — China Interest Softening';signalClass='weak';thesis=`Directional read: search and engagement both point down for ${brand.name} this period.`;}else if(chinaUp&&!globalUp){signal='⚡ China-Specific Divergence';signalClass='mixed';thesis=`Directional read: China-specific strength not mirrored globally for ${brand.name}.`;}else if(globalUp&&!chinaUp){signal=chinaDataLimited?'⚠ Global Rising · China Read Unreliable':'⚠ China Underperforming Global Search';signalClass='mixed';thesis=chinaDataLimited?`Global search is up for ${brand.name}, but China Trends figure is too thin to read.`:`Global interest is outpacing China for ${brand.name}.`;}else{signal='→ Mixed / Inconclusive';signalClass='mixed';thesis=`No clear single story for ${brand.name} this period.`;}
 const wechatLine=wechat?` WeChat (30d): ${wechat.latest.toFixed(1)}M, ${wechat.pctChange>=0?'+':''}${wechat.pctChange.toFixed(0)}% over window.`:' WeChat: not tracked.';const douyinLine=douyin?` Douyin (${douyin.date}): ${douyin.fmt} engagement score (${douyin.n} videos, prior 7 days).`:' Douyin: no data yet.';const perfLine=perf?(perf.growth!=null?` ${perf.label} organic ${perf.growth>=0?'+':''}${perf.growth.toFixed(1)}%${perf.note}, Asia ex-Japan ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`:` ${perf.label} Asia ex-Japan ${perf.asiaGrowth>=0?'+':''}${perf.asiaGrowth.toFixed(1)}%.`):' Not in LVMH Performance (different group).';const macroLine=macro?` China: confidence ${macro.conf!=null?macro.conf.toFixed(1)+'pts':'n/a'}, retail ${macro.retail!=null?(macro.retail>=0?'+':'')+macro.retail.toFixed(1)+'%':'n/a'}.`:'';const resaleLine=resale?` Resale ~${(resale.vr/100).toFixed(2)}x VR (US/EU avg).`:'';const trendsLine=` Trends: China ${chinaLatest.change>=0?'+':''}${chinaLatest.change.toFixed(1)}%, Global ${globalLatest.change>=0?'+':''}${globalLatest.change.toFixed(1)}%.`;const text=`${thesis}<br><span style="opacity:.75;">${trendsLine}${wechatLine}${douyinLine}${perfLine}${macroLine}${resaleLine}</span>`;html+=`<div class="corr-item"><div class="corr-header"><div class="corr-dot" style="background:${brand.color}"></div><div class="corr-brand">${brand.name}</div></div><div class="corr-signal ${signalClass}">${signal}</div><div class="corr-text">${text}</div></div>`;});document.getElementById('correlationGrid').innerHTML=html;}
 
@@ -1003,7 +1003,7 @@ function renderDouyinCharts(period) {
   const lineDatasets = DOUYIN_BRANDS.map(brand => {
     const series = getDouyinSeries(brand, weeks);
     const byDate = {};
-    series.forEach(e => byDate[e.date] = e.score);
+    series.forEach(e => byDate[e.date] = e.n_videos != null ? e.n_videos : 0);
     return {
       label: brand,
       data: dates.map(d => byDate[d] != null ? +byDate[d].toFixed(3) : null),
@@ -1018,7 +1018,7 @@ function renderDouyinCharts(period) {
   const barAvgs = DOUYIN_BRANDS.map(brand => {
     const series = getDouyinSeries(brand, weeks);
     if (!series.length) return null;
-    return +(series.reduce((s,e) => s + e.score, 0) / series.length).toFixed(3);
+    return +(series.reduce((s,e) => s + (e.n_videos||0), 0) / series.length).toFixed(1);
   });
 
   const periodLabels = {'4w':'Last 4 Weeks','12w':'Last 12 Weeks','all':'All History'};
