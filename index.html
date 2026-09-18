@@ -6,7 +6,6 @@
 <title>LVMH | GRAM Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
   :root {
@@ -559,8 +558,37 @@
 </div>
 
 <script>
-Chart.register(ChartDataLabels);
-Chart.defaults.set("plugins.datalabels", {display: false});
+
+// ── Custom point labels for resale charts (no external plugin needed) ──
+const resalePointLabels = {
+  id: 'resalePointLabels',
+  afterDatasetsDraw(chart) {
+    if (!chart.config.options._showPointLabels) return;
+    const ctx = chart.ctx;
+    chart.data.datasets.forEach((dataset, i) => {
+      const meta = chart.getDatasetMeta(i);
+      if (meta.hidden) return;
+      // Offset direction by dataset index to avoid overlap
+      const yOffset = i === 0 ? -10 : i === 1 ? 12 : 0;
+      const xOffset = i === 2 ? 8 : 0;
+      const align = i === 2 ? 'left' : 'center';
+      meta.data.forEach((point, j) => {
+        const val = dataset.data[j];
+        if (val == null) return;
+        const label = val.toFixed(2) + 'x';
+        ctx.save();
+        ctx.font = '600 8px Inter, sans-serif';
+        ctx.fillStyle = dataset.borderColor;
+        ctx.textAlign = align;
+        ctx.textBaseline = i === 1 ? 'top' : 'bottom';
+        ctx.fillText(label, point.x + xOffset, point.y + yOffset);
+        ctx.restore();
+      });
+    });
+  }
+};
+Chart.register(resalePointLabels);
+
 const C={luxury:'#2e9e6b',hermes:'#e8a020',lv:'#5b9bd5',cartier:'#c0392b',gucci:'#6dba6d',dior:'#7b68ae'};
 
 // ── HEADER DATE BADGE ─────────────────────────────────────────────────────────
@@ -1158,24 +1186,7 @@ function computeRegionIndex(regionData,modelFilter){const byDate={};Object.entri
 
 let indexChartInstance=null;
 function buildIndexChart(brandGroup){const models=BRAND_GROUPS[brandGroup];const usIdx=computeRegionIndex(RESALE_V2_DATA.US,models);const euIdx=computeRegionIndex(RESALE_V2_DATA.EU,models);const cnIdx=computeRegionIndex(RESALE_V2_DATA.CN,models);const allDates=Array.from(new Set([...usIdx,...euIdx,...cnIdx].map(d=>d.date))).sort();function seriesFor(idx){const map={};idx.forEach(d=>map[d.date]=d.avg);return allDates.map(d=>map[d]!=null?+(map[d]).toFixed(4):null);}
-const ctx=document.getElementById('resaleIndexChart');if(indexChartInstance)indexChartInstance.destroy();indexChartInstance=new Chart(ctx,{type:'line',data:{labels:allDates,datasets:[{label:'USA',data:seriesFor(usIdx),borderColor:REGION_COLORS_V2.US,backgroundColor:REGION_COLORS_V2.US+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true},{label:'Europe',data:seriesFor(euIdx),borderColor:REGION_COLORS_V2.EU,backgroundColor:REGION_COLORS_V2.EU+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true},{label:'China ⚠',data:seriesFor(cnIdx),borderColor:REGION_COLORS_V2.CN,backgroundColor:REGION_COLORS_V2.CN+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true,borderDash:[5,4]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}x avg VR`}},datalabels:{
-              display: ctx => ctx.parsed.y != null,
-              align: ctx => {
-                // Spread labels by dataset to avoid overlap
-                const idx = ctx.datasetIndex;
-                return idx === 0 ? 'top' : idx === 1 ? 'bottom' : 'right';
-              },
-              anchor: ctx => {
-                const idx = ctx.datasetIndex;
-                return idx === 0 ? 'end' : idx === 1 ? 'start' : 'end';
-              },
-              offset: 4,
-              color: ctx => ctx.dataset.borderColor,
-              font: {size: 8, weight: '600'},
-              formatter: v => v != null ? v.toFixed(2)+'x' : null,
-              clamp: true,
-              clip: false
-            }},scales:{x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(v).toFixed(2)+'x'},grace:'10%'}}}});}
+const ctx=document.getElementById('resaleIndexChart');if(indexChartInstance)indexChartInstance.destroy();indexChartInstance=new Chart(ctx,{type:'line',data:{labels:allDates,datasets:[{label:'USA',data:seriesFor(usIdx),borderColor:REGION_COLORS_V2.US,backgroundColor:REGION_COLORS_V2.US+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true},{label:'Europe',data:seriesFor(euIdx),borderColor:REGION_COLORS_V2.EU,backgroundColor:REGION_COLORS_V2.EU+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true},{label:'China ⚠',data:seriesFor(cnIdx),borderColor:REGION_COLORS_V2.CN,backgroundColor:REGION_COLORS_V2.CN+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true,borderDash:[5,4]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}x avg VR`}}}},scales:{x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(v).toFixed(2)+'x'}}}}});}
 
 function buildIndexTable(brandGroup){const models=BRAND_GROUPS[brandGroup];const nTotal=models.length;const regions=[{key:'US',name:'USA',source:'Rebag'},{key:'EU',name:'Europe',source:'Vestiaire Collective'},{key:'CN',name:'China ⚠',source:'Xianyu / Goofish'}];let rows='';let latestDateOverall='';regions.forEach(r=>{const idx=computeRegionIndex(RESALE_V2_DATA[r.key],models);const latest=idx[idx.length-1];const dotStyle=`display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;if(!latest){rows+=`<tr><td><span style="${dotStyle}"></span>${r.name}</td><td colspan="2" style="color:var(--text-muted)">No data</td><td style="color:var(--text-muted)">${r.source}</td></tr>`;}else{rows+=`<tr><td><span style="${dotStyle}"></span>${r.name}</td><td class="vr-val">${(latest.avg).toFixed(2)}x</td><td style="color:var(--text-muted)">${latest.nModels} / ${nTotal}</td><td style="color:var(--text-muted)">${r.source}</td></tr>`;if(latest.date>latestDateOverall)latestDateOverall=latest.date;}});document.getElementById('resaleIndexTableBody').innerHTML=rows;const title=document.getElementById('indexSnapshotTitle');if(title)title.textContent=`Latest Snapshot · ${latestDateOverall?new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—'}`;}
 
@@ -1185,23 +1196,7 @@ let modelChartInstance=null;
 const MSRP_REF={'Hermès Birkin 25':{US:13500,EU:9600,CN:115000},'Hermès Birkin 30':{US:14900,EU:10600,CN:125000},'Hermès Kelly 25':{US:13700,EU:9600,CN:115000},'Hermès Kelly 28':{US:14400,EU:10100,CN:108000},'LV Neverfull MM':{US:2240,EU:1550,CN:15100},'LV Speedy 25':{US:1980,EU:1650,CN:15100},'LV Pochette Métis':{US:2840,EU:2300,CN:20700},'LV Alma BB':{US:2000,EU:1650,CN:15100}};
 const VR_PLAUSIBLE_MIN=0.40,VR_PLAUSIBLE_MAX=3.00;
 
-function renderModelDetail(model){const regions=[{key:'US',name:'USA'},{key:'EU',name:'Europe'},{key:'CN',name:'China ⚠'}];const allDates=new Set();regions.forEach(r=>{const h=(RESALE_V2_DATA[r.key]&&RESALE_V2_DATA[r.key][model])||[];h.forEach(e=>allDates.add(e.date));});const sortedDates=Array.from(allDates).sort();const datasets=regions.map(r=>{const h=(RESALE_V2_DATA[r.key]&&RESALE_V2_DATA[r.key][model])||[];const byDate={};h.forEach(e=>byDate[e.date]=e.vr_median);const data=sortedDates.map(d=>byDate[d]!=null?+(byDate[d]).toFixed(4):null);return{label:r.name,data,borderColor:REGION_COLORS_V2[r.key],backgroundColor:REGION_COLORS_V2[r.key]+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true,borderDash:r.key==='CN'?[5,4]:undefined};});const ctx=document.getElementById('modelDetailChart');if(modelChartInstance)modelChartInstance.destroy();modelChartInstance=new Chart(ctx,{type:'line',data:{labels:sortedDates,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{color:'#667085',font:{size:9},boxWidth:10,padding:8}},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}x VR`}},datalabels:{
-              display: ctx => ctx.parsed.y != null,
-              align: ctx => {
-                const idx = ctx.datasetIndex;
-                return idx === 0 ? 'top' : idx === 1 ? 'bottom' : 'right';
-              },
-              anchor: ctx => {
-                const idx = ctx.datasetIndex;
-                return idx === 0 ? 'end' : idx === 1 ? 'start' : 'end';
-              },
-              offset: 4,
-              color: ctx => ctx.dataset.borderColor,
-              font: {size: 8, weight: '600'},
-              formatter: v => v != null ? v.toFixed(2)+'x' : null,
-              clamp: true,
-              clip: false
-            }},scales:{x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(v).toFixed(2)+'x'},grace:'10%'}}}});
+function renderModelDetail(model){const regions=[{key:'US',name:'USA'},{key:'EU',name:'Europe'},{key:'CN',name:'China ⚠'}];const allDates=new Set();regions.forEach(r=>{const h=(RESALE_V2_DATA[r.key]&&RESALE_V2_DATA[r.key][model])||[];h.forEach(e=>allDates.add(e.date));});const sortedDates=Array.from(allDates).sort();const datasets=regions.map(r=>{const h=(RESALE_V2_DATA[r.key]&&RESALE_V2_DATA[r.key][model])||[];const byDate={};h.forEach(e=>byDate[e.date]=e.vr_median);const data=sortedDates.map(d=>byDate[d]!=null?+(byDate[d]).toFixed(4):null);return{label:r.name,data,borderColor:REGION_COLORS_V2[r.key],backgroundColor:REGION_COLORS_V2[r.key]+'22',borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:0.25,fill:false,spanGaps:true,borderDash:r.key==='CN'?[5,4]:undefined};});const ctx=document.getElementById('modelDetailChart');if(modelChartInstance)modelChartInstance.destroy();modelChartInstance=new Chart(ctx,{type:'line',data:{labels:sortedDates,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{color:'#667085',font:{size:9},boxWidth:10,padding:8}},tooltip:{backgroundColor:'#ffffff',borderColor:'#d0d5dd',borderWidth:1,padding:10,titleColor:'#1a1a2e',bodyColor:'#344054',callbacks:{label:ctx=>ctx.parsed.y==null?` ${ctx.dataset.label}: no data`:` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}x VR`}}}},scales:{x:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9}}},y:{grid:{color:'rgba(0,0,0,0.08)'},ticks:{color:'#667085',font:{size:9},callback:v=>+(v).toFixed(2)+'x'}}},_showPointLabels:true}}}});
 let rows='';let latestDateOverall='';const anomalies=[];regions.forEach(r=>{const h=(RESALE_V2_DATA[r.key]&&RESALE_V2_DATA[r.key][model])||[];const last=h.length?h[h.length-1]:null;const dotStyle=`display:inline-block;width:8px;height:8px;border-radius:50%;background:${REGION_COLORS_V2[r.key]};margin-right:5px;flex-shrink:0;`;const msrp=MSRP_REF[model]?MSRP_REF[model][r.key]:null;const currSymbol=r.key==='US'?'$':r.key==='EU'?'€':'¥';const msrpCell=msrp!=null?`${currSymbol}${msrp.toLocaleString()}`:'—';if(!last||last.vr_median==null){const note=(last&&last._caveat)?last._caveat:'No data yet';rows+=`<tr><td><span style="${dotStyle}"></span>${r.name}</td><td style="color:var(--text-muted)">${msrpCell}</td><td colspan="4" style="color:var(--text-muted);font-size:10px;">${note}</td></tr>`;}else{const vr=last.vr_median;const isAnomaly=vr<VR_PLAUSIBLE_MIN||vr>VR_PLAUSIBLE_MAX;if(isAnomaly)anomalies.push(`${r.name} (${(vr).toFixed(2)}x VR)`);const vrStyle=isAnomaly?'color:#c0392b;font-weight:700;':'';rows+=`<tr><td><span style="${dotStyle}"></span>${r.name}</td><td style="color:var(--text-muted)">${msrpCell}</td><td style="color:var(--text-muted)">${currSymbol}${last.price_median!=null?last.price_median.toLocaleString():'—'}</td><td class="vr-val" style="${vrStyle}">${(vr).toFixed(2)}x${isAnomaly?' ⚠':''}</td><td style="color:var(--text-muted)">${last.n_listings!=null?last.n_listings:'—'}</td></tr>`;if(last.date>latestDateOverall)latestDateOverall=last.date;}});document.getElementById('modelDetailTableBody').innerHTML=rows;const flagEl=document.getElementById('modelAnomalyFlag');if(flagEl)flagEl.innerHTML=anomalies.length?`<div class="signal-badge red" style="margin-top:10px;">🔴 Flagged for validation — ${anomalies.join('; ')}: VR outside plausible 0.40x–3.00x range.</div>`:'';const title=document.getElementById('modelSnapshotTitle');if(title)title.textContent=`Latest Snapshot · ${model} · ${latestDateOverall?new Date(latestDateOverall+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'—'}`;}
 
 // ── PANEL 3: RESALE PRICE vs RETAIL PRICE — HISTORICAL EVOLUTION ──────────────
