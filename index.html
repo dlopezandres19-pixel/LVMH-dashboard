@@ -1335,7 +1335,7 @@ function renderPriceEvolutionChart(){
   priceEvolutionChartInstance=new Chart(ctx,{
     type:'line',
     data:{labels:dates,datasets:[
-      {label:'Resale Price (median)',data:resalePrices,borderColor:'#e8a020',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointHoverRadius:7,tension:0.25,fill:false,spanGaps:true},
+      {label:'Resale Price (median)',data:resalePrices,borderColor:'#e8a020',backgroundColor:'transparent',borderWidth:2.5,pointRadius:5,pointHoverRadius:7,tension:0.25,spanGaps:true,fill:{target:1,above:'rgba(46,158,107,0.14)',below:'rgba(192,57,43,0.12)'}},
       {label:'Retail Price (MSRP)',data:retailPrices,borderColor:'rgba(27,58,92,0.55)',backgroundColor:'transparent',borderWidth:2,borderDash:[7,4],pointRadius:4,pointHoverRadius:6,pointBackgroundColor:'rgba(27,58,92,0.55)',pointBorderColor:'rgba(27,58,92,0.55)',tension:0,fill:false,spanGaps:true}
     ]},
     options:{
@@ -1353,7 +1353,7 @@ function renderPriceEvolutionChart(){
         y:{grid:{color:'rgba(0,0,0,0.06)'},ticks:{color:'#667085',font:{size:9},callback:v=>currSymbol+v.toLocaleString()}}
       }
     },
-    plugins:[conditionalFillPlugin]
+    plugins:[]
   });
 }
 
