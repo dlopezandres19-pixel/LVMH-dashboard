@@ -78,6 +78,14 @@
   .time-btn.active{background:var(--accent);color:#fff;}
   .time-btn:hover:not(.active){background:var(--border-light);color:var(--text-primary);}
   .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .val-tags{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:2px 0 12px;}
+  .vtag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;letter-spacing:.02em;}
+  .vtag.current{background:#eef4ff;color:#2e6da4;border:1px solid #bdd4f0;}
+  .vtag.median{background:#fff3e8;color:#e07820;border:1px solid #f5c992;}
+  .vtag.disc{background:#edfaf3;color:#2e9e6b;border:1px solid #9ee0be;}
+  .vtag.prem{background:#fef0ee;color:#c0392b;border:1px solid #f0b5ae;}
+  .val-notes{margin-top:12px;display:flex;flex-direction:column;gap:6px;}
+  .val-note{font-size:10.5px;color:var(--text-secondary);line-height:1.55;padding-left:10px;border-left:2px solid var(--border);}
   .insights-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
   .insight-card{background:var(--card);border:1px solid var(--border);border-radius:11px;padding:18px 16px;}
   .insight-dot-row{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
@@ -525,17 +533,42 @@
 
   </div>
 
-  <!-- ══ SECTION 7: CROSS-PLATFORM ══ -->
+  <!-- ══ SECTION 7: VALUATION ══ -->
   <div class="section-header">
-    <div class="section-label">⑦ Cross-Platform Intelligence Analysis</div>
+    <div class="section-label">⑦ Valuation</div>
     <div class="section-line"></div>
-    <div class="section-sub" id="crossPlatformSubtitle">Comparing WeChat Index + Google Trends (China & Global) + Macro + Luxury Resale Value Retention · 30-day basis</div>
+    <div class="section-sub" id="valuationSubtitle">Capital IQ · NTM multiples · Monthly · Mar 2011 – Sep 2026 · n=187 observations</div>
   </div>
 
-  <div class="signal-panel">
-    <div class="signal-title">Integrated Multi-Source Signals</div>
-    <div class="signal-subtitle">⚠ Correlations are observational and should be verified with earnings data and professional analysis before investment decisions.</div>
-    <div class="correlation-grid" id="correlationGrid"></div>
+  <div class="time-selector" id="valSelectorParent" style="margin-bottom:16px;">
+    <button class="time-btn active" onclick="setValView('lvmh',this)">LVMH Only</button>
+    <button class="time-btn" onclick="setValView('peers',this)">LVMH vs. Peers</button>
+  </div>
+
+  <div class="charts-row">
+
+    <!-- P/E NTM -->
+    <div class="panel">
+      <div class="panel-title">P/E NTM — LVMH<span id="valPePeersSuffix" style="display:none;"> vs. Peers</span></div>
+      <div class="panel-sub" id="valPeSub">Capital IQ forward multiple · Monthly end-of-period</div>
+      <div class="val-tags" id="valPeTags"></div>
+      <div class="chart-wrap-tall"><canvas id="chartPE"></canvas></div>
+      <div class="val-notes" id="valPeNotes"></div>
+    </div>
+
+    <!-- EV/EBITDA NTM -->
+    <div class="panel">
+      <div class="panel-title">EV/EBITDA NTM — LVMH<span id="valEvPeersSuffix" style="display:none;"> vs. Peers</span></div>
+      <div class="panel-sub" id="valEvSub">Capital IQ forward multiple · Monthly end-of-period</div>
+      <div class="val-tags" id="valEvTags"></div>
+      <div class="chart-wrap-tall"><canvas id="chartEV"></canvas></div>
+      <div class="val-notes" id="valEvNotes"></div>
+    </div>
+
+  </div>
+
+  <div style="font-size:9.5px;color:var(--text-light);padding:10px 2px 0;line-height:1.6;">
+    Source: Capital IQ (ENXTPA:MC, ENXTPA:RMS, ENXTPA:KER, SWX:CFR) · Updated manually from LVMH_Dashboard.xlsx (tabs "PE NTM" / "EVEBITDA NTM") · Richemont data begins May 2011.
   </div>
 
   <!-- Methodology -->
@@ -919,9 +952,9 @@ const chartConfigTrends={type:'line',options:{responsive:true,maintainAspectRati
 async function loadTrendsData(){try{const response=await fetch('https://raw.githubusercontent.com/dlopezandres19-pixel/luxury-trends-tracker/main/trends_data.json');if(!response.ok)throw new Error('Failed');trendsData=await response.json();try{const lastUpdate=trendsData?.metadata?.last_update;if(lastUpdate){const d=new Date(lastUpdate);if(!isNaN(d)){HEADER_DATES.trends=d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});updateHeaderBadge();}}}catch(e){}initTrendsCharts();renderTrendsView('china','7d');renderTrendsView('global','7d');renderCorrelation();}catch(error){console.error('Error loading Google Trends data:',error);}}
 function initTrendsCharts(){const ctxChina=document.getElementById('chartTrendsChina').getContext('2d');const ctxGlobal=document.getElementById('chartTrendsGlobal').getContext('2d');chartChina=new Chart(ctxChina,JSON.parse(JSON.stringify(chartConfigTrends)));chartGlobal=new Chart(ctxGlobal,JSON.parse(JSON.stringify(chartConfigTrends)));}
 function renderTrendsView(region,period){if(!trendsData||!trendsData[region]||!trendsData[region][period])return;const data=trendsData[region][period];const chart=region==='china'?chartChina:chartGlobal;const kpiContainer=region==='china'?'trendsKpiChinaMini':'trendsKpiGlobalMini';let kpiHTML='';Object.keys(BRANDS).forEach(brandKey=>{const brand=BRANDS[brandKey];const keyword=region==='china'?brand.keywords.cn:brand.keywords.en;const latest=data.latest[keyword];if(latest){const changeClass=latest.change>0?'up':latest.change<0?'down':'neutral';const changeSymbol=latest.change>0?'↑':latest.change<0?'↓':'→';kpiHTML+=`<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 10px;position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:2px;background:${brand.color};"></div><div style="font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;">${brand.name}</div><div style="font-size:16px;font-weight:600;color:var(--accent-light);">${latest.value.toFixed(0)}</div><div style="display:inline-flex;align-items:center;gap:3px;margin-top:2px;font-size:9px;font-weight:500;padding:2px 6px;border-radius:12px;background:${changeClass==='up'?'rgba(192,57,43,.15)':changeClass==='down'?'rgba(74,144,196,.15)':'rgba(138,168,196,.15)'};color:${changeClass==='up'?'#e05c4a':changeClass==='down'?'#2e6da4':'var(--text-muted)'};">${changeSymbol} ${Math.abs(latest.change).toFixed(1)}%</div></div>`;}});document.getElementById(kpiContainer).innerHTML=kpiHTML;const datasets=[];Object.keys(BRANDS).forEach(brandKey=>{const brand=BRANDS[brandKey];const keyword=region==='china'?brand.keywords.cn:brand.keywords.en;if(data.datasets[keyword]){datasets.push({label:brand.name,data:data.datasets[keyword],borderColor:brand.color,backgroundColor:brand.color+'18',borderWidth:2,pointRadius:0,pointHoverRadius:4,tension:0.4});}});chart.data={labels:data.labels,datasets:datasets};chart.update();const periodNames={'7d':'Last 7 days','30d':'Last 30 days','12m':'Last 12 months'};const subtitle=periodNames[period]||period;const regionLabel=region==='china'?'Mainland China':'Worldwide';document.getElementById(region==='china'?'trendsChinaSub':'trendsGlobalSub').textContent=`${subtitle} · ${regionLabel} search interest`;}
-function setTrendsViewBoth(period,button){const buttons=document.getElementById('trendsSelectorParent').querySelectorAll('.time-btn');buttons.forEach(b=>b.classList.remove('active'));button.classList.add('active');renderTrendsView('china',period);renderTrendsView('global',period);currentPeriod=period;renderCorrelation();const periodNames={'7d':{long:'last 7 days'},'30d':{long:'last 30 days'},'12m':{long:'last 12 months'}};document.getElementById('crossPlatformSubtitle').textContent=`Comparing WeChat Index + Google Trends (China & Global) + NBS Macro · ${(periodNames[period]||{long:period}).long} comparison`;}
+function setTrendsViewBoth(period,button){const buttons=document.getElementById('trendsSelectorParent').querySelectorAll('.time-btn');buttons.forEach(b=>b.classList.remove('active'));button.classList.add('active');renderTrendsView('china',period);renderTrendsView('global',period);currentPeriod=period;renderCorrelation();const periodNames={'7d':{long:'last 7 days'},'30d':{long:'last 30 days'},'12m':{long:'last 12 months'}};const xsub=document.getElementById('crossPlatformSubtitle');if(xsub)xsub.textContent=`Comparing WeChat Index + Google Trends (China & Global) + NBS Macro · ${(periodNames[period]||{long:period}).long} comparison`;}
 
-function renderCorrelation(){const XPLAT_PERIOD='30d';const WECHAT_PERIOD_MAP={'7d':'7d','30d':'30d','12m':'1y'};if(!trendsData||!trendsData.china[XPLAT_PERIOD]||!trendsData.global[XPLAT_PERIOD]){document.getElementById('correlationGrid').innerHTML=`<div class="corr-item" style="grid-column:1/-1;text-align:center;padding:20px;"><div class="corr-signal mixed">Google Trends data loading...</div></div>`;return;}const chinaData=trendsData.china[XPLAT_PERIOD].latest;const globalData=trendsData.global[XPLAT_PERIOD].latest;function liveWeChatContext(brandKey){const wchatKeyMap={lv:'lv',hermes:'hermes',cartier:'cartier',gucci:'gucci'};const key=wchatKeyMap[brandKey];if(!key||typeof WDATA==='undefined')return null;const d=WDATA[WECHAT_PERIOD_MAP[XPLAT_PERIOD]];if(!d||!d[key]||d[key].length<2)return null;const arr=d[key];const first=arr[0],latest=arr[arr.length-1];const pctChange=first?((latest-first)/first*100):null;return{latest,pctChange};}
+function renderCorrelation(){if(!document.getElementById('correlationGrid'))return;const XPLAT_PERIOD='30d';const WECHAT_PERIOD_MAP={'7d':'7d','30d':'30d','12m':'1y'};if(!trendsData||!trendsData.china[XPLAT_PERIOD]||!trendsData.global[XPLAT_PERIOD]){document.getElementById('correlationGrid').innerHTML=`<div class="corr-item" style="grid-column:1/-1;text-align:center;padding:20px;"><div class="corr-signal mixed">Google Trends data loading...</div></div>`;return;}const chinaData=trendsData.china[XPLAT_PERIOD].latest;const globalData=trendsData.global[XPLAT_PERIOD].latest;function liveWeChatContext(brandKey){const wchatKeyMap={lv:'lv',hermes:'hermes',cartier:'cartier',gucci:'gucci'};const key=wchatKeyMap[brandKey];if(!key||typeof WDATA==='undefined')return null;const d=WDATA[WECHAT_PERIOD_MAP[XPLAT_PERIOD]];if(!d||!d[key]||d[key].length<2)return null;const arr=d[key];const first=arr[0],latest=arr[arr.length-1];const pctChange=first?((latest-first)/first*100):null;return{latest,pctChange};}
 function liveMacroContext(){if(typeof confChina==='undefined')return null;const lastNonNull=arr=>{for(let i=arr.length-1;i>=0;i--)if(arr[i]!=null)return arr[i];return null;};return{conf:lastNonNull(confChina),retail:lastNonNull(retailChina),gdp:lastNonNull(gdpChina)};}
 function livePerformanceContext(brandKey){if(typeof BU_GROWTH==='undefined'||typeof ASIA_GROWTH==='undefined')return null;if(brandKey==='lv'||brandKey==='dior'){const flg=BU_GROWTH['Fashion and Leather Goods'];const latestFlg=flg[flg.length-1];const asiaLvmh=ASIA_GROWTH.LVMH[ASIA_GROWTH.LVMH.length-1];const note=brandKey==='dior'?' (shared BU with LV, not Dior-specific)':'';return{label:'LVMH F&LG',growth:latestFlg,asiaGrowth:asiaLvmh,note};}if(brandKey==='hermes'){const asiaHermes=ASIA_GROWTH.Hermes[ASIA_GROWTH.Hermes.length-1];return{label:'Hermès',growth:null,asiaGrowth:asiaHermes,note:''};}if(brandKey==='gucci'){const asiaKering=ASIA_GROWTH.Kering[ASIA_GROWTH.Kering.length-1];return{label:'Kering',growth:null,asiaGrowth:asiaKering,note:''};}return null;}
 function liveResaleContext(brandKey){const modelMap={hermes:['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 25','Hermès Kelly 28'],lv:['LV Neverfull MM','LV Speedy 25']};const models=modelMap[brandKey];if(!models||typeof RESALE_V2_DATA==='undefined')return null;let sum=0,n=0;['US','EU'].forEach(region=>{models.forEach(m=>{const h=(RESALE_V2_DATA[region]&&RESALE_V2_DATA[region][m])||[];const last=h[h.length-1];if(last&&last.vr_median!=null){sum+=last.vr_median;n++;}});});if(n===0)return null;return{vr:(sum/n)*100,aboveRetail:(sum/n)>1};}
@@ -963,6 +996,11 @@ function getDouyinSeries(brand, weeks) {
   return weeks === 'all' ? sorted : sorted.slice(-weeks);
 }
 
+function fmtEngagement(v){
+  if (v == null) return '—';
+  return v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(1)+'K':v.toFixed(0);
+}
+
 function renderDouyinKpis() {
   const row = document.getElementById('douyinKpiRow');
   let html = '';
@@ -976,6 +1014,13 @@ function renderDouyinKpis() {
     const wow = nPrev ? ((n - nPrev) / nPrev * 100).toFixed(1) : null;
     const wowSign = wow > 0 ? '▲ +' : '▼ ';
     const wowColor = wow > 0 ? '#2e9e6b' : '#c0392b';
+
+    const eng = last.total_engagement != null ? last.total_engagement : null;
+    const engPrev = prev && prev.total_engagement != null ? prev.total_engagement : null;
+    const engWow = (eng != null && engPrev) ? ((eng - engPrev) / engPrev * 100).toFixed(1) : null;
+    const engWowSign = engWow > 0 ? '▲ +' : '▼ ';
+    const engWowColor = engWow > 0 ? '#2e9e6b' : '#c0392b';
+
     const cardClass = brand === 'Hermès' ? 'hermes' : brand === 'Louis Vuitton' ? 'lv' :
                       brand === 'Cartier' ? 'cartier' : 'gucci';
     html += `<div class="kpi-card ${cardClass}">
@@ -983,7 +1028,10 @@ function renderDouyinKpis() {
       <div class="kpi-brand">${brand}</div>
       <div class="kpi-value">${n} videos</div>
       ${wow !== null ? `<div class="kpi-change ${wow > 0 ? 'up' : 'down'}" style="color:${wowColor}">${wowSign}${Math.abs(wow)}% vs prev week</div>` : ''}
-      <div class="kpi-sub">${last.date}</div>
+      <div class="kpi-sub" style="display:flex;justify-content:space-between;align-items:baseline;gap:6px;">
+        <span>${last.date}</span>
+        <span style="font-size:9.5px;color:var(--text-muted);">Engagement: <strong style="color:var(--text-secondary);">${fmtEngagement(eng)}</strong>${engWow !== null ? ` <span style="color:${engWowColor};font-weight:600;">${engWowSign}${Math.abs(engWow)}%</span>` : ''}</span>
+      </div>
     </div>`;
   });
   row.innerHTML = html || '<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:20px;">No Douyin data yet.</div>';
@@ -1015,11 +1063,17 @@ function renderDouyinCharts(period) {
     };
   });
 
-  // Bar chart — average score per brand over period
+  // Bar chart — average videos per brand over period, plus avg engagement
+  // (shown only in the tooltip on hover — not plotted as its own bar/line)
   const barAvgs = DOUYIN_BRANDS.map(brand => {
     const series = getDouyinSeries(brand, weeks);
     if (!series.length) return null;
     return +(series.reduce((s,e) => s + (e.n_videos||0), 0) / series.length).toFixed(1);
+  });
+  const barEngAvgs = DOUYIN_BRANDS.map(brand => {
+    const series = getDouyinSeries(brand, weeks).filter(e => e.total_engagement != null);
+    if (!series.length) return null;
+    return series.reduce((s,e) => s + e.total_engagement, 0) / series.length;
   });
 
   const periodLabels = {'4w':'Last 4 Weeks','12w':'Last 12 Weeks','all':'All History'};
@@ -1065,7 +1119,11 @@ function renderDouyinCharts(period) {
       plugins: {
         legend: {display: false},
         tooltip: {...tooltipCfg, callbacks: {
-          label: ctx => ctx.parsed.y == null ? ' No data' : ` Avg: ${ctx.parsed.y>=1000000?(ctx.parsed.y/1000000).toFixed(1)+'M':ctx.parsed.y>=1000?(ctx.parsed.y/1000).toFixed(0)+'K':ctx.parsed.y.toFixed(0)}`
+          label: ctx => ctx.parsed.y == null ? ' No data' : ` Avg videos: ${ctx.parsed.y.toFixed(1)}`,
+          afterLabel: ctx => {
+            const eng = barEngAvgs[ctx.dataIndex];
+            return eng != null ? ` Avg engagement: ${fmtEngagement(eng)}` : null;
+          }
         }}
       },
       scales: {
@@ -1403,6 +1461,174 @@ buSel.addEventListener('change',()=>renderBuCharts(buSel.value));
 renderBuCharts(buSel.value);
 buildAsiaPeerChart();
 buildAsiaPeerTable();
+
+
+// ══════════════════════════════════════════════════════════════
+// SECTION 7 — VALUATION (P/E NTM & EV/EBITDA NTM, LVMH vs. Peers)
+// Source: Capital IQ, via LVMH_Dashboard.xlsx tabs "PE NTM" / "EVEBITDA NTM"
+// ══════════════════════════════════════════════════════════════
+const VAL_DATA = {
+  pe: {
+    unit: 'x', title: 'P/E NTM',
+    labels: ["Mar 2011","Apr 2011","May 2011","Jun 2011","Jul 2011","Aug 2011","Sep 2011","Oct 2011","Nov 2011","Dec 2011","Jan 2012","Feb 2012","Mar 2012","Apr 2012","May 2012","Jun 2012","Jul 2012","Aug 2012","Sep 2012","Oct 2012","Nov 2012","Dec 2012","Jan 2013","Feb 2013","Mar 2013","Apr 2013","May 2013","Jun 2013","Jul 2013","Aug 2013","Sep 2013","Oct 2013","Nov 2013","Dec 2013","Jan 2014","Feb 2014","Mar 2014","Apr 2014","May 2014","Jun 2014","Jul 2014","Aug 2014","Sep 2014","Oct 2014","Nov 2014","Dec 2014","Jan 2015","Feb 2015","Mar 2015","Apr 2015","May 2015","Jun 2015","Jul 2015","Aug 2015","Sep 2015","Oct 2015","Nov 2015","Dec 2015","Jan 2016","Feb 2016","Mar 2016","Apr 2016","May 2016","Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017","Jan 2018","Feb 2018","Mar 2018","Apr 2018","May 2018","Jun 2018","Jul 2018","Aug 2018","Sep 2018","Oct 2018","Nov 2018","Dec 2018","Jan 2019","Feb 2019","Mar 2019","Apr 2019","May 2019","Jun 2019","Jul 2019","Aug 2019","Sep 2019","Oct 2019","Nov 2019","Dec 2019","Jan 2020","Feb 2020","Mar 2020","Apr 2020","May 2020","Jun 2020","Jul 2020","Aug 2020","Sep 2020","Oct 2020","Nov 2020","Dec 2020","Jan 2021","Feb 2021","Mar 2021","Apr 2021","May 2021","Jun 2021","Jul 2021","Aug 2021","Sep 2021","Oct 2021","Nov 2021","Dec 2021","Jan 2022","Feb 2022","Mar 2022","Apr 2022","May 2022","Jun 2022","Jul 2022","Aug 2022","Sep 2022","Oct 2022","Nov 2022","Dec 2022","Jan 2023","Feb 2023","Mar 2023","Apr 2023","May 2023","Jun 2023","Jul 2023","Aug 2023","Sep 2023","Oct 2023","Nov 2023","Dec 2023","Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024","Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025","Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026","Apr 2026","May 2026","Jun 2026","Jul 2026","Aug 2026","Sep 2026"],
+    lvmh: [18.43,19.32,19.3,19.68,19.39,17.83,15.09,18.29,17.25,16.13,18.15,17.88,18.11,16.87,16.01,16.02,15.97,16.86,15.22,16.08,17.31,17.78,17.46,17.38,17.75,17.11,17.79,16.31,17.47,16.98,18.71,18.12,17.76,17.08,16.92,17.48,17.29,18.15,18.73,18.07,17.11,17.69,17.23,18.54,19.31,17.74,19.17,21.11,20.95,19.19,19.88,19.38,20.95,18.3,18.83,21.17,19.35,17.78,18.39,18.61,18.18,17.55,17.46,16.6,18.6,18.36,18.4,19.34,20.02,21.12,20.71,20.76,22.51,23.18,23.19,22.29,20.83,21.55,22.9,24.15,23.07,23.12,22.74,22.07,22.45,24.66,25.21,24.02,22.7,22.71,22.87,19.7,18.51,18.94,19.94,21.41,23.13,23.27,22.48,24.78,24.57,23.76,23.87,24.19,25.9,26.41,24.38,23.7,26.93,29.5,31.94,34.01,32.07,34.75,35.71,31.67,37.9,40.04,32.46,33.71,36.36,35.55,36.66,35.92,31.94,29.01,28.16,29.59,29.7,31.35,27.81,24.73,24.48,22.19,21.35,20.79,23.05,22.1,20.69,20.61,23.6,21.77,24.91,24.69,26.4,25.76,24.02,25.47,24.34,22.52,20.99,20.1,21.11,22.36,23.71,26.05,25.83,23.44,22.31,21.96,20.42,21.29,22.4,21.13,20.74,22.29,24.84,24.79,20.92,19.65,19.79,19.17,20.64,22.06,22.91,25.93,27.07,27.37,23.22,23.24,19.99,19.52,20.69,21.16,19.78,18.88,17.02],
+    hermes: [33.3,34.19,36.32,41.6,47.58,50.97,42.16,45.85,42.98,40.82,46.76,47.88,41.4,43.28,41.56,37.4,33.67,35.09,30.9,31.09,34.27,31.64,33.48,34.74,35.23,33.29,34.49,30.83,31.62,30.53,32.13,30.43,null,31.73,28.49,28.4,29.11,30.41,30.39,31.65,30.36,29.96,26.93,27.99,30.31,32.01,32.38,31.04,33.78,34.29,34.97,32.99,35.1,30.59,31.45,34.03,32.56,29.73,30.09,30.37,29.17,29.48,30.86,31.41,35.76,35.19,33.09,33.63,35.23,34.55,35.59,36.55,38.76,37.33,37.34,36.59,36.6,38.0,36.18,37.57,36.73,37.16,37.46,36.95,39.54,43.57,48.19,41.45,41.83,43.26,42.82,37.81,34.79,35.34,38.18,40.44,41.3,42.3,40.1,42.69,42.84,41.74,41.77,40.86,42.95,41.98,42.84,39.81,44.95,50.21,56.31,57.57,52.62,55.59,57.67,56.93,58.31,62.62,59.79,55.93,56.6,56.1,61.88,65.74,64.6,57.54,54.75,58.38,70.31,64.79,55.15,50.27,52.06,44.58,41.42,40.01,47.19,43.94,40.91,40.23,46.94,43.9,51.91,47.75,52.0,51.1,49.12,51.41,49.47,46.44,42.3,42.14,45.65,46.25,47.65,52.37,52.74,48.5,46.83,46.43,43.36,46.54,48.07,44.76,44.72,50.45,58.61,57.81,51.22,50.31,51.38,49.91,45.76,44.77,45.15,45.49,44.63,45.46,44.04,43.82,34.94,34.7,34.93,34.64,32.03,33.08,28.52],
+    kering: [13.33,14.12,14.0,14.25,14.46,12.84,10.86,12.58,12.11,12.16,13.3,13.7,13.78,12.94,11.76,11.51,11.97,12.26,11.88,14.14,14.36,14.38,16.35,16.1,16.01,15.13,15.31,14.3,15.32,15.12,14.73,15.7,14.82,13.93,13.89,14.32,14.42,15.32,15.62,15.52,15.05,15.28,15.17,14.93,15.46,14.92,16.87,17.2,17.06,15.55,15.31,15.72,17.31,15.1,14.5,17.01,15.95,15.56,15.65,15.89,15.51,14.87,14.49,14.66,16.72,16.68,17.64,19.3,18.7,19.4,19.91,19.48,20.54,20.69,20.76,20.68,19.49,20.68,22.06,22.83,21.37,22.37,23.14,21.07,21.08,23.66,24.15,23.0,20.03,20.68,20.28,16.36,15.84,16.97,18.09,18.79,19.59,19.15,17.04,19.39,17.32,16.36,17.43,18.51,19.83,21.23,19.97,18.55,20.91,22.41,23.52,25.31,24.18,25.88,28.67,23.89,27.92,27.81,25.68,23.51,26.52,27.48,30.66,29.48,28.06,24.7,22.52,23.13,24.29,25.04,23.07,20.78,18.36,15.89,15.78,15.2,16.62,14.93,13.53,13.52,16.66,14.34,17.51,16.92,18.42,17.65,15.14,15.66,16.25,15.51,13.78,13.6,14.13,14.89,14.56,17.46,16.23,17.91,17.42,19.11,18.05,16.68,17.6,17.92,17.69,19.49,21.21,24.88,19.29,22.96,22.3,25.79,29.49,33.04,40.42,39.82,37.74,38.93,34.87,39.44,37.58,31.14,34.45,33.64,34.71,31.05,28.4],
+    richemont: [null,null,18.45,18.25,18.36,16.35,13.37,16.47,15.29,14.88,15.82,16.22,16.5,16.26,14.33,13.44,14.36,14.32,13.39,14.33,16.24,16.19,16.54,16.39,16.26,16.18,17.32,17.07,18.35,17.34,17.9,18.3,17.95,17.54,17.23,17.59,17.05,18.06,19.03,19.15,17.84,17.69,16.41,17.47,19.41,18.96,20.02,20.74,19.75,21.35,20.07,18.81,20.43,16.92,17.51,19.55,18.39,17.4,16.7,16.43,16.74,17.15,19.15,19.51,21.56,20.3,23.41,25.47,26.11,26.47,26.31,25.23,26.82,27.53,25.1,24.46,24.24,24.57,25.25,25.19,22.23,23.2,22.9,21.48,21.73,23.5,24.2,22.46,23.27,22.73,20.92,19.3,17.59,17.26,18.62,20.65,20.4,20.63,20.18,22.9,23.95,21.68,20.87,22.37,22.63,23.2,21.24,20.42,19.99,24.08,38.28,41.42,36.71,38.89,40.24,39.45,38.14,40.7,34.19,34.58,35.04,35.79,32.41,31.11,28.23,23.96,23.04,26.9,28.1,27.12,23.47,22.06,21.02,20.42,18.94,18.52,20.98,19.97,17.69,17.72,19.71,18.74,20.96,21.16,21.63,21.95,20.47,21.09,19.27,17.28,15.51,15.25,16.15,17.56,19.56,20.87,20.06,18.51,20.57,20.61,19.75,20.25,20.91,20.02,20.63,23.25,26.7,27.78,23.12,22.9,25.09,24.9,22.66,23.67,25.8,28.02,27.72,28.09,23.98,25.45,22.16,24.13,26.43,28.8,26.85,26.55,23.33]
+  },
+  ev: {
+    unit: 'x', title: 'EV/EBITDA NTM',
+    labels: ["Mar 2011","Apr 2011","May 2011","Jun 2011","Jul 2011","Aug 2011","Sep 2011","Oct 2011","Nov 2011","Dec 2011","Jan 2012","Feb 2012","Mar 2012","Apr 2012","May 2012","Jun 2012","Jul 2012","Aug 2012","Sep 2012","Oct 2012","Nov 2012","Dec 2012","Jan 2013","Feb 2013","Mar 2013","Apr 2013","May 2013","Jun 2013","Jul 2013","Aug 2013","Sep 2013","Oct 2013","Nov 2013","Dec 2013","Jan 2014","Feb 2014","Mar 2014","Apr 2014","May 2014","Jun 2014","Jul 2014","Aug 2014","Sep 2014","Oct 2014","Nov 2014","Dec 2014","Jan 2015","Feb 2015","Mar 2015","Apr 2015","May 2015","Jun 2015","Jul 2015","Aug 2015","Sep 2015","Oct 2015","Nov 2015","Dec 2015","Jan 2016","Feb 2016","Mar 2016","Apr 2016","May 2016","Jun 2016","Jul 2016","Aug 2016","Sep 2016","Oct 2016","Nov 2016","Dec 2016","Jan 2017","Feb 2017","Mar 2017","Apr 2017","May 2017","Jun 2017","Jul 2017","Aug 2017","Sep 2017","Oct 2017","Nov 2017","Dec 2017","Jan 2018","Feb 2018","Mar 2018","Apr 2018","May 2018","Jun 2018","Jul 2018","Aug 2018","Sep 2018","Oct 2018","Nov 2018","Dec 2018","Jan 2019","Feb 2019","Mar 2019","Apr 2019","May 2019","Jun 2019","Jul 2019","Aug 2019","Sep 2019","Oct 2019","Nov 2019","Dec 2019","Jan 2020","Feb 2020","Mar 2020","Apr 2020","May 2020","Jun 2020","Jul 2020","Aug 2020","Sep 2020","Oct 2020","Nov 2020","Dec 2020","Jan 2021","Feb 2021","Mar 2021","Apr 2021","May 2021","Jun 2021","Jul 2021","Aug 2021","Sep 2021","Oct 2021","Nov 2021","Dec 2021","Jan 2022","Feb 2022","Mar 2022","Apr 2022","May 2022","Jun 2022","Jul 2022","Aug 2022","Sep 2022","Oct 2022","Nov 2022","Dec 2022","Jan 2023","Feb 2023","Mar 2023","Apr 2023","May 2023","Jun 2023","Jul 2023","Aug 2023","Sep 2023","Oct 2023","Nov 2023","Dec 2023","Jan 2024","Feb 2024","Mar 2024","Apr 2024","May 2024","Jun 2024","Jul 2024","Aug 2024","Sep 2024","Oct 2024","Nov 2024","Dec 2024","Jan 2025","Feb 2025","Mar 2025","Apr 2025","May 2025","Jun 2025","Jul 2025","Aug 2025","Sep 2025","Oct 2025","Nov 2025","Dec 2025","Jan 2026","Feb 2026","Mar 2026","Apr 2026","May 2026","Jun 2026","Jul 2026","Aug 2026","Sep 2026"],
+    lvmh: [10.09,10.56,10.56,10.81,10.96,10.36,8.84,10.49,9.98,9.38,10.38,10.12,10.18,9.53,9.09,9.1,9.18,9.64,8.79,9.24,9.87,10.11,9.8,9.4,9.52,9.16,9.51,8.78,9.44,9.17,10.01,9.76,9.59,9.23,9.14,9.38,9.23,9.7,9.98,9.67,9.24,9.55,9.32,9.89,10.28,9.51,10.2,10.93,10.74,9.93,10.24,10.01,10.72,9.46,9.69,10.83,10.02,9.25,9.56,9.45,9.25,8.91,8.85,8.45,9.48,9.4,9.43,9.94,10.28,10.78,10.38,10.47,11.3,11.74,11.76,11.27,10.68,11.04,11.63,12.28,11.73,11.74,12.19,11.89,12.07,13.3,13.6,12.99,12.77,12.8,12.88,11.18,10.56,10.76,11.26,12.09,13.03,13.24,12.81,14.06,13.56,12.65,12.62,12.71,14.07,14.2,12.3,12.52,12.45,13.98,15.0,15.83,14.59,15.5,15.83,14.97,17.55,18.47,15.57,16.11,17.41,17.23,17.81,17.48,16.81,15.48,15.08,15.9,15.8,16.67,15.62,14.07,13.88,12.73,12.35,11.99,13.18,12.64,11.81,11.8,13.53,12.57,14.07,13.95,14.9,14.7,13.63,14.39,13.89,13.03,12.23,11.83,12.4,13.04,13.74,15.07,14.99,13.76,13.15,12.81,12.16,12.66,13.19,12.26,12.02,12.82,13.31,13.19,11.21,10.4,10.31,9.97,10.47,11.1,11.46,13.01,13.58,13.8,11.59,11.59,10.13,9.83,10.28,10.64,10.24,9.82,8.9],
+    hermes: [18.3,18.83,20.16,23.14,26.66,28.56,23.47,25.64,24.02,22.85,26.36,27.0,23.41,24.39,23.67,21.18,18.93,20.1,17.71,17.69,19.56,18.11,19.17,20.07,20.49,19.29,20.03,18.02,18.5,17.89,18.79,17.74,17.88,18.33,16.51,16.47,16.62,17.25,17.26,17.92,17.11,17.0,15.31,15.95,17.41,18.46,18.67,17.88,19.59,19.73,20.17,19.01,20.16,17.81,18.21,19.77,18.89,17.24,17.38,17.53,17.01,16.74,17.5,17.79,20.18,19.84,18.54,18.89,19.79,19.43,20.16,20.75,22.11,21.11,20.72,20.25,20.19,21.0,19.95,20.93,20.42,20.58,20.63,20.49,21.94,24.36,27.08,22.97,23.63,24.41,24.3,21.39,19.61,19.94,21.58,22.91,23.66,24.38,22.97,24.58,24.55,23.88,23.81,22.81,23.98,23.3,23.53,21.07,23.26,26.37,29.71,30.51,28.32,29.52,30.84,30.23,31.11,33.45,31.94,30.45,30.96,30.97,34.25,36.44,35.95,32.57,30.97,33.45,40.47,37.29,31.53,29.08,29.95,25.61,23.74,23.04,27.28,25.52,23.81,23.44,28.02,26.22,30.91,28.11,30.73,30.76,29.58,30.99,30.47,28.82,26.16,26.04,28.38,28.8,29.6,33.61,34.17,31.22,30.11,29.78,28.08,30.22,31.17,28.67,28.51,32.09,37.58,35.79,31.61,31.22,31.69,30.45,28.54,27.79,27.87,28.44,27.73,28.18,27.04,26.1,20.32,20.5,20.52,20.26,18.88,19.51,16.59],
+    kering: [9.08,9.65,9.58,9.72,9.7,8.9,7.9,8.79,8.53,8.53,9.16,9.41,9.49,9.07,8.43,8.3,8.98,9.18,8.93,10.15,10.3,10.3,11.55,10.86,10.86,10.23,10.55,10.0,11.0,10.97,10.71,11.22,10.84,10.32,10.21,10.58,10.61,11.12,11.3,11.24,11.2,11.29,11.18,11.0,11.38,11.06,12.19,12.46,12.36,11.43,11.27,11.53,12.76,11.44,11.13,12.53,11.96,11.69,11.69,11.42,11.21,10.75,10.53,10.58,11.87,11.85,12.37,13.28,12.99,13.4,13.66,13.07,13.62,14.01,14.15,14.08,13.25,13.84,14.64,15.26,14.35,15.17,15.44,13.63,13.64,15.9,16.03,15.3,13.4,13.71,13.54,10.99,10.68,11.39,12.04,12.08,12.75,12.68,11.23,12.5,10.54,10.0,10.67,11.27,11.98,12.74,12.1,11.34,12.42,13.25,13.76,14.83,14.14,14.96,16.35,13.77,15.91,15.83,14.36,12.98,14.24,14.87,16.5,15.96,15.53,13.73,12.55,12.84,13.34,13.74,12.69,11.59,10.41,8.98,8.91,8.61,9.59,8.72,7.97,7.99,9.65,8.43,10.12,9.89,10.61,10.19,8.89,9.07,9.6,9.24,8.31,8.04,8.21,8.5,8.33,10.67,9.91,10.37,10.15,10.76,9.75,9.32,9.57,9.43,9.35,9.92,10.49,11.28,9.38,9.92,9.76,10.36,11.13,11.6,13.19,13.42,12.81,13.77,12.44,12.75,12.02,11.1,11.83,11.57,11.26,10.27,9.59],
+    richemont: [null,null,11.43,11.3,11.19,9.82,7.74,9.75,8.91,8.61,9.38,9.87,10.09,9.97,8.55,7.92,8.56,8.68,8.08,8.76,10.16,10.1,10.46,10.44,10.34,10.34,11.38,11.15,12.13,11.49,12.35,12.76,12.41,11.98,11.61,11.86,11.41,12.2,12.36,12.25,11.3,11.29,10.26,10.8,12.06,11.76,11.81,12.75,11.94,12.71,12.15,11.25,12.35,10.05,10.56,12.13,11.05,10.33,9.61,9.41,9.52,9.79,10.38,10.3,11.25,10.55,11.97,13.19,13.72,13.9,14.51,13.87,14.84,15.29,13.84,13.39,13.47,13.73,14.13,14.35,12.91,13.51,13.53,12.59,12.77,13.91,13.11,12.01,12.59,12.25,11.03,9.96,9.93,9.76,10.52,11.86,11.51,11.62,11.05,12.54,13.01,11.7,11.18,14.67,11.13,11.23,10.38,10.06,9.07,10.18,13.69,14.35,13.37,13.99,13.88,12.96,14.27,15.06,13.82,14.23,14.73,14.84,15.01,14.71,14.04,11.95,11.58,13.41,14.73,14.73,13.23,12.5,11.89,13.11,10.16,9.99,11.44,10.77,9.35,9.36,11.44,10.96,12.24,12.35,12.67,12.74,11.82,12.24,11.48,10.15,9.14,9.03,9.64,10.67,11.96,12.84,12.27,11.31,12.43,12.51,11.96,12.22,12.47,12.02,12.78,14.29,16.56,17.12,14.18,13.83,14.59,14.28,12.96,13.56,14.78,15.9,16.42,16.73,14.19,15.07,13.02,14.13,15.44,16.9,15.99,15.83,13.92]
+  }
+};
+
+const VAL_COLORS = { lvmh:'#1b3a5c', hermes:'#e8a020', kering:'#6B4EAF', richemont:'#1a7a6e' };
+const VAL_TOOLTIP = {backgroundColor:'#1b3a5c',borderColor:'#2e6da4',borderWidth:1,titleColor:'#94b4d4',bodyColor:'#ffffff',padding:9,cornerRadius:6,titleFont:{size:10},bodyFont:{size:11}};
+
+function valMedian(arr) {
+  const v = arr.filter(x => x != null).slice().sort((a,b) => a-b);
+  if (!v.length) return null;
+  const mid = Math.floor(v.length/2);
+  return v.length % 2 ? v[mid] : (v[mid-1]+v[mid])/2;
+}
+
+let valMode = 'lvmh';
+let valChartPE = null, valChartEV = null;
+
+function valLineDs(label, data, color, dash=false) {
+  return {label, data, borderColor:color, backgroundColor:color+'18', borderWidth:2,
+    borderDash: dash ? [5,3] : [], pointRadius:0, pointHoverRadius:4, tension:0.3, fill:false, spanGaps:true};
+}
+
+// Custom plugin: draws "Median X.Xx" tag + current-value dot label directly on
+// the canvas — used only in LVMH-only mode (mirrors the Rollins dashboard pattern).
+function valMedianLabelPlugin(medVal, color, unit, lastIdx, lastVal, lastLabel) {
+  return {
+    id: 'valMedianLabel',
+    afterDraw(chart) {
+      const {ctx, scales:{x,y}} = chart;
+      const yPx = y.getPixelForValue(medVal);
+      const text = `Median ${medVal.toFixed(1)}${unit}`;
+      ctx.save();
+      ctx.font = 'bold 9px "Segoe UI", system-ui, sans-serif';
+      const tw = ctx.measureText(text).width;
+      const px = x.left+4, py = yPx-10, pad=4;
+      ctx.fillStyle = '#fff3e8'; ctx.strokeStyle = '#f5c992'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.roundRect(px,py,tw+pad*2,14,3); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#e07820'; ctx.fillText(text, px+pad, py+10);
+
+      const dotX = x.getPixelForValue(lastIdx), dotY = y.getPixelForValue(lastVal);
+      ctx.beginPath(); ctx.arc(dotX,dotY,4,0,Math.PI*2); ctx.fillStyle = color; ctx.fill();
+      const currText = `${lastLabel}: ${lastVal.toFixed(1)}${unit}`;
+      ctx.font = '9px "Segoe UI", system-ui, sans-serif';
+      const cw = ctx.measureText(currText).width;
+      const cx2 = Math.min(dotX-cw-8, x.right-cw-8);
+      ctx.fillStyle = '#eef4ff'; ctx.strokeStyle = '#bdd4f0'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.roundRect(cx2,dotY-10,cw+pad*2,14,3); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#2e6da4'; ctx.fillText(currText, cx2+pad, dotY);
+      ctx.restore();
+    }
+  };
+}
+
+function renderValPanel(key, canvasId, tagsId, notesId, subId) {
+  const d = VAL_DATA[key];
+  const labels = d.labels;
+  const lastIdx = labels.length - 1;
+  const lastLabel = labels[lastIdx];
+  const lvmhLast = d.lvmh[lastIdx];
+  const ctx = document.getElementById(canvasId);
+
+  if (key === 'pe') { if (valChartPE) valChartPE.destroy(); } else { if (valChartEV) valChartEV.destroy(); }
+
+  const suffixEl = document.getElementById(key === 'pe' ? 'valPePeersSuffix' : 'valEvPeersSuffix');
+  suffixEl.style.display = valMode === 'peers' ? 'inline' : 'none';
+  document.getElementById(subId).textContent = valMode === 'lvmh'
+    ? 'Capital IQ forward multiple · Monthly end-of-period · LVMH only'
+    : 'Capital IQ forward multiple · Monthly end-of-period · vs. Hermès, Kering, Richemont';
+
+  let chart;
+  if (valMode === 'lvmh') {
+    const med = valMedian(d.lvmh);
+    const disc = ((lvmhLast - med) / med * 100);
+    document.getElementById(tagsId).innerHTML = `
+      <span class="vtag current">Current (${lastLabel}): ${lvmhLast.toFixed(1)}${d.unit}</span>
+      <span class="vtag median">Median (2011–2026): ${med.toFixed(1)}${d.unit}</span>
+      <span class="vtag ${disc<0?'disc':'prem'}">${disc>=0?'+':''}${disc.toFixed(1)}% ${disc<0?'discount':'premium'} to median</span>`;
+    document.getElementById(notesId).innerHTML = `
+      <div class="val-note">Current ${lvmhLast.toFixed(1)}${d.unit} is ${disc<0?'below':'above'} the 15-year median of ${med.toFixed(1)}${d.unit} — a ${Math.abs(disc).toFixed(1)}% ${disc<0?'discount':'premium'}.</div>`;
+
+    chart = new Chart(ctx, {
+      type:'line',
+      data:{labels, datasets:[
+        valLineDs(d.title, d.lvmh, VAL_COLORS.lvmh),
+        {label:`Median`, data:labels.map(()=>med), borderColor:'#e07820', borderWidth:1.5, borderDash:[6,4], pointRadius:0, fill:false, tension:0}
+      ]},
+      options:{
+        responsive:true, maintainAspectRatio:false, animation:{duration:400},
+        plugins:{legend:{display:false}, tooltip:{...VAL_TOOLTIP, callbacks:{label:c=>c.dataset.label==='Median'?null:`${c.dataset.label}: ${c.parsed.y.toFixed(1)}${d.unit}`}}},
+        scales:{
+          x:{grid:{color:'rgba(46,109,164,0.1)'}, ticks:{maxTicksLimit:8, maxRotation:0, color:'#98a2b3', font:{size:9}}},
+          y:{grid:{color:'rgba(46,109,164,0.14)'}, ticks:{color:'#98a2b3', font:{size:9}, callback:v=>v.toFixed(0)+d.unit}}
+        }
+      },
+      plugins:[valMedianLabelPlugin(med, VAL_COLORS.lvmh, d.unit, lastIdx, lvmhLast, lastLabel)]
+    });
+  } else {
+    const series = [
+      {k:'lvmh', label:'LVMH', color:VAL_COLORS.lvmh},
+      {k:'hermes', label:'Hermès', color:VAL_COLORS.hermes},
+      {k:'kering', label:'Kering', color:VAL_COLORS.kering},
+      {k:'richemont', label:'Richemont', color:VAL_COLORS.richemont}
+    ];
+    const tagsHtml = series.map(s => {
+      const v = d[s.k][lastIdx];
+      if (v == null) return '';
+      const cls = s.k === 'lvmh' ? 'current' : (v > lvmhLast ? 'prem' : 'disc');
+      return `<span class="vtag ${cls}">${s.label}: ${v.toFixed(1)}${d.unit}</span>`;
+    }).join('');
+    document.getElementById(tagsId).innerHTML = tagsHtml;
+
+    const peerVals = series.filter(s=>s.k!=='lvmh').map(s=>d[s.k][lastIdx]).filter(v=>v!=null);
+    const peerAvg = peerVals.reduce((a,b)=>a+b,0)/peerVals.length;
+    const vsPeers = ((lvmhLast - peerAvg)/peerAvg*100);
+    document.getElementById(notesId).innerHTML = `
+      <div class="val-note">LVMH trades at ${lvmhLast.toFixed(1)}${d.unit}, ${vsPeers<0?'a discount of':'a premium of'} ${Math.abs(vsPeers).toFixed(1)}% vs. the peer average (${peerAvg.toFixed(1)}${d.unit}) of Hermès, Kering &amp; Richemont.</div>`;
+
+    chart = new Chart(ctx, {
+      type:'line',
+      data:{labels, datasets: series.map(s => valLineDs(s.label, d[s.k], s.color))},
+      options:{
+        responsive:true, maintainAspectRatio:false, animation:{duration:400},
+        plugins:{legend:{display:true, position:'bottom', labels:{color:'#667085', font:{size:9}, boxWidth:10, padding:8}}, tooltip:{...VAL_TOOLTIP, callbacks:{label:c=>c.parsed.y==null?` ${c.dataset.label}: n/a`:` ${c.dataset.label}: ${c.parsed.y.toFixed(1)}${d.unit}`}}},
+        scales:{
+          x:{grid:{color:'rgba(46,109,164,0.1)'}, ticks:{maxTicksLimit:8, maxRotation:0, color:'#98a2b3', font:{size:9}}},
+          y:{grid:{color:'rgba(46,109,164,0.14)'}, ticks:{color:'#98a2b3', font:{size:9}, callback:v=>v.toFixed(0)+d.unit}}
+        }
+      }
+    });
+  }
+
+  if (key === 'pe') valChartPE = chart; else valChartEV = chart;
+}
+
+function renderValuationCharts() {
+  renderValPanel('pe', 'chartPE', 'valPeTags', 'valPeNotes', 'valPeSub');
+  renderValPanel('ev', 'chartEV', 'valEvTags', 'valEvNotes', 'valEvSub');
+}
+
+function setValView(mode, btn) {
+  valMode = mode;
+  document.getElementById('valSelectorParent').querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderValuationCharts();
+}
+
+renderValuationCharts();
 
 </script>
 </body>
