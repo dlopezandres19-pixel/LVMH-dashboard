@@ -258,9 +258,9 @@
         <div class="legend-item"><div class="legend-dot" style="background:#5b9bd5"></div>&lt;90m² — Mass Market / Aspirational</div>
         <div class="legend-item"><div class="legend-dot" style="background:#e8a020"></div>90–144m² — Upper Middle / Affluent</div>
         <div class="legend-item"><div class="legend-dot" style="background:#2e9e6b"></div>&gt;144m² — Luxury / HNWI Proxy</div>
-        <div class="legend-item"><div style="width:22px;height:10px;background:rgba(110,110,120,0.55);border:1px solid rgba(80,80,90,0.85);border-radius:2px;display:inline-block;margin-right:5px;"></div>LVMH Asia ex Japan Organic Growth (right axis, quarterly bars — actual, LVMH filings)</div>
+        <div class="legend-item"><div style="width:22px;height:10px;background:rgba(110,110,120,0.55);border:1px solid rgba(80,80,90,0.85);border-radius:2px;display:inline-block;margin-right:5px;"></div>LVMH Asia ex Japan Organic Growth (right axis, quarterly bars — actual, LVMH filings · 1Q21 +86% truncated with axis break)</div>
       </div>
-      <div style="position:relative;height:220px;margin-bottom:10px;">
+      <div style="position:relative;height:380px;margin-bottom:10px;">
         <canvas id="housingChart"></canvas>
       </div>
       <!-- Start Date Slider -->
@@ -685,7 +685,7 @@ function makeBoundaryPlugin(startIdx, yearBounds, quarterBounds) {
           ctx.font = opts.font;
           ctx.fillStyle = opts.textColor;
           ctx.textAlign = 'left';
-          ctx.fillText(opts.label, px + 2, chartArea.top + 9);
+          ctx.fillText(opts.label, px + 3, chartArea.top + 12);
         }
       }
       quarterBounds.forEach(pos => {
@@ -697,12 +697,23 @@ function makeBoundaryPlugin(startIdx, yearBounds, quarterBounds) {
         const yr = HOUSING_DATES[startIdx + pos].slice(0, 4);
         drawAt(pos, {
           dash: [5,3], width: 1.4, color: 'rgba(0,0,0,0.38)',
-          font: 'bold 8px "Segoe UI", sans-serif', textColor: '#475467', label: yr,
+          font: 'bold 11px "Segoe UI", sans-serif', textColor: '#475467', label: yr,
         });
       });
       ctx.restore();
     }
   };
+}
+
+function niceAlignedAxes(rA, rB) {
+  const pick = (raw, cands) => cands.find(c => raw <= c) || cands[cands.length - 1];
+  const spanA = Math.max(rA.max, 0) - Math.min(rA.min, 0), spanB = Math.max(rB.max, 0) - Math.min(rB.min, 0);
+  const stepA = pick(spanA / 6, [0.5, 1, 2, 2.5, 5, 10, 20]);
+  const stepB = pick(spanB / 6, [5, 10, 20, 25, 50, 100]);
+  const head = 1.04; // small headroom so extreme points don't sit on the frame
+  const nPos = Math.max(1, Math.ceil(Math.max(rA.max, 0) * head / stepA), Math.ceil(Math.max(rB.max, 0) * head / stepB));
+  const nNeg = Math.max(1, Math.ceil(-Math.min(rA.min, 0) * head / stepA), Math.ceil(-Math.min(rB.min, 0) * head / stepB));
+  return { a: { min: -nNeg * stepA, max: nPos * stepA, step: stepA }, b: { min: -nNeg * stepB, max: nPos * stepB, step: stepB } };
 }
 
 // Pads a raw [dataMin, dataMax] range so it includes zero plus breathing room.
@@ -741,7 +752,12 @@ function renderHousingChart() {
 
   // LVMH Asia ex. Japan organic growth — actual quarterly figures from filings, rendered as
   // narrow bars anchored at the LAST month of each quarter. No interpolation anywhere.
-  const lvmhBarSlice = LVMH_QUARTERLY_BAR.slice(startIdx);
+  const lvmhBarRaw = LVMH_QUARTERLY_BAR.slice(startIdx);
+  // Axis break (think-cell style): one-off outliers above LVMH_BREAK_AT (1Q21 +86%, COVID base effect vs 1Q20 -32%)
+  // are excluded from the axis range, drawn to the top of the axis with a break mark, and labelled with their real value.
+  const LVMH_BREAK_AT = 60;
+  const brokenIdx = lvmhBarRaw.map((v, i) => (v != null && v > LVMH_BREAK_AT ? i : -1)).filter(i => i >= 0);
+  let lvmhBarSlice = lvmhBarRaw.map(v => (v != null && v > LVMH_BREAK_AT ? null : v));
 
   const lvmhDataset = {
     type: 'bar',
@@ -765,7 +781,7 @@ function renderHousingChart() {
       data: vals,
       borderColor: seg.color,
       backgroundColor: seg.color + '15',
-      borderWidth: 2,
+      borderWidth: 2.5,
       pointRadius: dates.length <= 24 ? 3 : 0,
       pointHoverRadius: 5,
       tension: 0.3,
@@ -785,9 +801,12 @@ function renderHousingChart() {
   const lValsRaw = lvmhBarSlice.filter(v => v != null);
   const housingRangeRaw = hValsRaw.length ? { min: Math.min(...hValsRaw), max: Math.max(...hValsRaw) } : { min: -5, max: 5 };
   const lvmhRangeRaw    = lValsRaw.length ? { min: Math.min(...lValsRaw), max: Math.max(...lValsRaw) } : { min: -10, max: 10 };
-  const housingPadded = padRangeToZero(housingRangeRaw.min, housingRangeRaw.max, 0.14);
-  const lvmhPadded     = padRangeToZero(lvmhRangeRaw.min, lvmhRangeRaw.max, 0.14);
-  const { a: housingAxis, b: lvmhAxis } = alignZeroAxes(housingPadded, lvmhPadded);
+  // Round, zero-aligned dual axis: each side gets a "nice" step (e.g. 5% housing / 20% LVMH) and
+  // both sides share the same number of steps above and below zero, so gridlines line up on round values.
+  const { a: housingAxis, b: lvmhAxis } = niceAlignedAxes(housingRangeRaw, lvmhRangeRaw);
+  // Broken bars run up to just below the top of the (now tighter) axis.
+  lvmhBarSlice = lvmhBarRaw.map((v, i) => (brokenIdx.includes(i) ? lvmhAxis.max * 0.97 : lvmhBarSlice[i]));
+  lvmhDataset.data = lvmhBarSlice;
 
   // Quarter + year boundary lines, drawn precisely between months (not on top of a tick).
   const yearBounds = getYearBoundaries(startIdx);
@@ -815,12 +834,12 @@ function renderHousingChart() {
           callbacks: {
             title: items => formatHousingDate(HOUSING_DATES[startIdx + items[0].dataIndex]),
             label: ctx => {
-              const v = ctx.parsed.y;
-              if (v == null) return null;
               const isLVMH = ctx.dataset.yAxisID === 'yLVMH';
+              const v = isLVMH ? lvmhBarRaw[ctx.dataIndex] : ctx.parsed.y;
+              if (v == null) return null;
               if (isLVMH) {
                 const q = LVMH_QUARTER_BY_IDX[startIdx + ctx.dataIndex];
-                return ` LVMH Asia ex Japan (${q}, actual): ${v >= 0 ? '+' : ''}${v.toFixed(1)}%`;
+                return ` LVMH Asia ex Japan (${q}, actual): ${v >= 0 ? '+' : ''}${v.toFixed(1)}%${brokenIdx.includes(ctx.dataIndex) ? ' — bar truncated (axis break)' : ''}`;
               }
               return ` ${ctx.dataset.label.split('—')[0].trim()}: ${v >= 0 ? '+' : ''}${v.toFixed(1)}%`;
             },
@@ -830,23 +849,23 @@ function renderHousingChart() {
       scales: {
         x: {
           grid: { display: false },
-          ticks: { color: '#667085', font: { size: 9 }, maxRotation: 90, minRotation: 45, autoSkip: false }
+          ticks: { color: '#475467', font: { size: 11 }, maxRotation: 0, minRotation: 0, autoSkip: false }
         },
         yHousing: {
           position: 'left',
           grid: { color: 'rgba(0,0,0,0.06)' },
           min: housingAxis.min,
           max: housingAxis.max,
-          ticks: { color: '#667085', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%' },
-          title: { display: true, text: 'Housing YoY (%)', color: '#667085', font: { size: 9 } }
+          ticks: { color: '#344054', font: { size: 11 }, stepSize: housingAxis.step, callback: v => (v > 0 ? '+' : '') + (housingAxis.step < 1 ? v.toFixed(1) : v.toFixed(0)) + '%' },
+          title: { display: true, text: 'Housing price YoY (%) — lines', color: '#344054', font: { size: 11, weight: '600' } }
         },
         yLVMH: {
           position: 'right',
           grid: { drawOnChartArea: false },
           min: lvmhAxis.min,
           max: lvmhAxis.max,
-          ticks: { color: '#667085', font: { size: 9 }, callback: v => (v >= 0 ? '+' : '') + v.toFixed(0) + '%' },
-          title: { display: true, text: 'LVMH Asia ex Japan Growth (%, quarterly)', color: '#667085', font: { size: 9 } }
+          ticks: { color: '#6e6e78', font: { size: 11 }, stepSize: lvmhAxis.step, callback: v => (v > 0 ? '+' : '') + v.toFixed(0) + '%' },
+          title: { display: true, text: 'LVMH Asia ex-Japan organic growth (%) — grey bars', color: '#6e6e78', font: { size: 11, weight: '600' } }
         }
       }
     },
@@ -873,7 +892,37 @@ function renderHousingChart() {
           c.restore();
         }
       },
-      makeBoundaryPlugin(startIdx, yearBounds, quarterBounds)
+      makeBoundaryPlugin(startIdx, yearBounds, quarterBounds),
+      {
+        id: 'lvmhAxisBreak',
+        // Drawn right after the bars (dataset 0) and BEFORE the housing lines, so lines stay on top.
+        afterDatasetDraw(chart, args) {
+          if (!brokenIdx.length || args.index !== 0) return;
+          const meta = args.meta;
+          const sc = chart.scales.yLVMH;
+          const c = chart.ctx;
+          brokenIdx.forEach(i => {
+            const bar = meta.data[i];
+            if (!bar) return;
+            const { x, width } = bar.getProps(['x', 'width'], true);
+            const w = Math.max(width, 11) + 8;
+            const yb = sc.getPixelForValue(lvmhAxis.max * 0.4);   // break mark at ~40% of the bar height
+            c.save();
+            c.fillStyle = '#ffffff';
+            c.beginPath();
+            c.moveTo(x - w / 2, yb + 3); c.lineTo(x + w / 2, yb - 3);
+            c.lineTo(x + w / 2, yb + 3); c.lineTo(x - w / 2, yb + 9);
+            c.closePath(); c.fill();
+            c.strokeStyle = 'rgba(80,80,90,0.9)'; c.lineWidth = 1.2;
+            c.beginPath(); c.moveTo(x - w / 2, yb + 3); c.lineTo(x + w / 2, yb - 3); c.stroke();
+            c.beginPath(); c.moveTo(x - w / 2, yb + 9); c.lineTo(x + w / 2, yb + 3); c.stroke();
+            c.font = '700 11px Inter, "Segoe UI", sans-serif';
+            c.fillStyle = '#4a4a55'; c.textAlign = 'left'; c.textBaseline = 'middle';
+            c.fillText(`+${lvmhBarRaw[i].toFixed(0)}%`, x + width / 2 + 4, yb + 3);
+            c.restore();
+          });
+        }
+      }
     ]
   });
 
@@ -1250,7 +1299,7 @@ const RESALE_V2_MODELS=['Hermès Birkin 25','Hermès Birkin 30','Hermès Kelly 2
 const REGION_COLORS_V2={US:'#d4a84b',EU:'#2ecc71',CN:'#4a90c4',ZZ:'#9b59b6'};
 const REGION_FILES={US:'us_resale.json',EU:'eu_resale.json',CN:'cn_resale.json'};
 // ZZER (只二) — authenticated China resale, manually collected from listing screenshots (no scraper). Add a new entry per model per snapshot date.
-const ZZER_RESALE={"Hermès Birkin 25":[{"date":"2026-10-26","vr_median":1.4126,"vr_mean":1.4122,"n_listings":15,"price_median":162445,"msrp_used":115000,"currency":"CNY","prices":[164800,125000,157999,156000,188000,191111,186666,136889,195777,187000,135000,168888,118000,162445,162445]},{"date":"2026-11-02","vr_median":1.5281,"vr_mean":1.4835,"n_listings":14,"price_median":175733.0,"msrp_used":115000,"currency":"CNY","prices":[125000,136889,137800,153333,156000,157999,164800,186666,187000,188000,191111,193333,195777,214700]}],"Hermès Birkin 30":[{"date":"2026-10-26","vr_median":0.944,"vr_mean":0.9929,"n_listings":16,"price_median":117999.5,"msrp_used":125000,"currency":"CNY","prices":[93040,148000,84666,117999,96888,80000,191111,208000,126000,100272,163555,131000,97800,97999,118000,131400]},{"date":"2026-11-02","vr_median":0.924,"vr_mean":0.978,"n_listings":16,"price_median":115499.5,"msrp_used":125000,"currency":"CNY","prices":[84666,93040,96888,97800,97999,100272,106000,113000,117999,118000,125778,126000,131400,148000,191111,208000]}],"Hermès Kelly 25":[{"date":"2026-10-26","vr_median":1.2184,"vr_mean":1.1948,"n_listings":18,"price_median":140110.5,"msrp_used":115000,"currency":"CNY","prices":[78000,116000,118000,123000,125778,131111,131111,134999,137999,142222,143000,146000,148000,152222,156000,157999,163000,168888]},{"date":"2026-11-02","vr_median":1.0648,"vr_mean":1.1018,"n_listings":19,"price_median":122450,"msrp_used":115000,"currency":"CNY","prices":[97999,103556,106889,106889,110000,111340,116000,118000,121000,122450,123000,134666,137000,137000,142222,145778,146666,158000,168888]}],"Hermès Kelly 28":[{"date":"2026-10-26","vr_median":1.0139,"vr_mean":0.9814,"n_listings":12,"price_median":109499.5,"msrp_used":108000,"currency":"CNY","prices":[87500,92009,95000,97000,98000,108000,110999,111999,112400,113000,118000,127999]},{"date":"2026-11-02","vr_median":0.9244,"vr_mean":0.9497,"n_listings":14,"price_median":99835.5,"msrp_used":108000,"currency":"CNY","prices":[82999,87500,92009,95000,95999,97000,98672,100999,108000,110999,111335,114500,118000,123000]}],"LV Neverfull MM":[{"date":"2026-10-26","vr_median":0.4513,"vr_mean":0.4624,"n_listings":9,"price_median":6815,"msrp_used":15100,"currency":"CNY","prices":[5091,5858,6610,6711,6815,6815,6840,7740,10360]},{"date":"2026-11-02","vr_median":0.4675,"vr_mean":0.4865,"n_listings":25,"price_median":7060,"msrp_used":15100,"currency":"CNY","prices":[5858,6215,6460,6497,6601,6815,6815,6840,6940,6940,7000,7060,7060,7160,7160,7210,7215,7248,7540,7740,7859,8140,8660,10260,10360]}],"LV Speedy 25":[{"date":"2026-10-26","vr_median":0.8185,"vr_mean":0.7912,"n_listings":7,"price_median":12360,"msrp_used":15100,"currency":"CNY","prices":[9759,11360,12160,12360,12560,12648,12780]},{"date":"2026-11-02","vr_median":0.6132,"vr_mean":0.642,"n_listings":20,"price_median":9260.0,"msrp_used":15100,"currency":"CNY","prices":[7160,7859,7860,7860,8044,8484,8648,8760,8859,9175,9345,9360,9459,9648,9759,9759,12260,12260,13560,15760]}],"LV Pochette Métis":[{"date":"2026-10-26","vr_median":0.4473,"vr_mean":0.5031,"n_listings":16,"price_median":9260.0,"msrp_used":20700,"currency":"CNY","prices":[7860,8448,8660,8760,9000,9160,9260,9260,9260,9336,9360,9560,12660,13740,14540,17759]},{"date":"2026-11-02","vr_median":0.4473,"vr_mean":0.4953,"n_listings":26,"price_median":9260.0,"msrp_used":20700,"currency":"CNY","prices":[6819,7560,7860,7860,8448,8572,8748,8760,8760,8760,9000,9260,9260,9260,9336,9336,9342,9360,9560,12660,13260,13740,13965,14540,14760,17759]}],"LV Alma BB":[{"date":"2026-10-26","vr_median":0.4528,"vr_mean":0.471,"n_listings":16,"price_median":6837.0,"msrp_used":15100,"currency":"CNY","prices":[5260,5660,6310,6360,6360,6723,6759,6815,6859,6859,7060,7659,7840,7959,8759,10560]},{"date":"2026-11-02","vr_median":0.4646,"vr_mean":0.4732,"n_listings":24,"price_median":7015.0,"msrp_used":15100,"currency":"CNY","prices":[5660,5760,5760,6060,6310,6360,6360,6723,6759,6815,6859,6970,7060,7159,7259,7360,7559,7726,7828,7840,7959,8410,8659,10260]}]};
+const ZZER_RESALE={"Hermès Birkin 25":[{"date":"2026-10-26","vr_median":1.4126,"vr_mean":1.4122,"n_listings":15,"price_median":162445,"msrp_used":115000,"currency":"CNY","prices":[164800,125000,157999,156000,188000,191111,186666,136889,195777,187000,135000,168888,118000,162445,162445]},{"date":"2026-11-02","vr_median":1.5281,"vr_mean":1.4835,"n_listings":14,"price_median":175733.0,"msrp_used":115000,"currency":"CNY","prices":[125000,136889,137800,153333,156000,157999,164800,186666,187000,188000,191111,193333,195777,214700]}],"Hermès Birkin 30":[{"date":"2026-10-26","vr_median":0.944,"vr_mean":0.9929,"n_listings":16,"price_median":117999.5,"msrp_used":125000,"currency":"CNY","prices":[93040,148000,84666,117999,96888,80000,191111,208000,126000,100272,163555,131000,97800,97999,118000,131400]},{"date":"2026-11-02","vr_median":0.924,"vr_mean":0.978,"n_listings":16,"price_median":115499.5,"msrp_used":125000,"currency":"CNY","prices":[84666,93040,96888,97800,97999,100272,106000,113000,117999,118000,125778,126000,131400,148000,191111,208000]}],"Hermès Kelly 25":[{"date":"2026-10-26","vr_median":1.2184,"vr_mean":1.1948,"n_listings":18,"price_median":140110.5,"msrp_used":115000,"currency":"CNY","prices":[78000,116000,118000,123000,125778,131111,131111,134999,137999,142222,143000,146000,148000,152222,156000,157999,163000,168888]},{"date":"2026-11-02","vr_median":1.0648,"vr_mean":1.1018,"n_listings":19,"price_median":122450,"msrp_used":115000,"currency":"CNY","prices":[97999,103556,106889,106889,110000,111340,116000,118000,121000,122450,123000,134666,137000,137000,142222,145778,146666,158000,168888]}],"Hermès Kelly 28":[{"date":"2026-10-26","vr_median":1.0139,"vr_mean":0.9814,"n_listings":12,"price_median":109499.5,"msrp_used":108000,"currency":"CNY","prices":[87500,92009,95000,97000,98000,108000,110999,111999,112400,113000,118000,127999]},{"date":"2026-11-02","vr_median":0.9244,"vr_mean":0.9497,"n_listings":14,"price_median":99835.5,"msrp_used":108000,"currency":"CNY","prices":[82999,87500,92009,95000,95999,97000,98672,100999,108000,110999,111335,114500,118000,123000]}],"LV Neverfull MM":[{"date":"2026-10-26","vr_median":0.4513,"vr_mean":0.4624,"n_listings":9,"price_median":6815,"msrp_used":15100,"currency":"CNY","prices":[5091,5858,6610,6711,6815,6815,6840,7740,10360]},{"date":"2026-11-02","vr_median":0.4675,"vr_mean":0.4865,"n_listings":25,"price_median":7060,"msrp_used":15100,"currency":"CNY","prices":[5858,6215,6460,6497,6601,6815,6815,6840,6940,6940,7000,7060,7060,7160,7160,7210,7215,7248,7540,7740,7859,8140,8660,10260,10360]}],"LV Speedy 25":[{"date":"2026-10-26","vr_median":0.6132,"vr_mean":0.642,"n_listings":20,"price_median":9260.0,"msrp_used":15100,"currency":"CNY","prices":[7160,7859,7860,7860,8044,8484,8648,8760,8859,9175,9345,9360,9459,9648,9759,9759,12260,12260,13560,15760],"_note":"Oct 26 replaced with Nov 2 Bandoulière set (Oct 26 sample of 7 was too noisy)"},{"date":"2026-11-02","vr_median":0.6132,"vr_mean":0.642,"n_listings":20,"price_median":9260.0,"msrp_used":15100,"currency":"CNY","prices":[7160,7859,7860,7860,8044,8484,8648,8760,8859,9175,9345,9360,9459,9648,9759,9759,12260,12260,13560,15760]}],"LV Pochette Métis":[{"date":"2026-10-26","vr_median":0.4473,"vr_mean":0.5031,"n_listings":16,"price_median":9260.0,"msrp_used":20700,"currency":"CNY","prices":[7860,8448,8660,8760,9000,9160,9260,9260,9260,9336,9360,9560,12660,13740,14540,17759]},{"date":"2026-11-02","vr_median":0.4473,"vr_mean":0.4953,"n_listings":26,"price_median":9260.0,"msrp_used":20700,"currency":"CNY","prices":[6819,7560,7860,7860,8448,8572,8748,8760,8760,8760,9000,9260,9260,9260,9336,9336,9342,9360,9560,12660,13260,13740,13965,14540,14760,17759]}],"LV Alma BB":[{"date":"2026-10-26","vr_median":0.4528,"vr_mean":0.471,"n_listings":16,"price_median":6837.0,"msrp_used":15100,"currency":"CNY","prices":[5260,5660,6310,6360,6360,6723,6759,6815,6859,6859,7060,7659,7840,7959,8759,10560]},{"date":"2026-11-02","vr_median":0.4646,"vr_mean":0.4732,"n_listings":24,"price_median":7015.0,"msrp_used":15100,"currency":"CNY","prices":[5660,5760,5760,6060,6310,6360,6360,6723,6759,6815,6859,6970,7060,7159,7259,7360,7559,7726,7828,7840,7959,8410,8659,10260]}]};
 let RESALE_V2_DATA={US:{},EU:{},CN:{},ZZ:ZZER_RESALE};
 
 async function loadResaleData(){
